@@ -20,7 +20,7 @@ const sfx = {
   }),
   countdown: new Howl({
     src: ['/audio/3-2-1.mp3'], // Yeni geri sayım sesi
-    volume: 0.3
+    volume: 0.15
   }),
   gameover: null // Game over SFX kaldırıldı
 };
@@ -29,7 +29,7 @@ const sfx = {
 const bgms = {
   1: new Howl({ src: ['/audio/game_music.mp3'], loop: true, volume: 0.15 }),   // Menü
   2: new Howl({ src: ['/audio/Normal.mp3'], loop: true, volume: 0.15 }),       // Normal Oyun
-  3: new Howl({ src: ['/audio/2x.mp3'], loop: true, volume: 0.20 }),           // 2x Oyun
+  3: new Howl({ src: ['/audio/2x.mp3'], loop: true, volume: 0.15 }),           // 2x Oyun
   4: new Howl({ src: ['/audio/game_music_2.mp3'], loop: true, volume: 0.15 })  // Skor Ekranı
 };
 
