@@ -15,7 +15,7 @@ const sfx = {
     volume: 0.10
   }),
   countdown: new Howl({
-    src: ['/audio/3-2-1.mp3'], 
+    src: ['/audio/3-2-1.ogg', '/audio/3-2-1.mp3'], 
     volume: 0.10
   }),
   click: new Howl({
@@ -26,10 +26,10 @@ const sfx = {
 
 // Arka Plan Müzikleri (BGM)
 const bgms = {
-  1: new Howl({ src: ['/audio/game_music.mp3'], loop: true, volume: 0.15 }),   // Menü
-  2: new Howl({ src: ['/audio/Normal.mp3'], loop: true, volume: 0.10 }),       // Normal Oyun
-  3: new Howl({ src: ['/audio/2x.mp3'], loop: true, volume: 0.10 }),           // 2x Oyun
-  4: new Howl({ src: ['/audio/game_music_2.mp3'], loop: true, volume: 0.15 })  // Skor Ekranı
+  1: new Howl({ src: ['/audio/game_music.ogg', '/audio/game_music.mp3'], loop: true, volume: 0.15 }),   // Menü
+  2: new Howl({ src: ['/audio/Normal.ogg', '/audio/Normal.mp3'], loop: true, volume: 0.10 }),       // Normal Oyun
+  3: new Howl({ src: ['/audio/2x.ogg', '/audio/2x.mp3'], loop: true, volume: 0.10 }),           // 2x Oyun
+  4: new Howl({ src: ['/audio/game_music_2.ogg', '/audio/game_music_2.mp3'], loop: true, volume: 0.15 })  // Skor Ekranı
 };
 
 let currentBGM = null;

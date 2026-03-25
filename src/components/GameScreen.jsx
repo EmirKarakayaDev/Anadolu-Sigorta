@@ -116,13 +116,11 @@ export function GameScreen({ onGameOver }) {
             if (!gameOverTriggeredRef.current) {
                 gameOverTriggeredRef.current = true;
                 
-                // Dramatik Bekleyiş (0.5 Saniye Sadece Donup Kalıyoruz)
                 gameFinishTimeout = setTimeout(() => {
-                    if (!feedback) {
+                    // Sadece oyun zaten bitmemişse (süre bittiğinde) triggerGameOver çağır
+                    if (!gameOver) {
                         triggerGameOver();
                     }
-                    
-                    audioManager.fadeOutBGM(2000); 
 
                     // Yazının ekranda kaldığı o 2 saniyenin sonunda Skor Ekranına geç
                     finalTransitionTimeout = setTimeout(() => {
