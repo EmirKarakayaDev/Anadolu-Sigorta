@@ -188,7 +188,7 @@ export function useTetris({ isPaused = false } = {}) {
                 const linesCleared = linesToClear.length;
                 const levels = { 1: 'GÜZEL', 2: 'HARİKA', 3: 'MUHTEŞEM', 4: 'TETRIS' };
                 setFeedback({ text: levels[linesCleared], id: Date.now() });
-                setTimeout(() => setFeedback(null), 750);
+                setTimeout(() => setFeedback(null), 600);
 
                 let startTime = null;
                 const duration = 600; // Biraz daha uzun ve belirgin olması için
