@@ -12,7 +12,6 @@
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "@supabase/supabase-js": "^2.99.0",
-    "firebase": "^12.10.0",
     "framer-motion": "^12.35.0",
     "howler": "^2.2.4",
     "lucide-react": "^0.577.0",
