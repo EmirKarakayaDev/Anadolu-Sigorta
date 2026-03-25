@@ -113,8 +113,11 @@ export function GameScreen({ onGameOver }) {
                 
                 // Dramatik Bekleyiş (0.5 Saniye Sadece Donup Kalıyoruz)
                 setTimeout(() => {
-                    // 0.5 Saniye Sonra: "OYUN BİTTİ" yazısını patlat ve müziği süze süze sustur
-                    triggerGameOver();
+                    // Eğer useTetris (blokların dolmasıyla) zaten OYUN BİTTİ yazısını çıkartmadıysa, biz çıkartıyoruz (örn: süre bitince)
+                    if (!feedback) {
+                        triggerGameOver();
+                    }
+                    
                     audioManager.fadeOutBGM(2000); 
 
                     // Yazının ekranda kaldığı o 2 saniyenin sonunda Skor Ekranına geç
