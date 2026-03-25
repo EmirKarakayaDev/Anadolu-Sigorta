@@ -122,10 +122,10 @@ export function GameScreen({ onGameOver }) {
                         triggerGameOver();
                     }
 
-                    // Yazının ekranda kaldığı o 2 saniyenin sonunda Skor Ekranına geç
+                    // Yazının ekranda kaldığı o 1.5 saniyenin sonunda Skor Ekranına geç
                     finalTransitionTimeout = setTimeout(() => {
                         onGameOver(score);
-                    }, 2000);
+                    }, 1500);
 
                 }, 500);
             }
@@ -343,7 +343,8 @@ export function GameScreen({ onGameOver }) {
                     gap: '8px',
                     width: '100%',
                     alignItems: 'stretch',
-                    height: '80px'
+                    height: '80px',
+                    position: 'relative'
                 }}>
                     {/* Left: Score */}
                     <div className="glass-panel" style={{
@@ -356,7 +357,8 @@ export function GameScreen({ onGameOver }) {
                         background: 'rgba(0, 0, 0, 0.4)',
                         border: '2px solid rgba(255, 255, 255, 0.5)',
                         borderRadius: '4px',
-                        backdropFilter: 'blur(10px)'
+                        backdropFilter: 'blur(10px)',
+                        boxShadow: 'none'
                     }}>
                         <span style={{ fontSize: '0.8rem', color: 'white', fontWeight: 900, letterSpacing: '1px' }}>Skor</span>
                         <span style={{ fontSize: '1.5rem', fontWeight: 900 }}>{score}</span>
@@ -373,7 +375,8 @@ export function GameScreen({ onGameOver }) {
                         background: 'rgba(0, 0, 0, 0.4)',
                         border: '2px solid rgba(255, 255, 255, 0.5)',
                         borderRadius: '4px',
-                        backdropFilter: 'blur(10px)'
+                        backdropFilter: 'blur(10px)',
+                        boxShadow: 'none'
                     }}>
                         <span style={{ fontSize: '0.8rem', color: 'white', fontWeight: 900, letterSpacing: '1px' }}>Süre</span>
                         <span style={{ fontSize: '1.5rem', fontWeight: 900 }}>
@@ -393,7 +396,8 @@ export function GameScreen({ onGameOver }) {
                         borderRadius: '4px',
                         backdropFilter: 'blur(10px)',
                         position: 'relative',
-                        overflow: 'hidden'
+                        overflow: 'hidden',
+                        boxShadow: 'none'
                     }}>
                         <span style={{ fontSize: '0.8rem', color: 'white', fontWeight: 900, letterSpacing: '1px' }}>Sıradaki</span>
                         <div style={{ padding: '0px', height: '40px', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -402,6 +406,7 @@ export function GameScreen({ onGameOver }) {
                             )}
                         </div>
                     </div>
+
                 </div>
 
                 <div className="game-main-area" style={{ position: 'relative', margin: 'auto 0' }}>
@@ -483,6 +488,35 @@ export function GameScreen({ onGameOver }) {
                             images={images}
                         />
                     </motion.div>
+
+                    {/* Exterior Mute Button (Sticking to border) */}
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            const newMute = audioManager.toggleMute();
+                            setIsMuted(newMute);
+                        }}
+                        style={{
+                            position: 'absolute',
+                            top: '2px', // Align with the top border
+                            left: '100%',
+                            marginLeft: '8px', // Gap from the border
+                            background: 'rgba(0, 0, 0, 0.4)',
+                            border: '1px solid rgba(255, 255, 255, 0.5)',
+                            borderRadius: '8px', // Square-ish matching the panel
+                            width: '42px',
+                            height: '42px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: 'white',
+                            cursor: 'pointer',
+                            zIndex: 20,
+                            backdropFilter: 'blur(5px)'
+                        }}
+                    >
+                        {isMuted ? <VolumeX size={22} /> : <Volume2 size={22} />}
+                    </button>
                 </div>
 
                 {/* Speed Button */}

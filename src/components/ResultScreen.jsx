@@ -89,12 +89,12 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard })
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.6 }}
                 >
-                    <button className="btn-primary" onClick={onPlayAgain}>
-                        Yeniden Oyna 
+                    <button className="btn-primary" onClick={onShowLeaderboard}>
+                        Skor Tablosu
                     </button>
  
-                    <button className="btn-outline" onClick={onShowLeaderboard}>
-                        Skor Tablosu
+                    <button className="btn-outline" onClick={onPlayAgain}>
+                        Yeniden Oyna 
                     </button>
  
                     <button className="btn-text-link" onClick={onReset}>

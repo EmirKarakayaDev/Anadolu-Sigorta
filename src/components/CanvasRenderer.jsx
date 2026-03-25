@@ -187,6 +187,6 @@ export function CanvasRenderer({ grid, activePiece, ghostPiece, trail, isSettlin
         }
     }, [grid, activePiece, ghostPiece, trail, isSettling, clearingLines, clearingStage, images]);
 
-    return <canvas ref={canvasRef} width={300} height={600} style={{ background: '#3a3a3a' }} />;
+    return <canvas ref={canvasRef} width={300} height={600} style={{ background: '#4a4a4a' }} />;
 }
 
