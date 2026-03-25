@@ -6,7 +6,7 @@ import { COLS, ROWS, BLOCK_SIZE, COLORS, SHAPES, PIECE_ASSETS } from '../game/co
 import { Trophy, Clock, Volume2, VolumeX } from 'lucide-react';
 import { audioManager } from '../utils/audioManager';
 
-export function GameScreen({ onGameOver }) {
+export function GameScreen({ onGameOver, settings }) {
     const [timeLeft, setTimeLeft] = useState(120); // 2 minutes game
     const [countdown, setCountdown] = useState(3);
     const [isCounting, setIsCounting] = useState(true);
@@ -184,7 +184,9 @@ export function GameScreen({ onGameOver }) {
 
         if (interaction.lock === 'horizontal' || (!interaction.lock && totalDx > 15)) {
             const dragDist = e.clientX - lastX;
-            if (Math.abs(dragDist) > 30) {
+            // Sensitivity multiplier affects how much we need to drag (higher sensitivity = lower threshold)
+            const threshold = 30 / settings.sensitivity; 
+            if (Math.abs(dragDist) > threshold) {
                 move(dragDist > 0 ? 1 : -1);
                 setLastX(e.clientX);
             }
@@ -193,7 +195,8 @@ export function GameScreen({ onGameOver }) {
         // Vertical Movement (Soft Drop)
         if (interaction.lock === 'vertical' || (!interaction.lock && totalDy > 20)) {
             const dragDistY = e.clientY - lastY;
-            if (dragDistY > 40) {
+            const vThreshold = 40 / settings.sensitivity;
+            if (dragDistY > vThreshold) {
                 drop();
                 setLastY(e.clientY);
             }

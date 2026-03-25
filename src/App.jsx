@@ -26,13 +26,17 @@ function App() {
   const [lastSessionId, setLastSessionId] = useState(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [transitionTarget, setTransitionTarget] = useState(null);
+  const [settings, setSettings] = useState({
+    sensitivity: parseFloat(localStorage.getItem('game_sensitivity')) || 1.0,
+    isMuted: localStorage.getItem('game_muted') === 'true'
+  });
   const isSavingRef = React.useRef(false);
 
   const handleStart = () => {
     // Attempt fullscreen on first interaction for immersion
     try {
       if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen().catch(() => {});
+        document.documentElement.requestFullscreen().catch(() => { });
       } else if (document.documentElement.webkitRequestFullscreen) {
         document.documentElement.webkitRequestFullscreen();
       }
@@ -82,7 +86,7 @@ function App() {
     <div className="app-container">
       <AnimatePresence mode="wait">
         {currentScreen === SCREENS.MENU && (
-          <MenuScreen key="menu" onStart={handleStart} />
+          <MenuScreen key="menu" onStart={handleStart} settings={settings} setSettings={setSettings} />
         )}
         {currentScreen === SCREENS.KVKK && (
           <KVKKScreen key="kvkk" onAccept={handleKVKKAccept} onDecline={handleReset} />
@@ -91,7 +95,7 @@ function App() {
           <FormScreen key="form" onSubmit={handleFormSubmit} />
         )}
         {currentScreen === SCREENS.GAME && (
-          <GameScreen key="game" onGameOver={handleGameOver} />
+          <GameScreen key="game" onGameOver={handleGameOver} settings={settings} />
         )}
         {currentScreen === SCREENS.RESULT && (
           <ResultScreen key="result" score={finalScore} onReset={handleReset} onPlayAgain={handlePlayAgain} onShowLeaderboard={() => setCurrentScreen(SCREENS.LEADERBOARD)} />

@@ -15,8 +15,8 @@ const sfx = {
     volume: 0.05
   }),
   clear: new Howl({
-    src: ['https://assets.mixkit.co/sfx/preview/mixkit-magical-coin-win-1936.mp3'],
-    volume: 0.5
+    src: ['/audio/gecis.mp3'],
+    volume: 0.3
   }),
   countdown: new Howl({
     src: ['/audio/3-2-1.mp3'], 
