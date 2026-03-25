@@ -15,8 +15,8 @@ const sfx = {
     volume: 0.05
   }),
   clear: new Howl({
-    src: ['/audio/gecis.mp3'],
-    volume: 0.3
+    src: ['/audio/blok.mp3'],
+    volume: 0.4
   }),
   countdown: new Howl({
     src: ['/audio/3-2-1.mp3'], 
