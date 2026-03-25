@@ -10,29 +10,25 @@ const sfx = {
     src: ['/audio/move.mp3'], 
     volume: 0.10
   }),
-  gecis: new Howl({
-    src: ['/audio/gecis.mp3'],
-    volume: 0.05
-  }),
   clear: new Howl({
     src: ['/audio/blok.mp3'],
-    volume: 0.4
+    volume: 0.10
   }),
   countdown: new Howl({
     src: ['/audio/3-2-1.mp3'], 
-    volume: 0.15
+    volume: 0.10
   }),
   click: new Howl({
     src: ['/audio/buton.mp3'],
-    volume: 0.25
+    volume: 0.15
   })
 };
 
 // Arka Plan Müzikleri (BGM)
 const bgms = {
   1: new Howl({ src: ['/audio/game_music.mp3'], loop: true, volume: 0.15 }),   // Menü
-  2: new Howl({ src: ['/audio/Normal.mp3'], loop: true, volume: 0.15 }),       // Normal Oyun
-  3: new Howl({ src: ['/audio/2x.mp3'], loop: true, volume: 0.15 }),           // 2x Oyun
+  2: new Howl({ src: ['/audio/Normal.mp3'], loop: true, volume: 0.10 }),       // Normal Oyun
+  3: new Howl({ src: ['/audio/2x.mp3'], loop: true, volume: 0.10 }),           // 2x Oyun
   4: new Howl({ src: ['/audio/game_music_2.mp3'], loop: true, volume: 0.15 })  // Skor Ekranı
 };
 
