@@ -111,17 +111,18 @@ export function GameScreen({ onGameOver }) {
             if (!gameOverTriggeredRef.current) {
                 gameOverTriggeredRef.current = true;
                 
-                // Eğer süre bittiyse "OYUN BİTTİ" yazısını patlat (GameOver halindeyse zaten useTetris yaptı)
-                if (timeLeft <= 0 && !gameOver) {
-                    triggerGameOver();
-                }
-
-                // İdeal Final (1 Saniyelik Müzik Fade ve Rötar)
-                audioManager.fadeOutBGM(1000); 
-                
+                // Dramatik Bekleyiş (0.5 Saniye Sadece Donup Kalıyoruz)
                 setTimeout(() => {
-                    onGameOver(score);
-                }, 1000);
+                    // 0.5 Saniye Sonra: "OYUN BİTTİ" yazısını patlat ve müziği süze süze sustur
+                    triggerGameOver();
+                    audioManager.fadeOutBGM(2000); 
+
+                    // Yazının ekranda kaldığı o 2 saniyenin sonunda Skor Ekranına geç
+                    setTimeout(() => {
+                        onGameOver(score);
+                    }, 2000);
+
+                }, 500);
             }
             return;
         }
@@ -451,7 +452,7 @@ export function GameScreen({ onGameOver }) {
                                     padding: '1.2rem 2.5rem',
                                     borderRadius: '8px',
                                     fontWeight: 900,
-                                    fontSize: feedback.text.includes('BİTTİ') ? '4rem' : (feedback.text === 'TETRIS' ? '3rem' : '2.2rem'),
+                                    fontSize: feedback.text.includes('BİTTİ') ? '3rem' : (feedback.text === 'TETRIS' ? '3rem' : '2.2rem'),
                                     textShadow: '0 0 20px rgba(0,0,0,0.5)',
                                     boxShadow: '0 0 50px rgba(0, 0, 0, 0.5)',
                                     letterSpacing: '4px',

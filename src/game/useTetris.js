@@ -110,8 +110,8 @@ export function useTetris({ isPaused = false } = {}) {
     const triggerGameOver = useCallback(() => {
         setGameOver(true);
         setFeedback({ text: 'OYUN\nBİTTİ', id: Date.now() });
-        // Oyun bitiş mesajı tam 1 saniye kalsın
-        setTimeout(() => setFeedback(null), 1000);
+        // Oyun bitiş mesajı tam 2 saniye kalsın (Daha dramatik)
+        setTimeout(() => setFeedback(null), 2000);
     }, []);
 
     const landPiece = useCallback((isHardDrop = false) => {

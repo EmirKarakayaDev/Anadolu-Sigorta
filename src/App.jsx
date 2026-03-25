@@ -49,17 +49,21 @@ function App() {
     setIsTransitioning(true);
   };
 
-  const handleGameOver = async (score) => {
+  const handleGameOver = (score) => {
     if (isSavingRef.current) return;
 
     setFinalScore(score);
     if (userData) {
       isSavingRef.current = true;
-      const result = await saveGameSession(userData, score);
-      if (result.success) {
-        setLastSessionId(result.id);
-      }
-      isSavingRef.current = false;
+      saveGameSession(userData, score).then(result => {
+        if (result.success) {
+          setLastSessionId(result.id);
+        }
+        isSavingRef.current = false;
+      }).catch(err => {
+        console.error("Save error:", err);
+        isSavingRef.current = false;
+      });
     }
     setCurrentScreen(SCREENS.RESULT);
   };
