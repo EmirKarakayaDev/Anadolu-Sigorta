@@ -232,7 +232,6 @@ export function GameScreen({ onGameOver }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerUp}
             onPointerCancel={() => { interactionStartRef.current = null; }}
@@ -474,8 +473,11 @@ export function GameScreen({ onGameOver }) {
                             WebkitBackdropFilter: 'none',
                             lineHeight: 0, // Prevents inline block extra space
                             display: 'flex',
-                            originY: 1
+                            originY: 1,
+                            cursor: 'pointer',
+                            touchAction: 'none'
                         }}
+                        onPointerDown={handlePointerDown}
                     >
                         <CanvasRenderer 
                             grid={grid} 
