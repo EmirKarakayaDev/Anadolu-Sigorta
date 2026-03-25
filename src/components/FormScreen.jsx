@@ -135,8 +135,8 @@ export function FormScreen({ onSubmit }) {
                                 type="button"
                                 className="btn-text-link"
                                 onClick={() => onSubmit({
-                                    firstName: 'Oyun',
-                                    lastName: 'Testi',
+                                    firstName: 'Test',
+                                    lastName: 'Kullanıcı',
                                     email: 'test@test.com',
                                     tcNumber: '11111111111',
                                     phone: '5551112233',
