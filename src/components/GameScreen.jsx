@@ -240,34 +240,6 @@ export function GameScreen({ onGameOver }) {
             onPointerCancel={() => { interactionStartRef.current = null; }}
             onContextMenu={(e) => e.preventDefault()}
         >
-            {/* Mute Button */}
-            <motion.button
-                whileTap={{ scale: 0.9 }}
-                onClick={(e) => {
-                    e.stopPropagation();
-                    const newMute = audioManager.toggleMute();
-                    setIsMuted(newMute);
-                }}
-                style={{
-                    position: 'absolute',
-                    top: '1.2rem',
-                    right: '1.2rem',
-                    zIndex: 2000,
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    borderRadius: '50%',
-                    width: '40px',
-                    height: '40px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    color: 'white'
-                }}
-            >
-                {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-            </motion.button>
             {/* Global Countdown Overlay */}
             <AnimatePresence>
                 {isCounting && (
@@ -425,8 +397,30 @@ export function GameScreen({ onGameOver }) {
                         position: 'relative',
                         overflow: 'hidden'
                     }}>
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                const newMute = audioManager.toggleMute();
+                                setIsMuted(newMute);
+                            }}
+                            style={{
+                                position: 'absolute',
+                                top: '5px',
+                                right: '5px',
+                                background: 'transparent',
+                                border: 'none',
+                                color: 'white',
+                                cursor: 'pointer',
+                                padding: '4px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}
+                        >
+                            {isMuted ? <VolumeX size={14} /> : <Volume2 size={14} />}
+                        </button>
                         <span style={{ fontSize: '0.8rem', color: 'white', fontWeight: 900, letterSpacing: '1px' }}>Sıradaki</span>
-                        <div style={{ padding: '5px', height: '50px', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div style={{ padding: '0px', height: '40px', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             {nextPieces[0] && (
                                 <NextPiecePreview piece={nextPieces[0]} images={images} />
                             )}
