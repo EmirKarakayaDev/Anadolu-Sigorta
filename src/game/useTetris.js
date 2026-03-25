@@ -40,6 +40,7 @@ export function useTetris({ isPaused = false } = {}) {
         setScore(0);
         setGameOver(false);
         setIsSettling(false); // Reset isSettling
+        setFeedback(null); // Reset feedback
     }, [getRandomPiece]);
 
     const collision = useCallback((targetPiece, targetGrid) => { // Wrapped in useCallback
@@ -110,8 +111,6 @@ export function useTetris({ isPaused = false } = {}) {
     const triggerGameOver = useCallback(() => {
         setGameOver(true);
         setFeedback({ text: 'OYUN\nBİTTİ', id: Date.now() });
-        // Oyun bitiş mesajı tam 2 saniye kalsın (Daha dramatik)
-        setTimeout(() => setFeedback(null), 2000);
     }, []);
 
     const landPiece = useCallback((isHardDrop = false) => {
