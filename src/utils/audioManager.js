@@ -4,11 +4,11 @@ import { Howl } from 'howler';
 const sfx = {
   move: new Howl({
     src: ['/audio/move.mp3'],
-    volume: 0.15
+    volume: 0.10
   }),
   rotate: new Howl({
     src: ['/audio/move.mp3'], 
-    volume: 0.15
+    volume: 0.10
   }),
   gecis: new Howl({
     src: ['/audio/gecis.mp3'],

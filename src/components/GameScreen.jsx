@@ -431,6 +431,8 @@ export function GameScreen({ onGameOver }) {
                                     background: feedback.text.includes('BİTTİ') ? 'var(--primary)' : (feedback.text === 'TETRIS' ? 'linear-gradient(to bottom, #FF8C42, #FF5E5B)' : 'var(--secondary)'),
                                     color: 'white',
                                     padding: '1.2rem 2.5rem',
+                                    width: feedback.text.includes('BİTTİ') ? '92%' : 'auto',
+                                    maxWidth: feedback.text.includes('BİTTİ') ? '450px' : 'none',
                                     borderRadius: '8px',
                                     fontWeight: 900,
                                     fontSize: feedback.text.includes('BİTTİ') ? '3rem' : (feedback.text === 'TETRIS' ? '3rem' : '2.2rem'),
