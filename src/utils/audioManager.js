@@ -21,6 +21,10 @@ const sfx = {
   countdown: new Howl({
     src: ['/audio/3-2-1.mp3'], 
     volume: 0.15
+  }),
+  click: new Howl({
+    src: ['/audio/buton.mp3'],
+    volume: 0.25
   })
 };
 
@@ -135,3 +139,10 @@ if (localStorage.getItem('game_muted') === 'true') {
   Object.values(bgms).forEach(b => b.mute(true));
   Object.values(sfx).forEach(s => s.mute(true));
 }
+
+// Global buton tıklama dinleyicisi
+document.addEventListener('click', (e) => {
+  if (e.target.closest('button')) {
+    audioManager.play('click');
+  }
+}, true);
