@@ -60,8 +60,14 @@ export function CanvasRenderer({ grid, activePiece, ghostPiece, trail, isSettlin
                 -size / 2, -size / 2, size, size
             );
             
+            // Effect overlays
             if (highlight === 'hard') {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+                // Parlaklık ve gölge (Hard Drop için)
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+                ctx.fillRect(-size / 2, -size / 2, size, size);
+            } else if (highlight === true) {
+                // Kararma (Normal yerleşme için)
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
                 ctx.fillRect(-size / 2, -size / 2, size, size);
             }
             

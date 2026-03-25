@@ -182,16 +182,16 @@ export function GameScreen({ onGameOver }) {
 
         if (interaction.lock === 'horizontal' || (!interaction.lock && totalDx > 15)) {
             const dragDist = e.clientX - lastX;
-            if (Math.abs(dragDist) > 30) {
+            if (Math.abs(dragDist) > 25) { // Kullanıcı geri bildirimine göre 30 -> 25 olarak güncellendi
                 move(dragDist > 0 ? 1 : -1);
                 setLastX(e.clientX);
             }
         }
 
         // Vertical Movement (Soft Drop)
-        if (interaction.lock === 'vertical' || (!interaction.lock && totalDy > 20)) {
+        if (interaction.lock === 'vertical' || (!interaction.lock && totalDy > 15)) {
             const dragDistY = e.clientY - lastY;
-            if (dragDistY > 40) {
+            if (dragDistY > 34) { // Dikey hassasiyeti de aynı oranda (30 yerine 34) dengelendi
                 drop();
                 setLastY(e.clientY);
             }
@@ -232,6 +232,7 @@ export function GameScreen({ onGameOver }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerUp}
             onPointerCancel={() => { interactionStartRef.current = null; }}
@@ -337,14 +338,18 @@ export function GameScreen({ onGameOver }) {
             }}>
 
                 {/* Reference-style Top Bar */}
-                <div style={{
-                    display: 'flex',
-                    gap: '8px',
-                    width: '100%',
-                    alignItems: 'stretch',
-                    height: '80px',
-                    position: 'relative'
-                }}>
+                <div 
+                    onPointerDown={(e) => e.stopPropagation()}
+                    onPointerUp={(e) => e.stopPropagation()}
+                    style={{
+                        display: 'flex',
+                        gap: '8px',
+                        width: '100%',
+                        alignItems: 'stretch',
+                        height: '80px',
+                        position: 'relative'
+                    }}
+                >
                     {/* Left: Score */}
                     <div className="glass-panel" style={{
                         flex: 1,
@@ -473,11 +478,8 @@ export function GameScreen({ onGameOver }) {
                             WebkitBackdropFilter: 'none',
                             lineHeight: 0, // Prevents inline block extra space
                             display: 'flex',
-                            originY: 1,
-                            cursor: 'pointer',
-                            touchAction: 'none'
+                            originY: 1
                         }}
-                        onPointerDown={handlePointerDown}
                     >
                         <CanvasRenderer 
                             grid={grid} 
@@ -498,6 +500,8 @@ export function GameScreen({ onGameOver }) {
                             const newMute = audioManager.toggleMute();
                             setIsMuted(newMute);
                         }}
+                        onPointerDown={(e) => e.stopPropagation()}
+                        onPointerUp={(e) => e.stopPropagation()}
                         style={{
                             position: 'absolute',
                             top: '2px', // Align with the top border

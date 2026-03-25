@@ -227,7 +227,7 @@ export function useTetris({ isPaused = false } = {}) {
             // No lines to clear, proceed normally
             setGrid(newGrid);
             spawnNext(newGrid);
-        }, 250);
+        }, 150);
     }, [getRandomPiece, collision]);
 
     const drop = useCallback(() => { // Moved drop to top-level and wrapped in useCallback
