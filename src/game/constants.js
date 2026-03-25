@@ -54,13 +54,13 @@ export const SHAPES = {
 export const PIECES = Object.keys(SHAPES);
 
 export const PIECE_ASSETS = {
-    I: '/src/assets/TETRIS_BLOK_I.svg',
-    J: '/src/assets/TETRIS_BLOK_TERS_L.svg',
-    L: '/src/assets/TETRIS_BLOK_L.svg',
-    O: '/src/assets/TETRIS_BLOK_4LU.svg',
-    S: '/src/assets/TETRIS_BLOK_S.svg',
-    T: '/src/assets/TETRIS_BLOK_T.svg',
-    Z: '/src/assets/TETRIS_BLOK_Z.svg'
+    I: '/assets/TETRIS_BLOK_I.svg',
+    J: '/assets/TETRIS_BLOK_TERS_L.svg',
+    L: '/assets/TETRIS_BLOK_L.svg',
+    O: '/assets/TETRIS_BLOK_4LU.svg',
+    S: '/assets/TETRIS_BLOK_S.svg',
+    T: '/assets/TETRIS_BLOK_T.svg',
+    Z: '/assets/TETRIS_BLOK_Z.svg'
 };
 
 // Natural dimensions of pieces in their SVG assets
