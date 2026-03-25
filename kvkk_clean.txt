@@ -1,0 +1,283 @@
+﻿K─░┼Ş─░SEL VER─░LER─░N ─░┼ŞLENMES─░NDE UYULACAK ESASLARA ─░L─░┼ŞK─░N PROTOKOL
+Taraflar:
+ANADOLU ANON─░M T├£RK S─░GORTA ┼Ş─░RKET─░
+R├╝zgarl─▒bah├ğe Mah. Kavak Sok. No.31
+Kavac─▒k-─░stanbul
+KURUM T─░CAR─░ ADI:
+KURUM TABELA ADI:
+Adres:
+─░l├ğe/─░l:
+Protokol 	i├ğerisinde 	bundan 	sonra 	ANADOLU 	ANON─░M 	T├£RK 	S─░GORTA 	┼Ş─░RKET─░,
+ÔÇ£ANADOLU S─░GORTAÔÇØ; ÔÇĞÔÇĞÔÇĞÔÇĞÔÇĞÔÇĞÔÇĞ.. / ÔÇĞÔÇĞÔÇĞÔÇĞÔÇĞÔÇĞÔÇĞÔÇĞÔÇĞ ise ÔÇ£ÔÇĞÔÇĞÔÇĞÔÇĞÔÇĞÔÇĞÔÇĞÔÇĞÔÇĞÔÇØ
+olarak an─▒lacakt─▒r.
+Protokol├╝n Amac─▒ ve Konusu:
+Bu protokol, 7 Nisan 2016 tarihli Resmi GazeteÔÇÖde yay─▒mlanan 6698 say─▒l─▒ Ki┼şisel Verilerin
+Korunmas─▒ KanunuÔÇÖnun ama├ğlar─▒ do─şrultusunda ki┼şisel verilerin i┼şlenmesi ve aktar─▒lmas─▒
+hususunda uyulacak esaslar─▒ i├ğermek amac─▒yla ___/___/___ tarihinde iki (2) n├╝sha olarak
+imzalanm─▒┼şt─▒r.
+1. Madde ÔÇô Tan─▒mlar
+─░┼şbu ProtokolÔÇÖde ge├ğen;
+a) 	Veri Sorumlusu: Ki┼şisel verilerin i┼şleme ama├ğlar─▒n─▒ ve vas─▒talar─▒n─▒ belirleyen, veri kay─▒t
+sisteminin kurulmas─▒ndan ve y├Ânetilmesinden sorumlu olan ger├ğek veya t├╝zel ki┼şiyi,
+b) Veri ─░┼şleyen: Veri SorumlusuÔÇÖnun verdi─şi yetkiye dayanarak onun ad─▒na ki┼şisel verileri
+i┼şleyen ger├ğek veya t├╝zel ki┼şiyi,
+c) 	Alt Veri ─░┼şleyen: Veri sorumlusu ad─▒na i┼şlenen ki┼şisel verileri Veri ─░┼şleyenÔÇÖin ayr─▒ bir
+yaz─▒l─▒ s├Âzle┼şme ile verdi─şi yetkiye dayal─▒ olarak i┼şleyen ger├ğek veya t├╝zel ki┼şiyi,
+d) ─░lgili Ki┼şi: Ki┼şisel verisi i┼şlenen ger├ğek ki┼şiyi,
+e) 	Ki┼şisel Veri: Hizmet kapsam─▒nda kimli─şi belirli veya belirlenebilir ger├ğek ki┼şiye ili┼şkin
+i┼şlenen her t├╝rl├╝ bilgiyi,
+f) 	├ûzel Nitelikli Ki┼şisel Veri: Ki┼şilerin ─▒rk─▒, etnik k├Âkeni, siyasi d├╝┼ş├╝ncesi, felsefi inanc─▒,
+dini, mezhebi veya di─şer inan├ğlar─▒, k─▒l─▒k ve k─▒yafeti, dernek, vak─▒f ya da sendika ├╝yeli─şi,
+sa─şl─▒─ş─▒, cinsel hayat─▒, ceza mahk├╗miyeti ve g├╝venlik tedbirleriyle ilgili verileri ile
+biyometrik ve genetik verileri,
+g) Ki┼şisel Verilerin ─░┼şlenmesi: Ki┼şisel verilerin tamamen veya k─▒smen otomatik olan ya
+da herhangi bir veri kay─▒t sisteminin par├ğas─▒ olmak kayd─▒yla otomatik olmayan yollarla
+elde edilmesi, kaydedilmesi, depolanmas─▒, muhafaza edilmesi, de─şi┼ştirilmesi, yeniden
+d├╝zenlenmesi, a├ğ─▒klanmas─▒, aktar─▒lmas─▒, devral─▒nmas─▒, elde edilebilir h├óle getirilmesi,
+s─▒n─▒fland─▒r─▒lmas─▒ ya da kullan─▒lmas─▒n─▒n engellenmesi gibi veriler ├╝zerinde ger├ğekle┼ştirilen
+her t├╝rl├╝ i┼şlemi,
+h) Ki┼şisel Verilerin ─░mha Edilmesi: Ki┼şisel Verilerin silinmesini, yok edilmesini veya
+anonim hale getirilmesini,
+
+-- 1 of 8 --
+
+i) 	G├╝venlik ─░hlali: ─░┼şlenen ki┼şisel verilerin kanuni olmayan yollarla ba┼şkalar─▒ taraf─▒ndan
+elde edilmesini,
+j) 	Kanun: 6698 say─▒l─▒ Ki┼şisel Verilerin Korunmas─▒ KanunuÔÇÖnu,
+k) 	Kurul: Ki┼şisel Verileri Koruma KuruluÔÇÖnu,
+l) 	Kurum: Ki┼şisel Verileri Koruma KurumuÔÇÖnu
+m) Mevzuat: Kanun ile ikincil mevzuat─▒, Kurul taraf─▒ndan al─▒nan kararlar ile yay─▒mlanan
+rehberlerin tamam─▒n─▒,
+n) Teknik ve ─░dari Tedbirler: KanunÔÇÖda belirtilen ve Ki┼şisel Verilerin muhafazas─▒n─▒
+sa─şlamak, amac─▒yla uygun g├╝venlik d├╝zeyini temin etmeye y├Ânelik gerekli her t├╝rl├╝
+teknik ve idari tedbirleri ifade eder.
+Bu ProtokolÔÇÖde yer almayan tan─▒mlar i├ğin mevzuatta yer alan tan─▒mlar s├Âz konusu olacakt─▒r.
+2. Madde ÔÇô Uygulama Alan─▒ ve Veri ─░┼şleme Esaslar─▒
+─░┼şbu Protokol, Taraflar aras─▒nda y├╝r├╝rl├╝─şe girmi┼ş ve/veya girecek t├╝m s├Âzle┼şmelerde 6698
+say─▒l─▒ Ki┼şisel Verilerin Korunmas─▒ KanunuÔÇÖndan ve ki┼şisel verilerin korunmas─▒na ili┼şkin
+y├╝r├╝rl├╝kteki ve/veya y├╝r├╝rl├╝─şe girebilecek sair mevzuattan do─şan ve/veya do─şabilecek
+y├╝k├╝ml├╝l├╝klere ili┼şkin t├╝m hususlarda uygulan─▒r.
+─░┼şbu Protokol kapsam─▒ndaki i┼şleme faaliyeti, Veri Sorumlusu s─▒fat─▒n─▒ haiz Anadolu Anonim T├╝rk
+Sigorta ┼Şirketi ile Veri ─░┼şleyen s─▒fat─▒n─▒ haiz _______________ aras─▒nda s├Âzl├╝ veya yaz─▒l─▒ olarak
+ya da elektronik vas─▒talarla ve sair ┼şekillerde payla┼ş─▒lacak her t├╝rl├╝ Ki┼şisel Veri aktar─▒m─▒ndan
+ibarettir.
+Veri ─░┼şleyen; s├Âz konusu Ki┼şisel Verileri mevzuata uygun olarak, i┼şbu protokoldeki h├╝k├╝m ve
+ko┼şullar d├óhilinde ve KanunÔÇÖun 4. maddesinde belirtilen ilkelere ayk─▒r─▒ olmayacak ┼şekilde
+i┼şleyecektir.
+3. Madde ÔÇô Veri ─░┼şleyenÔÇÖin Y├╝k├╝ml├╝l├╝kleri
+Veri ─░┼şleyen, i┼şbu s├Âzle┼şme uyar─▒nca Anadolu Sigorta ad─▒na ki┼şisel veri i┼şledi─şi hallerde;
+(a) yaln─▒zca Anadolu SigortaÔÇÖn─▒n talimatlar─▒ do─şrultusunda ve i┼şbu Protokole uygun bir
+bi├ğimde ki┼şisel verileri i┼şleyece─şini, herhangi bir sebeple talimatlara riayet edemeyecek
+durumda olmas─▒ halinde Anadolu SigortaÔÇÖy─▒ derhal bilgilendirece─şini,
+(b) ancak 	taraflar 	aras─▒ndaki 	S├Âzle┼şmeÔÇÖnin 	gerektirdi─şi 	kapsamda, 	ki┼şisel 	verilerin
+korunmas─▒na ili┼şkin mevzuat ├ğer├ğevesinde ve yaln─▒zca S├Âzle┼şmede belirtilen ama├ğlarla
+ba─şlant─▒l─▒, s─▒n─▒rl─▒ ve ├Âl├ğ├╝l├╝ ┼şekilde ki┼şisel verileri i┼şleyece─şini,
+(c) i┼şledi─şi ki┼şisel verilere ili┼şkin olarak s├╝resiz s─▒r saklama y├╝k├╝ml├╝l├╝─ş├╝ne tabi olaca─ş─▒n─▒;
+(d) yaln─▒zca T├╝rkiye Cumhuriyeti s─▒n─▒rlar─▒ dahilinde veri i┼şleyece─şini;
+(e) ki┼şisel 	verilerin 	hukuka 	ayk─▒r─▒ 	olarak 	i┼şlenmesini, 	bunlara 	hukuka 	ayk─▒r─▒ 	olarak
+eri┼şilmesini ├Ânlemeye, bunlar─▒n muhafazas─▒n─▒ sa─şlamaya; veri kayb─▒ olu┼şmas─▒n─▒,
+verilerin 	yok 	olmas─▒n─▒, 	zarar 	g├Ârmesini, 	de─şi┼ştirilmesini 	veya 	a├ğ─▒klanmas─▒n─▒
+engellemeye y├Ânelik, s├Âz konusu verinin niteliklerini, i┼şleme faaliyetinin kapsam─▒n─▒ ve
+ihlal halinde olu┼şacak zarar─▒n b├╝y├╝kl├╝─ş├╝n├╝ de g├Âz ├Ân├╝nde bulundurarak, gerekli teknik
+ve idari tedbirleri almay─▒;
+(f) Aktar─▒ma konu Ki┼şisel Verilerin do─şru ve g├╝ncel oldu─şunu,
+(g) Talep halinde s├Âz konusu Ki┼şisel Verinin do─şrulu─şunu teyit eder ilgili form, belge,
+g├Âr├╝nt├╝ ve bilgisayar kay─▒tlar─▒ da dahil ve fakat bununla s─▒n─▒rl─▒ olmaks─▒z─▒n her t├╝rl├╝ bilgi
+ve/veya 	belgeyi 	KanunÔÇÖun 	ama├ğlar─▒na 	uygun 	┼şekilde 	Anadolu 	SigortaÔÇÖya 	ibraz
+edece─şini,
+
+-- 2 of 8 --
+
+(h) ─░┼şledi─şi Ki┼şisel Verilere ili┼şkin olarak s─▒r saklama y├╝k├╝ml├╝l├╝─ş├╝ alt─▒nda bulundu─şunu, bu
+y├╝k├╝ml├╝l├╝─ş├╝n i┼ş ili┼şkisinin son bulmas─▒ halinde de s├╝resiz olarak devam edece─şini
+bildi─şini,
+(i) 	verilerin bir k─▒sm─▒n─▒n veya tamam─▒n─▒n yok edilmesi veya iade edilmesinin mevzuata
+ayk─▒r─▒l─▒k te┼şkil etti─şi hallerde verileri gizli tutaca─ş─▒n─▒ ve veri saklama amac─▒ haricinde
+herhangi bir ama├ğla i┼şlemeyece─şini kabul, beyan ve taahh├╝t eder.
+4. Madde ÔÇô Veri ─░┼şleyenÔÇÖin Veri Sorumlusu Olarak Kabul Edilece─şi Haller
+Veri ─░┼şleyen; i┼şbu S├Âzle┼şme kapsam─▒ndaki y├╝k├╝ml├╝l├╝klerin d─▒┼ş─▒nda yahut bu y├╝k├╝ml├╝l├╝klere
+ayk─▒r─▒ olarak ve Anadolu Sigorta taraf─▒ndan kendisine tan─▒nan yetki d─▒┼ş─▒nda, veri i┼şleme ama├ğ
+ve vas─▒talar─▒n─▒ bizatihi kendi belirleyerek ger├ğekle┼ştirdi─şi faaliyetler bak─▒m─▒ndan veri sorumlusu
+kabul edilecektir. Bu takdirde Anadolu SigortaÔÇÖn─▒n herhangi bir zarara ve/veya kayba u─şramas─▒
+halinde; Veri ─░┼şleyen, veri sorumlusu s─▒fat─▒n─▒ haiz olarak sebep oldu─şu t├╝m zarar, kay─▒p ve/veya
+harcamalar─▒ Anadolu SigortaÔÇÖn─▒n ilk talebi ├╝zerine derhal tazmin edece─şini taahh├╝t eder.
+Hizmetin niteli─şi gere─şi Taraflar─▒n veri sorumlusu olarak kabul edildi─şi veri i┼şleme faaliyetleri
+s├Âz konusu oldu─şu hallerde, her bir Taraf MevzuatÔÇÖ─▒n veri sorumlusu bak─▒m─▒ndan getirdi─şi
+y├╝k├╝ml├╝l├╝klere uygun hareket edecektir.
+5. Madde ÔÇô Veri ─░┼şleyenÔÇÖin Personeli
+Veri ─░┼şleyen, Ki┼şisel Veriye eri┼şimi olan personelinin g├╝venilirli─şini temin bak─▒m─▒ndan gizlilik
+taahh├╝tnameleri ba┼şta olmak ├╝zere gerekli ├Ânlemlerini alacak, Ki┼şisel Verilerin ─░┼şlenmesinde
+yaln─▒zca ki┼şisel verilerin korunmas─▒ mevzuat─▒ ve ki┼şisel verilerin niteli─şi hakk─▒nda bilgilendirilmi┼ş
+personel kullanacakt─▒r.
+Veri ─░┼şleyen, kendisiyle payla┼ş─▒lan veya Anadolu Sigorta ad─▒na elde etti─şi ki┼şisel verilere eri┼şimi
+hizmet kapsam─▒nda gerekli minimum say─▒da personel ile s─▒n─▒rland─▒racak, bu personele d├╝zenli
+fark─▒ndal─▒k e─şitimi sunacak ve bu ki┼şisel verilere izinsiz eri┼şimi engelleyecek politikalar
+y├╝r├╝tecektir.
+6. Madde ÔÇô Ayd─▒nlatma ve A├ğ─▒k R─▒za Y├╝k├╝ml├╝l├╝klerinin Yerine Getirilmesi
+Taraflar aras─▒ndaki hizmetin niteli─şi ├ğer├ğevesinde ki┼şisel verilerin ilgili ki┼şilerden do─şrudan Veri
+─░┼şleyen taraf─▒ndan toplanmas─▒n─▒n s├Âz konusu oldu─şu hallerde Veri ─░┼şleyen; Anadolu SigortaÔÇÖn─▒n
+y├Ânlendirmelerine gere─şi gibi uyaca─ş─▒n─▒ ve bu kapsamda Anadolu Sigorta ad─▒na KanunÔÇÖun 10.
+maddesinde belirtilen ayd─▒nlatma y├╝k├╝ml├╝l├╝─ş├╝ ve gerekmesi halinde a├ğ─▒k r─▒zan─▒n toplanmas─▒
+s├╝re├ğlerini yerine getirecektir. Veri ─░┼şleyen, Anadolu SigortaÔÇÖn─▒n talebi halinde payla┼ş─▒lmak
+├╝zere, iletilen ayd─▒nlatma ve a├ğ─▒k r─▒za metinlerine ili┼şkin kay─▒tlar─▒ ispat edilebilir ┼şekilde
+tutacakt─▒r.
+7. Madde ÔÇô Ki┼şisel Verilerin 3. Ki┼şilerle Payla┼ş─▒m─▒
+Veri ─░┼şleyen kanunen yetkili idari veya adli makamlarca mevzuata uygun bi├ğimde talep
+edilmedik├ğe, i┼şbu protokol├╝n a├ğ─▒k├ğa izin verdi─şi haller haricinde ve hizmet zorunlu k─▒lmad─▒k├ğa
+ki┼şisel verileri 3. ki┼şilere aktarmayacak veya if┼şa etmeyecektir.
+Veri i┼şleyen, s├Âzle┼şme konusu hizmeti ifa ederken, s├Âzle┼şmeye konu ki┼şisel verileri, alt veri
+i┼şleyene aktarmas─▒ gereken hallerde, veri sorumlusunu ispat edilebilir ┼şekilde bilgilendirmeli ve
+yaz─▒l─▒ onay─▒n─▒ almal─▒d─▒r.
+
+-- 3 of 8 --
+
+Veri ─░┼şleyen, alternatif olarak kullanaca─ş─▒ alt veri i┼şleyenleri i┼şbu ProtokolÔÇÖ├╝n ekinde bir liste
+halinde ├Ânceden belirterek Anadolu SigortaÔÇÖn─▒n onay─▒n─▒ alabilir. Veri ─░┼şleyen, bu listeye yeni alt
+i┼şverenlerin eklenmesini veya mevcut listenin de─şi┼ştirilmesi talebini de─şi┼şiklikten en az 15 (on
+be┼ş) g├╝n ├Ânce yaz─▒l─▒ olarak Anadolu SigortaÔÇÖya bildirecek ve onay─▒n─▒ alacakt─▒r.
+─░┼şbu Protokol kapsam─▒nda onay verilen 3. Ki┼şilerle Veri ─░┼şleyen taraf─▒ndan ki┼şisel veri
+payla┼ş─▒lmas─▒ halinde, s├Âz konusu aktar─▒m─▒n g├╝venli bir ┼şekilde sa─şlanmas─▒ndan Veri ─░┼şleyen
+sorumlu olacakt─▒r. Veri ─░┼şleyen, ki┼şisel verilerin payla┼ş─▒m─▒na ili┼şkin olarak ├╝├ğ├╝nc├╝ ki┼şilerle
+yap─▒lan s├Âzle┼şmenin asgari olarak i┼şbu ProtokolÔÇÖdeki y├╝k├╝ml├╝l├╝kleri ve korumay─▒ i├ğerece─şini
+taahh├╝t eder. Anadolu Sigorta, s├Âz konusu ki┼şisel veri aktar─▒m─▒na ili┼şkin detayl─▒ bilgi talep etme
+hakk─▒na sahiptir.
+8. Madde ÔÇô Teknik ve ─░dari Tedbirler
+Veri i┼şleyen, hizmet kapsam─▒nda fiziksel ve elektronik her t├╝rl├╝ ortamda i┼şledi─şi ki┼şisel verilere
+ili┼şkin olarak KanunÔÇÖun 12. maddesinin 1. f─▒kras─▒nda d├╝zenlenen y├╝k├╝ml├╝l├╝kler ├ğer├ğevesinde
+ki┼şisel verilerin hukuka ayk─▒r─▒ olarak i┼şlenmesinin ├Ânlenmesi, ki┼şisel verilere hukuka ayk─▒r─▒
+olarak eri┼şimin ├Ânlenmesi ve ki┼şisel verilerin muhafazas─▒n─▒ sa─şlamak amac─▒yla uygun g├╝venlik
+d├╝zeyini sa─şlamakla y├╝k├╝ml├╝d├╝r.
+Veri i┼şleyen hizmet kapsam─▒nda ├Âzel nitelikli verilerin i┼şlenmesi halinde; ├Âzel nitelikli ki┼şisel
+verilerin i┼şlenmesinde al─▒nmas─▒ gereken ├Ânlemler ile ilgili Ki┼şisel Verileri Koruma Kurulunun
+31/01/2018 tarihli ve 2018/10 say─▒l─▒ karar─▒nda belirlenen asgari ├Ânlemleri almakla y├╝k├╝ml├╝
+oldu─şunu kabul eder.
+Veri ─░┼şleyen, ki┼şisel verilerin i┼şlendi─şi, muhafaza edildi─şi ve/veya eri┼şildi─şi elektronik ortam
+ba┼şta olmak ├╝zere t├╝m ortamlar─▒n uygun g├╝venlik d├╝zeyini sa─şlayaca─ş─▒n─▒ taahh├╝t eder. Ki┼şisel
+verilerin kendisi taraf─▒ndan tasarlanan herhangi bir yaz─▒l─▒m/programa aktar─▒ld─▒─ş─▒ hallerde s├Âz
+konusu aktar─▒m─▒n ve ki┼şisel verilerin sakland─▒─ş─▒ ortamlar─▒n g├╝venli─şi i├ğin gerekli teknik ve idari
+b├╝t├╝n tedbirleri ald─▒─ş─▒n─▒ kabul eder. Bu konularla ilgili Veri ─░┼şleyenÔÇÖin herhangi bir i┼şlemi ve/veya
+ihmali nedeniyle Anadolu SigortaÔÇÖn─▒n herhangi bir zarara ve/veya kayba u─şramas─▒ halinde; Veri
+─░┼şleyen, Anadolu SigortaÔÇÖn─▒n s├Âz konusu i┼şlemlerden ve/veya ihmallerinden do─şan t├╝m zarar,
+kay─▒p ve/veya harcamalar─▒n─▒ Anadolu SigortaÔÇÖn─▒n ilk talebi ├╝zerine derhal tazmin edece─şini
+taahh├╝t eder.
+Veri ─░┼şleyen, Anadolu SigortaÔÇÖn─▒n onay─▒ do─şrultusunda eri┼şti─şi ki┼şisel veri bulunduran elektronik
+sistemlerin 	kullan─▒m─▒ 	kapsam─▒nda 	kendisine 	┼şifre 	tan─▒mlanmas─▒ 	halinde 	┼şifre 	g├╝venli─şi
+y├╝k├╝ml├╝l├╝klerine 	uygun 	hareket 	edecektir. 	Tan─▒mlanacak 	┼şifrelerin 	herhangi 	bir 	yere
+yaz─▒lmamas─▒ ve hi├ğbir ko┼şulda yetkili olmayan bir ki┼şiyle payla┼ş─▒lmamas─▒ i├ğin gerekli t├╝m
+tedbirleri alacak ve personelini bilgilendirecektir. ┼Şifrenin kullan─▒c─▒ d─▒┼ş─▒ndaki ki┼şiler taraf─▒ndan
+├Â─şrenilmesi yahut ┼şifreye ili┼şkin ┼ş├╝pheli herhangi bir durumun mevcut olmas─▒ halinde derhal
+Anadolu SigortaÔÇÖy─▒ bilgilendirecektir.
+9. Madde ÔÇô Bildirim Y├╝k├╝ml├╝l├╝─ş├╝
+Veri ─░┼şleyen; veri i┼şleme faaliyeti ├ğer├ğevesinde herhangi bir G├╝venlik ─░hlali tespit etti─şinde veya
+veri g├╝venli─şine ili┼şkin ┼ş├╝phelendi─şi bir durumun mevcut olmas─▒ halinde yahut ─░lgili Ki┼şi
+taraf─▒ndan 	ki┼şisel 	verilerin 	korunmas─▒ 	mevzuat─▒ 	├ğer├ğevesinde 	Anadolu 	SigortaÔÇÖn─▒n
+y├╝k├╝ml├╝l├╝klerine ili┼şkin ┼şikayet veya herhangi bir talepte bulunulmas─▒ halinde, en ge├ğ bir (1) i┼ş
+g├╝n├╝ i├ğerisinde Anadolu SigortaÔÇÖy─▒ haberdar edecektir. Veri ─░┼şleyen, Anadolu SigortaÔÇÖya
+
+-- 4 of 8 --
+
+kendisine iletilen her t├╝rl├╝ ihlal, ┼şikayet ve talep hakk─▒nda gerekli deste─şi verecek ve Anadolu
+Sigorta ile i┼şbirli─şi yapacakt─▒r. Burada say─▒lanlarla s─▒n─▒rl─▒ olmamak ├╝zere Veri ─░┼şleyen;
+(a) Anadolu SigortaÔÇÖya ihlal, ┼şikayet veya talebe ili┼şkin t├╝m detaylar─▒ iletece─şini ve bu
+konuya ili┼şkin gerekli her t├╝rl├╝ bilgi ve belgeyi sunaca─ş─▒n─▒,
+(b) Ki┼şisel verilerin yasa gere─şi a├ğ─▒klanmas─▒ gerekli oldu─şu hallerde derhal Anadolu
+Sigorta'ya ihbarda bulunmay─▒,
+(c) Anadolu 	SigortaÔÇÖn─▒n 	talimatlar─▒ 	do─şrultusunda 	veriye 	eri┼şim 	taleplerini 	yerine
+getirece─şini kabul, beyan ve taahh├╝t eder.
+10. Veri ─░┼şleyenÔÇÖin Denetimi
+Veri ─░┼şleyen, i┼şbu Protokol kapsam─▒ndaki ki┼şisel verilerin i┼şlenmesine ili┼şkin olarak gerekli
+oldu─şu hallerde Anadolu SigortaÔÇÖn─▒n denetimine tabi oldu─şunu kabul ve beyan eder. Anadolu
+Sigorta, denetim faaliyetlerinin Hizmet kapsam─▒nda belirtilen i┼şleme faaliyetleriyle s─▒n─▒rl─▒ olarak,
+Anadolu Sigorta b├╝nyesinde yer alan ya da ba─ş─▒ms─▒z ├╝yelerden olu┼şan ve veri sorumlusu
+taraf─▒ndan se├ğilen, gerekli mesleki niteliklere sahip ve gizlilik y├╝k├╝ml├╝l├╝─ş├╝ne tabi olan ki┼şiler
+taraf─▒ndan ger├ğekle┼ştirilece─şini taahh├╝t eder.
+Bu madde kapsam─▒nda Anadolu Sigorta taraf─▒ndan ger├ğekle┼ştirilecek denetleme s─▒ras─▒nda Veri
+─░┼şleyen sorular─▒n cevaplanmas─▒ i├ğin yeterli uzmanl─▒k ve yetki d├╝zeyine sahip bir veya birden
+fazla personeli haz─▒r bulunduracakt─▒r.
+Veri i┼şleyen i┼şbu protokol kapsam─▒ndaki veri i┼şlenmesine ili┼şkin t├╝m kay─▒t ve dok├╝manlar─▒
+Anadolu 	SigortaÔÇÖn─▒n 	talebi 	halinde 	veri 	i┼şlemenin 	mevzuata 	ve 	protokole 	uygunlu─şu
+bak─▒m─▒ndan incelenmesi i├ğin Anadolu SigortaÔÇÖya g├Ânderecektir.
+11. Madde ÔÇô R├╝cu ┼Şartlar─▒
+Veri ─░┼şleyen, y├╝r├╝tt├╝─ş├╝ veri i┼şleme faaliyetleri kapsam─▒nda Anadolu SigortaÔÇÖn─▒n 3.ki┼şilere kar┼ş─▒
+y├╝k├╝ml├╝l├╝klerini g├Âz ├Ân├╝nde bulunduracakt─▒r. Veri ─░┼şleyenÔÇÖin i┼şbu protokole ayk─▒r─▒ davranmas─▒
+sebebiyle Anadolu SigortaÔÇÖn─▒n dava sonucu veya ilama gerek kalmaks─▒z─▒n 3.ki┼şilere herhangi
+bir tazminat veya ilgili mercilere idari para cezas─▒ ├Âdemekle y├╝k├╝ml├╝ kalmas─▒ halinde; Anadolu
+Sigorta Veri ─░┼şleyenÔÇÖe r├╝cu edebilecektir. Bu durumda Veri ─░┼şleyen, Anadolu SigortaÔÇÖn─▒n makul
+vekalet ├╝cretleri ve yarg─▒lama masraflar─▒ da dahil t├╝m giderleri ilk talebinde, derhal, nakden ve
+defaten Anadolu SigortaÔÇÖya ├Âdeyecektir.
+12. Madde ÔÇô Verilerin Siilinmesi veya Yok Edilmesi
+Veri 	─░┼şleyen, 	Anadolu 	SigortaÔÇÖn─▒n 	talebi 	ba┼şta 	olmak 	├╝zere 	aralar─▒ndaki 	s├Âzle┼şmenin
+feshedilmesi 	veya y├╝r├╝rl├╝k s├╝resinin sona ermesi halinde, 	Kanun ve ilgili di─şer kanun
+h├╝k├╝mlerine uygun olarak i┼şlenmi┼ş olmas─▒na ra─şmen i┼şlenmesini gerektiren sebeplerin ortadan
+kalkmas─▒ halinde, i┼şbu Protokol kapsam─▒nda aktar─▒ma konu ki┼şisel verileri, yedekleri ile birlikte
+Anadolu SigortaÔÇÖya derhal geri g├Ânderece─şini ya da ki┼şisel verileri tamamen silece─şini veya
+yok edece─şini, mevzuatta Veri ─░┼şleyenÔÇÖin bu y├╝k├╝ml├╝l├╝─ş├╝ yerine getirmesini engelleyen
+h├╝k├╝mler varsa, aktar─▒ma konu ki┼şisel verilerin gizlili─şini g├╝vence alt─▒na almak i├ğin gerekli
+Teknik ve ─░dari tedbirleri alaca─ş─▒n─▒ ve veri i┼şleme faaliyetini durduraca─ş─▒n─▒ kabul eder.
+Veri ─░┼şleyen, Taraflar aras─▒ndaki s├Âzle┼şmenin y├╝r├╝rl├╝kte oldu─şu s├╝re boyunca da i┼şlenmesini
+gerektiren sebeplerin ortadan kalkt─▒─ş─▒ ki┼şisel verileri yedekleri ile birlikte Anadolu SigortaÔÇÖya
+geri g├Ânderecek ya da ki┼şisel verileri tamamen silecek veya yok edecektir.
+
+-- 5 of 8 --
+
+13. Madde ÔÇô S├Âzle┼şmenin S├╝resi ve Fesih
+─░┼şbu Protokol, Taraflarca imzaland─▒─ş─▒ tarihte y├╝r├╝rl├╝─şe girer. HizmetÔÇÖin sunulmas─▒na ili┼şkin
+taraflar aras─▒nda yap─▒lm─▒┼ş ve/veya yap─▒lacak s├Âzle┼şmelerden herhangi birinin feshi halinde i┼şbu
+s├Âzle┼şme y├╝r├╝rl├╝kte kalmaya devam eder.
+─░┼şbu ProtokolÔÇÖ├╝n herhangi bir h├╝km├╝ne ayk─▒r─▒l─▒k halinde Anadolu SigortaÔÇÖn─▒n ihtar─▒na ra─şmen
+Veri ─░┼şleyenÔÇÖe verilen 30 g├╝nl├╝k s├╝re i├ğerisinde ayk─▒r─▒l─▒k giderilmezse Anadolu Sigorta HizmetÔÇÖin
+sunulmas─▒na ili┼şkin taraflar aras─▒nda yap─▒lm─▒┼ş ve/veya yap─▒lacak t├╝m s├Âzle┼şmeleri feshedebilir.
+14. Madde ÔÇô ├ûncelikle Uygulanma
+─░┼şbu Protokol├╝n uygulama alan─▒na giren hallerde, Protokol h├╝k├╝mleri ile Taraflar aras─▒nda
+yap─▒lm─▒┼ş ve/veya yap─▒lacak s├Âzle┼şme h├╝k├╝mleri aras─▒nda ihtilaf ├ğ─▒kt─▒─ş─▒nda i┼şbu Protokol
+h├╝k├╝mleri ├Âncelikle uygulan─▒r. Anadolu Sigorta bu h├╝km├╝ de─şi┼ştirmeye y├Ânelik t├╝m icaplar─▒
+pe┼şinen reddeder.
+TARAFLAR
+KURUM T─░CAR─░ ADI 	ANADOLU ANON─░M T├£RK S─░GORTA ┼Ş─░RKET─░
+KURUM TABELA ADI
+
+-- 6 of 8 --
+
+EK 1:
+Protokol Kapsam─▒nda Ki┼şisel Verisi Aktar─▒lan Veri Konusu Ki┼şi Gruplar─▒
+ÔİÉ 	├çal─▒┼şan/Stajyer 	ÔİÆ 	M├╝┼şteri
+ÔİÉ 	├çal─▒┼şan Aday─▒ 	ÔİÆ 	Potansiyel M├╝┼şteri
+ÔİÆ 	Temsilciler 	ÔİÉ 	Veli/Vasi
+ÔİÆ 	Tedarik├ği/─░┼ş Orta─ş─▒ 	ÔİÉ 	Ziyaret├ğiler
+ÔİÉ 	Di─şer 	(Veri 	Konusu 	Ki┼şi 	Gruplar─▒n─▒
+Belirtiniz)
+ÔİÉ
+Protokol Kapsam─▒nda Aktar─▒lan Ki┼şisel Veri Kategorileri
+ÔİÆ 	Kimlik 	ÔİÉ 	Irk ve Etnik K├Âken
+ÔİÉ 	─░leti┼şim 	ÔİÉ 	Siyasi D├╝┼ş├╝nce Bilgileri
+ÔİÆ 	Lokasyon 	ÔİÉ 	Felsefi ─░nan├ğ, Din, Mezhep ve Di─şer
+─░nan├ğlara ─░li┼şkin Bilgiler
+ÔİÆ 	├ûzl├╝k 	ÔİÉ 	K─▒l─▒k ve K─▒yafet Bilgileri
+ÔİÉ 	Hukuki ─░┼şlem 	ÔİÆ 	Dernek ├£yeli─şi
+ÔİÉ 	M├╝┼şteri ─░┼şlem 	ÔİÉ 	Vak─▒f ├£yeli─şi
+ÔİÉ 	Fiziksel Mekan G├╝venli─şi 	ÔİÉ 	Sendika ├£yeli─şi
+ÔİÆ 	─░┼şlem G├╝venli─şi 	ÔİÉ 	Sa─şl─▒k Bilgileri
+ÔİÉ 	Risk Y├Ânetimi 	ÔİÉ 	Cinsel Hayat
+ÔİÆ 	Finans 	ÔİÉ 	Ceza 	Mahkumiyeti 	ve 	G├╝venlik
+Tedbirleri
+ÔİÉ 	Mesleki Deneyim 	ÔİÉ 	Biyometrik Veri
+ÔİÉ 	Pazarlama 	ÔİÉ 	Genetik Veri
+ÔİÉ 	G├Ârsel ve ─░┼şitsel Kay─▒tlar 	ÔİÉ 	Di─şer Bilgiler (Hangi Veriler Oldu─şunu
+Belirtiniz)
+Veri Sorumlusu Ad─▒na ─░┼şlenen Ki┼şisel Verilerin Aktar─▒m Ama├ğlar─▒
+
+-- 7 of 8 --
+
+L├╝tfen aktar─▒m ama├ğlar─▒n─▒ belirtinizÔÇĞ.
+ÔÇĞÔÇĞÔÇĞÔÇĞ
+ÔÇĞÔÇĞÔÇĞ..
+Kullan─▒lan Alt Veri ─░┼şleyenler
+Alt Veri ─░┼şleyenin Tam Ad─▒ 	Adresi 	(Sundu─şu
+hizmetin 	farkl─▒ 	bir
+lokasyonda 	olmas─▒
+halinde belirtiniz)
+Veri 	─░┼şleyenÔÇÖe 	Sundu─şu
+Hizmet
+
+-- 8 of 8 --
+

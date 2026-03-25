@@ -1,0 +1,450 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary: #FF8000;
+  /* Brand Orange */
+  --secondary: #00A6FB;
+  --as-blue: #2158d9;
+  /* Anadolu Sigorta Blue */
+  --accent: #FFD166;
+  --background: #101828;
+  --text: #FFFFFF;
+  --glass: rgba(15, 23, 42, 0.9);
+  --glass-border: #3A7BD5;
+  --glass-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  --font-main: 'Nunito Sans', sans-serif;
+}
+
+html {
+  background-color: var(--as-blue);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.checkerboard {
+  background-image:
+    radial-gradient(rgba(0, 0, 0, 0.2) 1px, transparent 1px),
+    conic-gradient(#23318C 90deg,
+      #1D2873 90deg 180deg,
+      #23318C 180deg 270deg,
+      #1D2873 270deg);
+  background-size: 9px 9px, 45px 45px;
+  background-position: 0 0, 0 0;
+  background-origin: content-box;
+  background-repeat: repeat;
+}
+
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--as-blue);
+  background-attachment: fixed;
+  color: var(--text);
+  overflow: hidden;
+  height: 100dvh;
+  width: 100vw;
+  margin: 0;
+}
+
+body.checkerboard-active {
+  background-image:
+    radial-gradient(rgba(0, 0, 0, 0.2) 1px, transparent 1px),
+    conic-gradient(#23318C 90deg,
+      #1D2873 90deg 180deg,
+      #23318C 180deg 270deg,
+      #1D2873 270deg);
+  background-size: 9px 9px, 45px 45px;
+  background-position: 0 0, 0 0;
+}
+
+#root {
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  padding: 1.5rem 1.5rem 0rem 1.5rem;
+  z-index: 10;
+  box-sizing: border-box;
+}
+
+/* Digital Panel Class (formerly glass-panel) */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.95);
+  border: 4px solid var(--glass-border);
+  border-radius: 4px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+  padding: 2rem;
+  width: 100%;
+  max-width: 500px;
+  max-height: 100%;
+  overflow-y: auto;
+  text-align: center;
+  position: relative;
+}
+
+.btn-primary {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.8rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+  border: 2px solid transparent;
+  /* Çerçeveli butonla yüksekliği eşitlemek için */
+  border-radius: 100px;
+  background: #FF8000;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: none;
+  /* Flat tasarım */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-outline {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.8rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: 2px solid white;
+  border-radius: 100px;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.btn-outline:active {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(0.98);
+}
+
+.btn-text-link {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  margin-top: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  width: 100%;
+  transition: color 0.2s ease;
+}
+
+.btn-text-link:hover {
+  color: white;
+}
+
+.btn-speed-filled {
+  width: 100%;
+  max-width: 400px;
+  padding: 1rem;
+  border-radius: 50px;
+  background: #FF8000;
+  color: white;
+  font-weight: 900;
+  font-size: 1.4rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 10px 20px rgba(255, 128, 0, 0.3);
+}
+
+.btn-speed-filled:active {
+  transform: scale(0.98);
+}
+
+.btn-speed-filled.active {
+  background: #E67300;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.btn-speed-filled:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  filter: grayscale(0.5);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: white;
+  border: 2px solid var(--glass-border);
+  padding: 0.8rem 1.6rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+
+.btn-secondary:hover {
+  background: rgba(58, 123, 213, 0.1);
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+  color: white;
+  letter-spacing: 0.5px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 8px 12px;
+  /* Dikey 8px, Yatay 12px olarak ayarlandı */
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  font-family: var(--font-main);
+  font-size: 1.1rem;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.form-input.error {
+  border-color: #FF6B6B;
+  background: rgba(255, 107, 107, 0.1);
+}
+
+.form-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.form-input:focus {
+  border-color: white;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.form-error {
+  color: #FF6B6B;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 4px;
+  display: block;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.checkbox-group input {
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+  cursor: pointer;
+}
+
+.checkbox-group label {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.checkbox-error {
+  outline: 2px solid #FF6B6B;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* KVKK / Digital Document Text */
+.kvkk-container {
+  max-height: 45vh;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  margin-bottom: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  text-align: left;
+  border-left: 4px solid var(--as-blue-light);
+  white-space: pre-wrap;
+  scrollbar-width: thin;
+  scrollbar-color: var(--as-blue-light) rgba(255, 255, 255, 0.05);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Mobile Scaling & Viewport Fixes */
+@media (max-height: 800px) and (max-width: 600px) {
+  .game-container {
+    transform: scale(0.92);
+    transform-origin: center center;
+  }
+}
+
+@media (max-height: 700px) and (max-width: 600px) {
+  .game-container {
+    transform: scale(0.82);
+  }
+}
+
+.app-container {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Prevent Selection & Context Menus */
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -ms-user-select: none;
+  touch-action: none;
+}
+
+.brand-layout-full {
+  background: var(--as-blue);
+  width: 100vw;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 3rem 1.5rem 0rem 1.5rem;
+  overflow-y: auto;
+  position: relative;
+}
+
+@media (display-mode: browser) {
+  .brand-layout-full {
+    padding-top: 0 !important; /* Tam sıfırlanmış, tavan hizasında logo */
+  }
+
+  .brand-logo {
+    margin-bottom: 0.5rem !important;
+  }
+}
+
+.brand-screen {
+  background: transparent;
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  flex: 1;
+  /* Stretch to fill brand-layout-full */
+}
+
+@media (max-width: 600px) {
+  .brand-layout-full {
+    padding: 2.8rem 1.2rem 0rem 1.2rem;
+  }
+}
+
+/* Oyun ekranına özel dikey simetri sağlayan sınıf */
+.game-screen-layout {
+  padding-bottom: 3rem !important;
+  /* Standalone (Ana Ekran) modunda varsayılan yukarıdan hizalamayı koruyoruz */
+}
+
+@media (display-mode: browser) {
+  .game-screen-layout {
+    justify-content: center !important; /* Sadece tarayıcıda dikeyde merkeze alıyoruz */
+    padding-bottom: 1.5rem !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .game-screen-layout {
+    padding-bottom: 2.8rem !important;
+  }
+ 
+  @media (display-mode: browser) {
+    .game-screen-layout {
+      padding-bottom: 1.2rem !important;
+    }
+  }
+}
+
+
+.brand-logo {
+  width: 180px;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.main-graphic {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  margin: auto;
+  z-index: 2;
+}
+
+/* Global Animation Utility - Perfect Spinning */
+.animate-spin {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
