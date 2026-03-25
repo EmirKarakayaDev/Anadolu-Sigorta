@@ -397,28 +397,6 @@ export function GameScreen({ onGameOver }) {
                         position: 'relative',
                         overflow: 'hidden'
                     }}>
-                        <button
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                const newMute = audioManager.toggleMute();
-                                setIsMuted(newMute);
-                            }}
-                            style={{
-                                position: 'absolute',
-                                top: '5px',
-                                right: '5px',
-                                background: 'transparent',
-                                border: 'none',
-                                color: 'white',
-                                cursor: 'pointer',
-                                padding: '4px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                            }}
-                        >
-                            {isMuted ? <VolumeX size={14} /> : <Volume2 size={14} />}
-                        </button>
                         <span style={{ fontSize: '0.8rem', color: 'white', fontWeight: 900, letterSpacing: '1px' }}>Sıradaki</span>
                         <div style={{ padding: '0px', height: '40px', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             {nextPieces[0] && (
