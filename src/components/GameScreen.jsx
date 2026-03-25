@@ -428,7 +428,7 @@ export function GameScreen({ onGameOver }) {
                                 }}
                             >
                                 <div style={{
-                                    background: feedback.text.includes('BİTTİ') ? 'var(--as-blue)' : (feedback.text === 'TETRIS' ? 'linear-gradient(to bottom, #FF8C42, #FF5E5B)' : 'var(--secondary)'),
+                                    background: feedback.text.includes('BİTTİ') ? 'var(--primary)' : (feedback.text === 'TETRIS' ? 'linear-gradient(to bottom, #FF8C42, #FF5E5B)' : 'var(--secondary)'),
                                     color: 'white',
                                     padding: '1.2rem 2.5rem',
                                     borderRadius: '8px',
@@ -437,7 +437,7 @@ export function GameScreen({ onGameOver }) {
                                     textShadow: '0 0 20px rgba(0,0,0,0.5)',
                                     boxShadow: '0 0 50px rgba(0, 0, 0, 0.5)',
                                     letterSpacing: '4px',
-                                    transform: feedback.text.includes('BİTTİ') ? 'none' : 'skewX(-10deg)',
+                                    transform: 'skewX(-10deg)',
                                     border: '4px solid white',
                                     whiteSpace: 'pre-line',
                                     textAlign: 'center',
