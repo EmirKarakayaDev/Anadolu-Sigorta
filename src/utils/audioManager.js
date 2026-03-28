@@ -1,6 +1,6 @@
 import { Howl } from 'howler';
 
-// Ses Efektleri (SFX)
+// Ses Efektleri
 const sfx = {
   move: new Howl({
     src: ['/audio/move.mp3'],
@@ -24,7 +24,7 @@ const sfx = {
   })
 };
 
-// Arka Plan Müzikleri (BGM)
+// Arka Plan Müzikleri
 const bgms = {
   1: new Howl({ src: ['/audio/game_music.ogg', '/audio/game_music.mp3'], loop: true, volume: 0.15 }),   // Menü
   2: new Howl({ src: ['/audio/Normal.ogg', '/audio/Normal.mp3'], loop: true, volume: 0.10 }),       // Normal Oyun
@@ -41,7 +41,7 @@ let wasPlayingBeforeBackground = {
   countdown: false
 };
 
-// Global visibility listener
+// Uygulama arka plana geçtiğinde sesi duraklatma yönetimi
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) {
     isBackgrounded = true;
@@ -136,7 +136,6 @@ if (localStorage.getItem('game_muted') === 'true') {
   Object.values(sfx).forEach(s => s.mute(true));
 }
 
-// Global buton tıklama dinleyicisi
 document.addEventListener('click', (e) => {
   if (e.target.closest('button')) {
     audioManager.play('click');

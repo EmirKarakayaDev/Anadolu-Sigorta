@@ -19,9 +19,8 @@ const SCREENS = {
   LEADERBOARD: 'leaderboard'
 };
 
-// Kiosk tespiti:
-// 1. Öncelik: URL'de ?kiosk parametresi varsa (ör. https://site.com/?kiosk)
-// 2. Fallback: Ekran yüksekliği 1800px ve üzeriyse (fiziksel kiosk ekranı)
+// Kiosk Modu Kontrolü
+// Öncelik URL parametresi (?kiosk), alternatif olarak yüksek çözünürlüklü dikey ekran tespiti.
 const urlParams = new URLSearchParams(window.location.search);
 const isKiosk = urlParams.has('kiosk') || window.screen.height >= 1800;
 const isTest = import.meta.env.DEV || urlParams.has('test');
@@ -35,7 +34,7 @@ function App() {
   const [transitionTarget, setTransitionTarget] = useState(null);
   const isSavingRef = React.useRef(false);
 
-  // Kiosk modunda body'e .kiosk class'ı ekle
+  // Sayfa yüklendiğinde kiosk sınıflarını ekle
   React.useEffect(() => {
     if (isKiosk) {
       document.body.classList.add('kiosk');
@@ -44,7 +43,7 @@ function App() {
   }, []);
 
   const handleStart = () => {
-    // Tarayıcı güvenlik politikası gereği ilk etkileşimde (user gesture) tam ekranı tetikliyoruz.
+    // Tarayıcı kısıtlamaları nedeniyle ilk etkileşimde tam ekranı tetikle
     try {
       const docElm = document.documentElement;
       if (docElm.requestFullscreen) {
@@ -129,6 +128,8 @@ function App() {
             isKiosk={isKiosk}
             onMidpoint={() => {
               if (transitionTarget) {
+                // Klavye ve odağı kapat
+                document.activeElement?.blur();
                 setCurrentScreen(transitionTarget);
               }
             }}

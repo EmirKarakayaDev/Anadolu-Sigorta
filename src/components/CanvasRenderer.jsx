@@ -3,7 +3,7 @@ import { BLOCK_SIZE, COLORS, PIECE_ASSETS, PIECE_DIMENSIONS } from '../game/cons
 
 export function CanvasRenderer({ grid, activePiece, ghostPiece, trail, isSettling, clearingLines = [], clearingStage = 0, images = {}, isKiosk = false }) {
     const canvasRef = useRef(null);
-    const KIOSK_BLOCK_SIZE = 58; // Devasa dikey doluluk için optimize edildi (1080x1920 Kiosk)
+    const KIOSK_BLOCK_SIZE = 58; // Kiosk ekranı için optimize edilmiş blok boyutu
     const blockSize = isKiosk ? KIOSK_BLOCK_SIZE : BLOCK_SIZE;
 
     const drawBlock = (ctx, x, y, type, pX = 0, pY = 0, pShape = null, highlight = false, isGhost = false, isClearing = false, blockX = 0, rotation = 0) => {
@@ -40,7 +40,7 @@ export function CanvasRenderer({ grid, activePiece, ghostPiece, trail, isSettlin
         if (img && !isGhost) {
             const dims = PIECE_DIMENSIONS[type] || { w: 1, h: 1 };
             
-            // Use naturalWidth for consistent SVG coordinate mapping
+            // Görsel koordinatlarını SVG'ye göre oranla
             const sW = img.naturalWidth || img.width;
             const sH = img.naturalHeight || img.height;
             
@@ -50,13 +50,13 @@ export function CanvasRenderer({ grid, activePiece, ghostPiece, trail, isSettlin
             ctx.save();
             ctx.imageSmoothingEnabled = true;
             
-            // Effect shadows
+            // Özel efekt gölgeleri
             if (highlight === 'hard') {
                 ctx.shadowBlur = 15;
                 ctx.shadowColor = 'white';
             }
 
-            // Move to center of block to rotate the texture
+            // Bloğu merkezinden döndürerek çiz
             ctx.translate(px + size / 2, py + size / 2);
             ctx.rotate((rotation * Math.PI) / 2);
             
@@ -67,7 +67,7 @@ export function CanvasRenderer({ grid, activePiece, ghostPiece, trail, isSettlin
                 -size / 2, -size / 2, size, size
             );
             
-            // Effect overlays
+            // Efekt kaplamaları
             if (highlight === 'hard') {
                 // Parlaklık ve gölge (Hard Drop için)
                 ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
@@ -105,7 +105,7 @@ export function CanvasRenderer({ grid, activePiece, ghostPiece, trail, isSettlin
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
 
-        // High-DPI (Retina) scaling
+        // Yüksek çözünürlüklü ekranlar için scaling (DPR)
         const dpr = window.devicePixelRatio || 1;
         const logicalWidth = grid[0].length * blockSize;
         const logicalHeight = grid.length * blockSize;
@@ -119,26 +119,6 @@ export function CanvasRenderer({ grid, activePiece, ghostPiece, trail, isSettlin
 
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         ctx.clearRect(0, 0, logicalWidth, logicalHeight);
-
-        // Draw Base Grid Lines (Subtle)
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
-        ctx.lineWidth = 1;
-        
-        // Vertical lines
-        for (let x = 0; x <= grid[0].length; x++) {
-            ctx.beginPath();
-            ctx.moveTo(x * blockSize, 0);
-            ctx.lineTo(x * blockSize, canvas.height);
-            ctx.stroke();
-        }
-        
-        // Horizontal lines
-        for (let y = 0; y <= grid.length; y++) {
-            ctx.beginPath();
-            ctx.moveTo(0, y * blockSize);
-            ctx.lineTo(canvas.width, y * blockSize);
-            ctx.stroke();
-        }
 
         // Draw Blocks
         grid.forEach((row, y) => {

@@ -39,11 +39,10 @@ export function useTetris({ isPaused = false } = {}) {
         setNextPieces([getRandomPiece(), getRandomPiece(), getRandomPiece()]);
         setScore(0);
         setGameOver(false);
-        setIsSettling(false); // Reset isSettling
-        setFeedback(null); // Reset feedback
+        setFeedback(null); 
     }, [getRandomPiece]);
 
-    const collision = useCallback((targetPiece, targetGrid) => { // Wrapped in useCallback
+    const collision = useCallback((targetPiece, targetGrid) => { 
         for (let y = 0; y < targetPiece.shape.length; y++) {
             for (let x = 0; x < targetPiece.shape[y].length; x++) {
                 if (targetPiece.shape[y][x] !== 0) {
@@ -61,7 +60,7 @@ export function useTetris({ isPaused = false } = {}) {
             }
         }
         return false;
-    }, []); // Empty dependency array as it only depends on constants
+    }, []); 
 
     const rotate = () => {
         setActivePiece(prev => {
@@ -73,7 +72,7 @@ export function useTetris({ isPaused = false } = {}) {
 
             const rotatedPiece = { ...prev, shape: newShape, rotation: (prev.rotation + 1) % 4 };
 
-            // Wall Kick Logic: If rotation fails, try shifting left or right
+            // Wall Kick: Dönüş başarısız olursa sağa/sola kaydırarak yer açmaya çalış
             const xOffsets = [0, -1, 1, -2, 2];
 
             for (const offset of xOffsets) {
@@ -124,11 +123,10 @@ export function useTetris({ isPaused = false } = {}) {
         landLockRef.current = true;
         setIsSettling(isHardDrop ? 'hard' : true);
 
-        // Standard Tetris "Settle" Delay
+        // Bloğun yerine oturması için kısa bir bekleme süresi (Settle Delay)
         setTimeout(() => {
             if (gameOverRef.current) {
-                setIsSettling(false); // Ensure settling state is reset even if game over
-                return;
+                setIsSettling(false); 
             }
 
             const newGrid = gridRef.current.map(row => [...row]);
@@ -150,7 +148,7 @@ export function useTetris({ isPaused = false } = {}) {
                 });
             });
 
-            // Clear lines detection
+            // Patlayan satırları tespit et
             const linesToClear = [];
             newGrid.forEach((row, y) => {
                 if (row.every(cell => cell !== 0)) {
@@ -161,7 +159,6 @@ export function useTetris({ isPaused = false } = {}) {
             const spawnNext = (finalGrid) => {
                 const currentNextPieces = nextPiecesRef.current;
                 if (!currentNextPieces || currentNextPieces.length === 0) {
-                    // Fallback if ref is empty
                     const piece = getRandomPiece();
                     if (collision(piece, finalGrid)) {
                         triggerGameOver();
@@ -189,7 +186,7 @@ export function useTetris({ isPaused = false } = {}) {
                 setClearingLines(linesToClear);
                 audioManager.play('clear');
 
-                // Show feedback IMMEDIATELY when animation starts
+                // Satır silme animasyonu başladığında bildirimi göster
                 const linesCleared = linesToClear.length;
                 const levels = { 1: 'GÜZEL', 2: 'HARİKA', 3: 'MUHTEŞEM', 4: 'TETRIS' };
                 setFeedback({ text: levels[linesCleared], id: Date.now() });
@@ -208,7 +205,7 @@ export function useTetris({ isPaused = false } = {}) {
                     if (progress < 1) {
                         requestAnimationFrame(animateClear);
                     } else {
-                        // Animation complete
+                        // Animasyon bitti, puanları hesaplayıp yeni grid'i güncelle
                         const linesCleared = linesToClear.length;
                         const filteredGrid = newGrid.filter((_, index) => !linesToClear.includes(index));
                         while (filteredGrid.length < ROWS) {
@@ -260,7 +257,7 @@ export function useTetris({ isPaused = false } = {}) {
     }, [landPiece, isSettling, collision, isPaused]); // Dependencies for drop
 
     const hardDrop = () => { // Refactored hardDrop
-        if (gameOver || !activePiece || isSettling || landLockRef.current || isPaused) return; // Added isPaused check
+        if (gameOver || !activePiece || isSettling || landLockRef.current || isPaused) return; 
 
         let currentPos = { ...activePiece.pos };
         const startY = currentPos.y;
@@ -294,7 +291,7 @@ export function useTetris({ isPaused = false } = {}) {
                 id: Date.now() // to force re-render if multiple fast drops
             });
 
-            // Animate trail shrinking downwards (falling into the block) smoothly
+            // Işık hızında düşüş efektini (trail) canlandır
             const duration = 200; // 200ms animation
             let startTime = null;
 
@@ -322,16 +319,16 @@ export function useTetris({ isPaused = false } = {}) {
             requestAnimationFrame(animateTrail);
         }
 
-        // Update active piece position and then land it using the existing landPiece logic
+        // Yeni pozisyonu set edip bloğu sabitle
         setActivePiece(prev => ({ ...prev, pos: currentPos }));
-        landPiece(true); // Call the top-level landPiece with hardDrop flag
+        landPiece(true); 
     };
 
     useEffect(() => {
         if (!activePiece && !gameOver && !isSettling && !isPaused) { // Added isPaused check
             initGame();
         }
-    }, [activePiece, gameOver, initGame, isSettling, isPaused]); // Added isSettling to dependencies
+    }, [activePiece, gameOver, initGame, isSettling, isPaused]); 
 
     // Calculate ghost piece position
     useEffect(() => {
@@ -340,7 +337,7 @@ export function useTetris({ isPaused = false } = {}) {
             return;
         }
 
-        // Find the lowest valid position
+        // Bloğun nereye düşeceğini gösteren hayalet gösterge (Ghost Piece)
         let currentPos = { ...activePiece.pos };
         while (!collision({ ...activePiece, pos: { ...currentPos, y: currentPos.y + 1 } }, grid)) {
             currentPos.y += 1;
@@ -354,7 +351,7 @@ export function useTetris({ isPaused = false } = {}) {
             timerRef.current = setInterval(drop, isFastMode ? 200 : 400);
         }
         return () => clearInterval(timerRef.current);
-    }, [drop, gameOver, isSettling, isPaused, isFastMode]); // Added isSettling to dependencies
+    }, [drop, gameOver, isSettling, isPaused, isFastMode]); 
 
     return { grid, activePiece, ghostPiece, trail, clearingLines, clearingStage, nextPieces, score, gameOver, isSettling, feedback, isFastMode, setIsFastMode, move, rotate, drop, hardDrop, initGame, triggerGameOver };
 }

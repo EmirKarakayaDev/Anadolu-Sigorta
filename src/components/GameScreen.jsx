@@ -2,12 +2,12 @@ import React, { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTetris } from '../game/useTetris';
 import { CanvasRenderer } from './CanvasRenderer';
-import { COLS, ROWS, BLOCK_SIZE, COLORS, SHAPES, PIECE_ASSETS } from '../game/constants';
+import { COLS, ROWS, BLOCK_SIZE, COLORS, SHAPES, PIECE_ASSETS, PIECE_DIMENSIONS } from '../game/constants';
 import { Trophy, Clock, Volume2, VolumeX } from 'lucide-react';
 import { audioManager } from '../utils/audioManager';
 
 export function GameScreen({ onGameOver, isKiosk }) {
-    const [timeLeft, setTimeLeft] = useState(120); // 2 minutes game
+    const [timeLeft, setTimeLeft] = useState(120);
     const [countdown, setCountdown] = useState(3);
     const [isCounting, setIsCounting] = useState(true);
     const [isMuted, setIsMuted] = useState(audioManager.getMuteStatus());
@@ -20,7 +20,7 @@ export function GameScreen({ onGameOver, isKiosk }) {
 
     const [images, setImages] = useState({});
 
-    // Asset loading (Shared)
+    // Görsel varlıkları preload et
     useEffect(() => {
         const loadedImages = {};
         let loadedCount = 0;
@@ -41,7 +41,7 @@ export function GameScreen({ onGameOver, isKiosk }) {
         });
     }, []);
 
-    // No more checkerboard, solid blue everywhere
+    // Arka plan rengini Anadolu Sigorta mavisine sabitle
     useEffect(() => {
         // Set body background color as fallback
         document.body.style.backgroundColor = 'var(--as-blue)';
@@ -66,12 +66,12 @@ export function GameScreen({ onGameOver, isKiosk }) {
     const gameOverTriggeredRef = useRef(false);
 
     const audioPlayOnceRef = useRef(false);
-    // Sayaç Mantığı (Sadece rakamı düşürür)
+    // Geri sayım ve müzik yönetimi
     useEffect(() => {
         // Oyun ekranına gelir gelmez menü müziğini kes
         audioManager.stopBGM();
 
-        // 3-2-1 Sesini SADECE BİR KEZ (başlangıçta) çal
+        // 3-2-1 sesini sadece bir kez çal
         if (!audioPlayOnceRef.current) {
             audioManager.play('countdown');
             audioPlayOnceRef.current = true;
@@ -107,31 +107,29 @@ export function GameScreen({ onGameOver, isKiosk }) {
     }, [isFastMode, isCounting, gameOver]);
 
     // Timer logic
+    // Oyun zamanlayıcısı ve bitiş senaryosu
     useEffect(() => {
         let gameFinishTimeout = null;
         let finalTransitionTimeout = null;
 
-        if (isCounting) return; // Wait for countdown
+        if (isCounting) return;
 
         if (timeLeft <= 0 || gameOver) {
             if (!gameOverTriggeredRef.current) {
                 gameOverTriggeredRef.current = true;
 
                 gameFinishTimeout = setTimeout(() => {
-                    // Sadece oyun zaten bitmemişse (süre bittiğinde) triggerGameOver çağır
-                    if (!gameOver) {
-                        triggerGameOver();
-                    }
+                    if (!gameOver) triggerGameOver();
 
-                    // Yazının ekranda kaldığı o 1.5 saniyenin sonunda Skor Ekranına geç
+                    // Yazının ekranda kalma süresinden sonra skor ekranına geç
                     finalTransitionTimeout = setTimeout(() => {
                         onGameOver(score);
                     }, 1500);
-
                 }, 500);
             }
             return;
         }
+
         const timer = setInterval(() => setTimeLeft(prev => prev - 1), 1000);
         return () => {
             clearInterval(timer);
@@ -190,7 +188,7 @@ export function GameScreen({ onGameOver, isKiosk }) {
         if (interaction.lock === 'horizontal' || (!interaction.lock && totalDx > lockThreshold)) {
             const dragDist = e.clientX - lastX.current;
             const steps = Math.floor(Math.abs(dragDist) / moveThreshold);
-            
+
             if (steps > 0) {
                 const dir = dragDist > 0 ? 1 : -1;
                 for (let i = 0; i < steps; i++) {
@@ -286,7 +284,7 @@ export function GameScreen({ onGameOver, isKiosk }) {
                                 fontWeight: 900,
                                 letterSpacing: '5px',
                                 marginBottom: isKiosk ? '6rem' : '1.5rem',
-                                textShadow: '4px 4px 0px #1D1D46' // Belirgin sert gölge (3D efekti)
+                                textShadow: '4px 4px 0px #1D1D46'
                             }}
                         >
                             HAZIR MISIN?
@@ -616,11 +614,11 @@ function NextPiecePreview({ piece, images, isKiosk }) {
 
         const img = images[piece.type];
         const dims = PIECE_DIMENSIONS[piece.type] || { w: 1, h: 1 };
-        
+
         // Use natural dimensions for reliable SVG slicing
         const sW = img.naturalWidth || img.width;
         const sH = img.naturalHeight || img.height;
-        
+
         const unit = sW / dims.w;
         const unitH = sH / dims.h;
 
@@ -664,11 +662,6 @@ function NextPiecePreview({ piece, images, isKiosk }) {
         });
     }, [piece, images]);
 
-    const { PIECE_DIMENSIONS } = {
-        PIECE_DIMENSIONS: {
-            I: { w: 1, h: 4 }, J: { w: 2, h: 3 }, L: { w: 2, h: 3 }, O: { w: 2, h: 2 }, S: { w: 3, h: 2 }, T: { w: 3, h: 2 }, Z: { w: 3, h: 2 }
-        }
-    };
 
     return <canvas ref={canvasRef} width={isKiosk ? 80 : 60} height={isKiosk ? 80 : 60} />;
 }

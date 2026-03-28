@@ -56,17 +56,6 @@ body {
   margin: 0;
 }
 
-body.checkerboard-active {
-  background-image:
-    radial-gradient(rgba(0, 0, 0, 0.2) 1px, transparent 1px),
-    conic-gradient(#23318C 90deg,
-      #1D2873 90deg 180deg,
-      #23318C 180deg 270deg,
-      #1D2873 270deg);
-  background-size: 9px 9px, 45px 45px;
-  background-position: 0 0, 0 0;
-}
-
 #root {
   min-height: 100dvh;
   width: 100%;

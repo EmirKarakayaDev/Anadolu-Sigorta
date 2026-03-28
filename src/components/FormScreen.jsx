@@ -27,7 +27,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
         }
     });
 
-    const [activeField, setActiveField] = useState(null); // { name, type }
+    const [activeField, setActiveField] = useState(null); 
     const [keyboardY, setKeyboardY] = useState(null);
     const emailRef = useRef(null);
     const phoneRef = useRef(null);
@@ -38,7 +38,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
         if (!activeField) return;
         const currentVal = watch(activeField.name) || '';
 
-        // TC ve Telefon için rakam kontrolü ve 11 hane sınırı
+        // TC ve Telefon alanları için sadece rakam girişi ve 11 hane sınırı kontrolü
         if ((activeField.name === 'tcNumber' || activeField.name === 'phone')) {
             if (!/^\d+$/.test(key)) return;
             if (currentVal.length >= 11) return;
@@ -61,11 +61,11 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
             onClick={(e) => {
-                // Eğer tıklanan yer bir input değilse ve kiosk modundaysak klavyeyi kapat
+                // Boşluklara tıklandığında klavyeyi ve odağı kapat
                 if (isKiosk && e.target.tagName !== 'INPUT' && e.target.closest('.virtual-keyboard-container') === null) {
                     setActiveField(null);
                     setKeyboardY(null);
-                    // Odaklanmış olan inputu bırak
+                    // Mevcut input odağını kes
                     if (document.activeElement instanceof HTMLInputElement) {
                         document.activeElement.blur();
                     }
@@ -240,7 +240,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                         </div>
                     </motion.form>
 
-                    {/* Bottom Buttons - Stationary outside form so they stick to bottom of parent */}
+                    {/* Alt Butonlar */}
                     <div style={{
                         marginTop: isKiosk ? '0' : '1.5rem',
                         display: 'flex',
@@ -258,7 +258,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                             Kaydet ve Başla
                         </button>
 
-                        {/* Test butonu isTest prop'u üzerinden kontrol edilir */}
+                        {/* Hızlı test butonu (geliştirme modu) */}
                         {isTest && (
                             <button
                                 type="button"
