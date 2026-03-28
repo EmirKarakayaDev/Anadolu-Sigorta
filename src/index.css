@@ -376,6 +376,7 @@ body {
     padding-top: max(2rem, calc(env(safe-area-inset-top, 0px) + 0.5rem));
     padding-left: max(1.5rem, env(safe-area-inset-left, 0px));
     padding-right: max(1.5rem, env(safe-area-inset-right, 0px));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
   }
 
   .game-screen-layout {
@@ -437,6 +438,7 @@ body {
     padding-top: max(2.4rem, calc(env(safe-area-inset-top, 0px) + 0.5rem));
     padding-left: max(1.2rem, env(safe-area-inset-left, 0px));
     padding-right: max(1.2rem, env(safe-area-inset-right, 0px));
+    padding-bottom: max(1.2rem, env(safe-area-inset-bottom, 0px));
   }
 
   .game-screen-layout {

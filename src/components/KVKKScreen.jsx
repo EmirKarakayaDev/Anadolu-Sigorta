@@ -186,7 +186,7 @@ Alt Veri İşleyenin Tam Adı | Adresi | Veri İşleyen’e Sunduğu Hizmet
                         fontWeight: 800,
                         textAlign: 'center',
                         marginTop: '0',
-                        marginBottom: isKiosk ? '1rem' : '-5px'
+                        marginBottom: isKiosk ? '1rem' : '0.5rem'
                     }}>
                         Aydınlatma Metni
                     </h1>
@@ -204,7 +204,7 @@ Alt Veri İşleyenin Tam Adı | Adresi | Veri İşleyen’e Sunduğu Hizmet
 
                         {/* Checkbox - Immediately below the text box */}
                         <div className="checkbox-group" style={{
-                            marginTop: isKiosk ? '1.5rem' : '1.5rem',
+                            marginTop: '1.5rem',
                             marginBottom: isKiosk ? '2rem' : '1rem',
                             padding: isKiosk ? '0' : '0 1.2rem'
                         }}>

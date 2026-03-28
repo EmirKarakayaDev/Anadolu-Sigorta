@@ -28,7 +28,6 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
     });
 
     const [activeField, setActiveField] = useState(null);
-    const [keyboardY, setKeyboardY] = useState(null);
     const emailRef = useRef(null);
     const phoneRef = useRef(null);
     const isMobile = window.innerWidth < 768;
@@ -64,7 +63,6 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                 // Boşluklara tıklandığında klavyeyi ve odağı kapat
                 if (isKiosk && e.target.tagName !== 'INPUT' && e.target.closest('.virtual-keyboard-container') === null) {
                     setActiveField(null);
-                    setKeyboardY(null);
                     // Mevcut input odağını kes
                     if (document.activeElement instanceof HTMLInputElement) {
                         document.activeElement.blur();
@@ -123,12 +121,8 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                                     className={`form-input ${errors.firstName ? 'error' : ''}`}
                                     {...register('firstName')}
                                     placeholder="Ad"
-                                    onFocus={(e) => {
-                                        if (isKiosk) {
-                                            const rect = e.target.getBoundingClientRect();
-                                            setKeyboardY(rect.bottom + 15);
-                                            setActiveField({ name: 'firstName', type: 'text' });
-                                        }
+                                    onFocus={() => {
+                                        if (isKiosk) setActiveField({ name: 'firstName', type: 'text' });
                                     }}
                                     inputMode={isKiosk ? 'none' : 'text'}
                                     autoComplete="off"
@@ -141,12 +135,8 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                                     className={`form-input ${errors.lastName ? 'error' : ''}`}
                                     {...register('lastName')}
                                     placeholder="Soyad"
-                                    onFocus={(e) => {
-                                        if (isKiosk) {
-                                            const rect = e.target.getBoundingClientRect();
-                                            setKeyboardY(rect.bottom + 15);
-                                            setActiveField({ name: 'lastName', type: 'text' });
-                                        }
+                                    onFocus={() => {
+                                        if (isKiosk) setActiveField({ name: 'lastName', type: 'text' });
                                     }}
                                     inputMode={isKiosk ? 'none' : 'text'}
                                     autoComplete="off"
@@ -166,12 +156,8 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                                 }}
                                 placeholder="adiniz@ornek.com"
                                 type={isKiosk ? 'text' : 'email'}
-                                onFocus={(e) => {
-                                    if (isKiosk) {
-                                        const rect = e.target.getBoundingClientRect();
-                                        setKeyboardY(rect.bottom + 15);
-                                        setActiveField({ name: 'email', type: 'text' });
-                                    }
+                                onFocus={() => {
+                                    if (isKiosk) setActiveField({ name: 'email', type: 'text' });
                                 }}
                                 inputMode={isKiosk ? 'none' : 'email'}
                                 autoComplete="off"
@@ -188,12 +174,8 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                                 type="text"
                                 inputMode={isKiosk ? 'none' : 'numeric'}
                                 maxLength={11}
-                                onFocus={(e) => {
-                                    if (isKiosk) {
-                                        const rect = e.target.getBoundingClientRect();
-                                        setKeyboardY(rect.bottom + 15);
-                                        setActiveField({ name: 'tcNumber', type: 'tel' });
-                                    }
+                                onFocus={() => {
+                                    if (isKiosk) setActiveField({ name: 'tcNumber', type: 'tel' });
                                 }}
                                 autoComplete="off"
                             />
@@ -215,12 +197,8 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                                 type={isKiosk ? 'text' : 'tel'}
                                 inputMode={isKiosk ? 'none' : 'numeric'}
                                 maxLength={11}
-                                onFocus={(e) => {
-                                    if (isKiosk) {
-                                        const rect = e.target.getBoundingClientRect();
-                                        setKeyboardY(rect.bottom + 15);
-                                        setActiveField({ name: 'phone', type: 'tel' });
-                                    }
+                                onFocus={() => {
+                                    if (isKiosk) setActiveField({ name: 'phone', type: 'tel' });
                                 }}
                                 autoComplete="off"
                             />
@@ -294,7 +272,6 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
             {isKiosk && (
                 <VirtualKeyboard
                     visible={!!activeField}
-                    y={keyboardY}
                     type={activeField?.type}
                     onKey={handleKey}
                     onBackspace={handleBackspace}
@@ -310,7 +287,6 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                         } else {
                             // Son alandaysa klavyeyi kapat
                             setActiveField(null);
-                            setKeyboardY(null);
                             if (document.activeElement instanceof HTMLInputElement) {
                                 document.activeElement.blur();
                             }
