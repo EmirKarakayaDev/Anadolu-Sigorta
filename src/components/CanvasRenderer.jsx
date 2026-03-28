@@ -120,7 +120,27 @@ export function CanvasRenderer({ grid, activePiece, ghostPiece, trail, isSettlin
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         ctx.clearRect(0, 0, logicalWidth, logicalHeight);
 
-        // Draw Blocks
+        // Kılavuz çizgilerini (grid) çiz
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+        ctx.lineWidth = 1;
+        
+        // Dikey çizgiler
+        for (let x = 0; x <= grid[0].length; x++) {
+            ctx.beginPath();
+            ctx.moveTo(x * blockSize, 0);
+            ctx.lineTo(x * blockSize, logicalHeight);
+            ctx.stroke();
+        }
+        
+        // Yatay çizgiler
+        for (let y = 0; y <= grid.length; y++) {
+            ctx.beginPath();
+            ctx.moveTo(0, y * blockSize);
+            ctx.lineTo(logicalWidth, y * blockSize);
+            ctx.stroke();
+        }
+
+        // Blokları çiz
         grid.forEach((row, y) => {
             const isClearingLine = clearingLines.includes(y);
             row.forEach((cell, x) => {

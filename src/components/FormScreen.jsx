@@ -93,7 +93,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                             fontSize: isKiosk ? undefined : (isMobile ? '1.4rem' : '1.8rem'),
                             fontWeight: 800,
                             color: 'white',
-                            margin: isKiosk ? '0 0 0.5rem 0' : '0.5rem 0 0.4rem 0',
+                            margin: isKiosk ? '0 0 0.5rem 0' : '0.5rem 0 0 0',
                             textAlign: 'center'
                         }}
                     >
@@ -115,7 +115,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                             gridTemplateColumns: '1fr 1fr',
                             gap: '0.8rem',
                             marginBottom: 0,
-                            marginTop: '0.4rem'
+                            marginTop: '0'
                         }}>
                             <div className="form-group">
                                 <label>Ad <span style={{ color: '#FF6B6B' }}>*</span></label>
@@ -242,7 +242,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
 
                     {/* Alt Butonlar */}
                     <div style={{
-                        marginTop: isKiosk ? '0' : (isMobile ? '0.6rem' : '1.5rem'),
+                        marginTop: isKiosk ? '0' : 'auto',
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '0.4rem',
