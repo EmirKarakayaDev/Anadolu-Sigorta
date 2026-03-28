@@ -16,12 +16,9 @@ const NUMERIC_LAYOUT = [
     ['0', 'BACKSPACE', 'DONE']
 ];
 
-export function VirtualKeyboard({ visible, y, type = 'text', onKey, onDone, onBackspace, onSpace }) {
+export function VirtualKeyboard({ visible, type = 'text', onKey, onDone, onBackspace, onSpace }) {
     const [isUpperCase, setIsUpperCase] = useState(false);
     const layout = type === 'tel' || type === 'number' ? NUMERIC_LAYOUT : TURKISH_QWERTY;
-
-    // Y değerini sınırla (ekranın dışına çıkmasın)
-    const clampedY = y ? Math.min(y, window.innerHeight - 660) : null;
 
     const formatKey = (key) => {
         if (['SPACE', 'BACKSPACE', 'DONE', 'SHIFT', '@', '.', '-', '_'].includes(key)) return key;
@@ -41,11 +38,10 @@ export function VirtualKeyboard({ visible, y, type = 'text', onKey, onDone, onBa
             {visible && (
                 <motion.div
                     initial={{ y: 500, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1, top: clampedY || undefined }}
+                    animate={{ y: 0, opacity: 1 }}
                     exit={{ y: 500, opacity: 0 }}
                     transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                     className="virtual-keyboard-container no-select"
-                    style={clampedY ? { position: 'absolute', bottom: 'auto' } : {}}
                 >
                     <div className="keyboard-grid">
                         {layout.map((row, rowIndex) => (

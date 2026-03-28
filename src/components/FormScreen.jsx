@@ -123,9 +123,9 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                                     className={`form-input ${errors.firstName ? 'error' : ''}`}
                                     {...register('firstName')}
                                     placeholder="Ad"
-                                    onFocus={() => {
-                                        if (isKiosk && emailRef.current) {
-                                            const rect = emailRef.current.getBoundingClientRect();
+                                    onFocus={(e) => {
+                                        if (isKiosk) {
+                                            const rect = e.target.getBoundingClientRect();
                                             setKeyboardY(rect.bottom + 15);
                                             setActiveField({ name: 'firstName', type: 'text' });
                                         }
@@ -141,9 +141,9 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                                     className={`form-input ${errors.lastName ? 'error' : ''}`}
                                     {...register('lastName')}
                                     placeholder="Soyad"
-                                    onFocus={() => {
-                                        if (isKiosk && emailRef.current) {
-                                            const rect = emailRef.current.getBoundingClientRect();
+                                    onFocus={(e) => {
+                                        if (isKiosk) {
+                                            const rect = e.target.getBoundingClientRect();
                                             setKeyboardY(rect.bottom + 15);
                                             setActiveField({ name: 'lastName', type: 'text' });
                                         }
@@ -166,9 +166,9 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                                 }}
                                 placeholder="adiniz@ornek.com"
                                 type={isKiosk ? 'text' : 'email'}
-                                onFocus={() => {
-                                    if (isKiosk && emailRef.current) {
-                                        const rect = emailRef.current.getBoundingClientRect();
+                                onFocus={(e) => {
+                                    if (isKiosk) {
+                                        const rect = e.target.getBoundingClientRect();
                                         setKeyboardY(rect.bottom + 15);
                                         setActiveField({ name: 'email', type: 'text' });
                                     }
@@ -188,9 +188,9 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                                 type="text"
                                 inputMode={isKiosk ? 'none' : 'numeric'}
                                 maxLength={11}
-                                onFocus={() => {
-                                    if (isKiosk && phoneRef.current) {
-                                        const rect = phoneRef.current.getBoundingClientRect();
+                                onFocus={(e) => {
+                                    if (isKiosk) {
+                                        const rect = e.target.getBoundingClientRect();
                                         setKeyboardY(rect.bottom + 15);
                                         setActiveField({ name: 'tcNumber', type: 'tel' });
                                     }
@@ -215,9 +215,9 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                                 type={isKiosk ? 'text' : 'tel'}
                                 inputMode={isKiosk ? 'none' : 'numeric'}
                                 maxLength={11}
-                                onFocus={() => {
-                                    if (isKiosk && phoneRef.current) {
-                                        const rect = phoneRef.current.getBoundingClientRect();
+                                onFocus={(e) => {
+                                    if (isKiosk) {
+                                        const rect = e.target.getBoundingClientRect();
                                         setKeyboardY(rect.bottom + 15);
                                         setActiveField({ name: 'phone', type: 'tel' });
                                     }

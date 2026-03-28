@@ -406,11 +406,11 @@ body {
   .game-screen-layout {
     padding-bottom: 2.8rem !important;
   }
- 
-  @media (display-mode: browser) {
-    .game-screen-layout {
-      padding-bottom: 1.2rem !important;
-    }
+}
+
+@media (max-width: 600px) and (display-mode: browser) {
+  .game-screen-layout {
+    padding-bottom: 1.2rem !important;
   }
 }
 

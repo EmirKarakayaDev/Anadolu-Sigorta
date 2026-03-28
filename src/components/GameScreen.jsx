@@ -270,9 +270,10 @@ export function GameScreen({ onGameOver, isKiosk }) {
                             zIndex: 1000,
                             display: 'flex',
                             flexDirection: 'column',
-                            justifyContent: isKiosk ? 'flex-start' : 'center',
+                            justifyContent: 'center',
                             alignItems: 'center',
-                            paddingTop: isKiosk ? '32vh' : '0',
+                            paddingTop: isKiosk ? '42px' : '0',
+                            paddingBottom: isKiosk ? '600px' : '0',
                             background: 'transparent', // Karartma kaldırıldı
                             pointerEvents: 'none'
                         }}
