@@ -93,7 +93,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                             fontSize: isKiosk ? undefined : (isMobile ? '1.4rem' : '1.8rem'),
                             fontWeight: 800,
                             color: 'white',
-                            margin: isKiosk ? '0 0 0.5rem 0' : '0.5rem 0 0 0',
+                            margin: isKiosk ? '0 0 0.5rem 0' : '0 0 0 0',
                             textAlign: 'center'
                         }}
                     >
