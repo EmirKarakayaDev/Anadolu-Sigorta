@@ -193,18 +193,20 @@ Alt Veri İşleyenin Tam Adı | Adresi | Veri İşleyen’e Sunduğu Hizmet
 
                     {/* Block 2: Middle - Text Box + Tick Box Together */}
                     <div className="kvkk-mid-block" style={{ 
-                        flex: isKiosk ? 1 : 'none', 
+                        flex: 1, 
                         display: 'flex', 
                         flexDirection: 'column',
-                        width: '100%'
+                        width: '100%',
+                        overflow: 'hidden'
                     }}>
-                        <div className="kvkk-container">
+                        <div className="kvkk-container" style={{ flex: 1 }}>
                             {kvkkText}
                         </div>
 
+                        {/* Checkbox - Metin kutusunun altında sabit mesafe */}
                         <div className="checkbox-group" style={{ 
-                            marginTop: isKiosk ? '1.5rem' : 'auto',
-                            marginBottom: isKiosk ? '2rem' : '0'
+                            marginTop: '1.2rem',
+                            marginBottom: isKiosk ? '2rem' : '0.5rem'
                         }}>
                             <input 
                                 type="checkbox" 
@@ -230,7 +232,7 @@ Alt Veri İşleyenin Tam Adı | Adresi | Veri İşleyen’e Sunduğu Hizmet
                         flexDirection: (isKiosk || isMobile) ? 'column' : 'row',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        marginTop: isKiosk ? '0' : '0.2rem',
+                        marginTop: isKiosk ? '0' : 'auto',
                         paddingBottom: isKiosk ? '1rem' : '0'
                     }}>
                         <button

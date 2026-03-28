@@ -93,6 +93,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                             fontSize: isKiosk ? undefined : (isMobile ? '1.4rem' : '1.8rem'),
                             fontWeight: 800,
                             color: 'white',
+                            flex: 1,
                             margin: isKiosk ? '0 0 0.5rem 0' : '0 0 0 0',
                             textAlign: 'center'
                         }}
@@ -107,7 +108,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                             width: '100%',
                             display: 'flex',
                             flexDirection: 'column',
-                            flex: isKiosk ? 1 : 'none'
+                            flex: 1 
                         }}
                     >
                         <div style={{
@@ -200,7 +201,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                             {errors.tcNumber && <span className="form-error">{errors.tcNumber.message}</span>}
                         </div>
 
-                        <div className="form-group" style={{ marginBottom: isKiosk ? 0 : '1.2rem' }}>
+                        <div className="form-group" style={{ marginBottom: isKiosk ? 0 : '0.8rem' }}>
                             <label>Telefon <span style={{ color: '#FF6B6B' }}>*</span></label>
                             <input
                                 className={`form-input ${errors.phone ? 'error' : ''}`}
@@ -227,9 +228,10 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                             {errors.phone && <span className="form-error">{errors.phone.message}</span>}
                         </div>
 
+                        {/* Checkbox - Metin kutusunun altında sabit mesafe */}
                         <div className="checkbox-group" style={{ 
-                            marginTop: isKiosk ? '0' : 'auto',
-                            marginBottom: isMobile ? '0' : '1.2rem' 
+                            marginTop: isKiosk ? '1.5rem' : '1.2rem',
+                            marginBottom: isKiosk ? '2rem' : '0.5rem'
                         }}>
                             <input
                                 type="checkbox"
@@ -243,7 +245,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
 
                     {/* Alt Butonlar */}
                     <div style={{
-                        marginTop: isKiosk ? '0' : '0.2rem',
+                        marginTop: isKiosk ? '0' : 'auto',
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '0.4rem',
