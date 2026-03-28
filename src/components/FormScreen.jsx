@@ -14,7 +14,7 @@ const schema = z.object({
     confirm: z.boolean().refine(v => v === true, "Onaylanmalıdır")
 });
 
-export function FormScreen({ onSubmit, isKiosk }) {
+export function FormScreen({ onSubmit, isKiosk, isTest }) {
     const { register, handleSubmit, setValue, watch, setFocus, formState: { errors } } = useForm({
         resolver: zodResolver(schema),
         defaultValues: {
@@ -258,8 +258,8 @@ export function FormScreen({ onSubmit, isKiosk }) {
                             Kaydet ve Başla
                         </button>
 
-                        {/* Test butonu geliştirme ortamında VEYA URL'de ?test=true varsa görünür */}
-                        {(import.meta.env.DEV || new URLSearchParams(window.location.search).has('test')) && (
+                        {/* Test butonu isTest prop'u üzerinden kontrol edilir */}
+                        {isTest && (
                             <button
                                 type="button"
                                 className="btn-text-link"

@@ -24,6 +24,7 @@ const SCREENS = {
 // 2. Fallback: Ekran yüksekliği 1800px ve üzeriyse (fiziksel kiosk ekranı)
 const urlParams = new URLSearchParams(window.location.search);
 const isKiosk = urlParams.has('kiosk') || window.screen.height >= 1800;
+const isTest = import.meta.env.DEV || urlParams.has('test');
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState(SCREENS.MENU);
@@ -108,7 +109,7 @@ function App() {
           <KVKKScreen key="kvkk" onAccept={handleKVKKAccept} onDecline={handleReset} isKiosk={isKiosk} />
         )}
         {currentScreen === SCREENS.FORM && (
-          <FormScreen key="form" onSubmit={handleFormSubmit} isKiosk={isKiosk} />
+          <FormScreen key="form" onSubmit={handleFormSubmit} isKiosk={isKiosk} isTest={isTest} />
         )}
         {currentScreen === SCREENS.GAME && (
           <GameScreen key="game" onGameOver={handleGameOver} isKiosk={isKiosk} />
