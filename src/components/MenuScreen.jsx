@@ -78,16 +78,6 @@ export function MenuScreen({ onStart, isKiosk }) {
                 </div>
             </div>
 
-            {isKiosk && (
-                <motion.img
-                    src="/logo_trn.png"
-                    alt="Kaybetmek Yok"
-                    className="brand-logo kiosk-logo-fixed"
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                />
-            )}
-
             <RewardsModal isOpen={isRewardsModalOpen} onClose={() => setIsRewardsModalOpen(false)} isKiosk={isKiosk} />
         </motion.div>
     );

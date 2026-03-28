@@ -262,7 +262,7 @@ body {
 
 .checkbox-group {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
   margin-bottom: 1rem;
   cursor: pointer;
@@ -271,7 +271,7 @@ body {
 .checkbox-group input {
   width: 18px;
   height: 18px;
-  margin-top: 3px;
+  flex-shrink: 0;
   cursor: pointer;
 }
 
