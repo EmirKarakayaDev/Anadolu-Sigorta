@@ -221,8 +221,8 @@ body.kiosk .brand-screen h2+form {
 
 body.kiosk .kvkk-container {
   font-size: 1.55rem;
-  /* Dikey denge noktası: Dengeyi bozmadan en uzun metin kutusu için 860px yapıldı */
-  max-height: 860px !important;
+  /* Play zone yüksekliğine göre dinamik: 900px = 42px top + 600px safe zone + başlık/butonlar */
+  max-height: calc(100dvh - 900px) !important;
   line-height: 1.7;
   padding: 0 1.2rem !important;
   /* Dikey padding tamamen sıfırlandı */
@@ -268,7 +268,7 @@ body.kiosk .virtual-keyboard-container {
   -webkit-backdrop-filter: blur(25px);
   border-top: 2px solid rgba(255, 255, 255, 0.15);
   padding: 1.5rem 1.5rem 60px 1.5rem !important;
-  z-index: 1000;
+  z-index: 1001;
   display: flex;
   flex-direction: column;
   justify-content: center;

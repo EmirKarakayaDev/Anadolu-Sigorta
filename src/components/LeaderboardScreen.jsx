@@ -178,7 +178,7 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
                     initial={{ scale: 0.95, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                 >
-                    <div style={{ flex: 1, overflowY: 'auto', padding: '1rem' }}>
+                    <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '1rem' }}>
                         {loading ? (
                             <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <motion.div

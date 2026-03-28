@@ -370,6 +370,24 @@ body {
   }
 }
 
+/* Standalone (Ana Ekrana Ekle) Modu — adres çubuğu yok, notch/home indicator var */
+@media (display-mode: standalone) {
+  .brand-layout-full {
+    padding-top: max(2rem, calc(env(safe-area-inset-top, 0px) + 0.5rem));
+    padding-left: max(1.5rem, env(safe-area-inset-left, 0px));
+    padding-right: max(1.5rem, env(safe-area-inset-right, 0px));
+  }
+
+  .game-screen-layout {
+    justify-content: center !important;
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .brand-logo {
+    margin-bottom: 0.5rem !important;
+  }
+}
+
 .brand-screen {
   background: transparent;
   width: 100%;
@@ -411,6 +429,18 @@ body {
 @media (max-width: 600px) and (display-mode: browser) {
   .game-screen-layout {
     padding-bottom: 1.2rem !important;
+  }
+}
+
+@media (max-width: 600px) and (display-mode: standalone) {
+  .brand-layout-full {
+    padding-top: max(2.4rem, calc(env(safe-area-inset-top, 0px) + 0.5rem));
+    padding-left: max(1.2rem, env(safe-area-inset-left, 0px));
+    padding-right: max(1.2rem, env(safe-area-inset-right, 0px));
+  }
+
+  .game-screen-layout {
+    padding-bottom: max(2.8rem, env(safe-area-inset-bottom, 0px)) !important;
   }
 }
 
