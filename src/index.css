@@ -363,6 +363,7 @@ body {
 @media (display-mode: browser) {
   .brand-layout-full {
     padding-top: 0 !important; /* Tam sıfırlanmış, tavan hizasında logo */
+    padding-bottom: 1rem !important;
   }
 
   .brand-logo {

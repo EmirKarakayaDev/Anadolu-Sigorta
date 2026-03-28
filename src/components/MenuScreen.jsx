@@ -61,22 +61,32 @@ export function MenuScreen({ onStart, isKiosk }) {
                                 background: 'rgba(255, 255, 255, 0.1)',
                                 border: '1px solid rgba(255, 255, 255, 0.3)',
                                 borderRadius: '30px',
-                                padding: '8px 20px',
+                                padding: isKiosk ? '16px 36px' : '8px 20px',
                                 color: 'white',
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: '8px',
+                                gap: isKiosk ? '12px' : '8px',
                                 cursor: 'pointer',
-                                fontSize: '0.9rem',
+                                fontSize: isKiosk ? '1.6rem' : '0.9rem',
                                 fontWeight: 600,
                                 backdropFilter: 'blur(5px)'
                             }}
                         >
-                            <Info size={18} /> Ödülleri Gör
+                            <Info size={isKiosk ? 32 : 18} /> Ödülleri Gör
                         </button>
                     </motion.div>
                 </div>
             </div>
+
+            {isKiosk && (
+                <motion.img
+                    src="/logo_trn.png"
+                    alt="Kaybetmek Yok"
+                    className="brand-logo kiosk-logo-fixed"
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                />
+            )}
 
             <RewardsModal isOpen={isRewardsModalOpen} onClose={() => setIsRewardsModalOpen(false)} isKiosk={isKiosk} />
         </motion.div>
