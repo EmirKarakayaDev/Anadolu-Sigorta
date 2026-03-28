@@ -186,32 +186,31 @@ Alt Veri İşleyenin Tam Adı | Adresi | Veri İşleyen’e Sunduğu Hizmet
                         fontWeight: 800,
                         textAlign: 'center',
                         marginTop: '0',
-                        marginBottom: isKiosk ? '1rem' : '0.5rem'
+                        marginBottom: isKiosk ? '1rem' : '-5px'
                     }}>
                         Aydınlatma Metni
                     </h1>
 
                     {/* Block 2: Middle - Text Box + Tick Box Together */}
-                    <div className="kvkk-mid-block" style={{ 
-                        flex: 1, 
-                        display: 'flex', 
+                    <div className="kvkk-mid-block" style={{
+                        flex: isKiosk ? 1 : 'none',
+                        display: 'flex',
                         flexDirection: 'column',
-                        width: '100%',
-                        overflow: 'hidden'
+                        width: '100%'
                     }}>
-                        <div className="kvkk-container" style={{ flex: 1 }}>
+                        <div className="kvkk-container">
                             {kvkkText}
                         </div>
 
-                        {/* Checkbox - Metin kutusunun altında sabit mesafe */}
-                        <div className="checkbox-group" style={{ 
-                            marginTop: '1.2rem',
-                            marginBottom: isKiosk ? '2rem' : '0.5rem'
+                        {/* Checkbox - Immediately below the text box */}
+                        <div className="checkbox-group" style={{
+                            marginTop: isKiosk ? '1.5rem' : '0.5rem',
+                            marginBottom: isKiosk ? '2rem' : '0'
                         }}>
-                            <input 
-                                type="checkbox" 
-                                id="kvkk-confirm" 
-                                className={showError && !isChecked ? 'checkbox-error' : ''} 
+                            <input
+                                type="checkbox"
+                                id="kvkk-confirm"
+                                className={showError && !isChecked ? 'checkbox-error' : ''}
                                 checked={isChecked}
                                 onChange={(e) => {
                                     setIsChecked(e.target.checked);
@@ -225,9 +224,9 @@ Alt Veri İşleyenin Tam Adı | Adresi | Veri İşleyen’e Sunduğu Hizmet
                     </div>
 
                     {/* Block 3: Action Buttons at the extreme bottom */}
-                    <div className="action-group" style={{ 
-                        width: '100%', 
-                        display: 'flex', 
+                    <div className="action-group" style={{
+                        width: '100%',
+                        display: 'flex',
                         gap: isKiosk ? '1.5rem' : '1rem',
                         flexDirection: (isKiosk || isMobile) ? 'column' : 'row',
                         alignItems: 'center',
