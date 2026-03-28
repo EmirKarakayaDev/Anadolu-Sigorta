@@ -20,14 +20,16 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
         >
-            <div className="brand-screen" style={isKiosk ? { justifyContent: 'center' } : {}}>
+            <div className="brand-screen">
                 {/* Top Graphic - Fixed at top like Menu Logo */}
+                {/* Top Brand Logo */}
                 <motion.img 
-                    src="/logo_trn.png" 
-                    alt="Kaybetmek Yok" 
+                    src="/beyaz_as_logo.png" 
+                    alt="Anadolu Sigorta" 
                     className="brand-logo"
                     initial={{ y: -20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
+                    style={{ width: isKiosk ? '280px' : '180px', height: 'auto', marginBottom: isKiosk ? '2rem' : '1rem' }}
                 />
 
                 {/* Main Content (Score) - Centered in remaining space */}
@@ -123,7 +125,7 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.6 }}
                 >
-                    <button className={isKiosk ? "btn-outline" : "btn-primary"} onClick={onShowLeaderboard}>
+                    <button className="btn-primary" onClick={onShowLeaderboard}>
                         Skor Tablosu
                     </button>
  
@@ -133,11 +135,21 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
                         </button>
                     )}
  
-                    <button className={isKiosk ? "btn-primary" : "btn-text-link"} onClick={onReset}>
+                    <button className={isKiosk ? "btn-outline" : "btn-text-link"} onClick={onReset}>
                         <Home size={isKiosk ? 24 : 16} style={{ marginRight: isKiosk ? '12px' : '4px' }} /> Ana Ekran
                     </button>
                 </motion.div>
             </div>
+
+            {isKiosk && (
+                <motion.img
+                    src="/logo_trn.png"
+                    alt="Anadolu Sigorta"
+                    className="brand-logo kiosk-logo-fixed"
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                />
+            )}
 
             <RewardsModal isOpen={isRewardsModalOpen} onClose={() => setIsRewardsModalOpen(false)} isKiosk={isKiosk} />
         </motion.div>

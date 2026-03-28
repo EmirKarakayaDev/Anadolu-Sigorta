@@ -118,15 +118,15 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
         >
             <div className="brand-screen" style={{ height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                 {/* Top Graphic - Desktop Only for space efficiency */}
-                {!isMobile && (
-                    <motion.img 
-                        src="/logo_trn.png" 
-                        alt="Kaybetmek Yok" 
-                        className="brand-logo"
-                        initial={{ y: -20, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                    />
-                )}
+                {/* Top Brand Logo */}
+                <motion.img 
+                    src="/beyaz_as_logo.png" 
+                    alt="Anadolu Sigorta" 
+                    className="brand-logo"
+                    initial={{ y: -20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    style={{ width: isKiosk ? '280px' : '180px', height: 'auto', marginBottom: isKiosk ? '1.5rem' : '12px' }}
+                />
 
                 {/* Header Title */}
                 <div style={{ 
@@ -304,6 +304,16 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
                     </button>
                 </div>
             </div>
+            {isKiosk && (
+                <motion.img
+                    src="/logo_trn.png"
+                    alt="Kaybetmek Yok"
+                    className="brand-logo kiosk-logo-fixed"
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                />
+            )}
+
             <RewardsModal isOpen={isRewardsModalOpen} onClose={() => setIsRewardsModalOpen(false)} isKiosk={isKiosk} />
         </motion.div>
     );
