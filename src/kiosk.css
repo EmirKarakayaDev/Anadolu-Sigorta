@@ -248,13 +248,13 @@ body.kiosk .virtual-keyboard-container {
   bottom: 0;
   left: 0;
   width: 100vw;
-  height: 780px;
-  /* 5 sıra tuş için ideal yükseklik + 200px alt boşluk */
+  height: 640px;
+  /* 5 sıra tuş için ideal yükseklik + 60px alt boşluk */
   background: rgba(15, 23, 42, 0.9);
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border-top: 2px solid rgba(255, 255, 255, 0.15);
-  padding: 1.5rem 1.5rem 200px 1.5rem !important;
+  padding: 1.5rem 1.5rem 60px 1.5rem !important;
   z-index: 1000;
   display: flex;
   flex-direction: column;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -15,7 +15,7 @@ const schema = z.object({
 });
 
 export function FormScreen({ onSubmit, isKiosk }) {
-    const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm({
+    const { register, handleSubmit, setValue, watch, setFocus, formState: { errors } } = useForm({
         resolver: zodResolver(schema),
         defaultValues: {
             confirm: false,
@@ -28,6 +28,9 @@ export function FormScreen({ onSubmit, isKiosk }) {
     });
 
     const [activeField, setActiveField] = useState(null); // { name, type }
+    const [keyboardY, setKeyboardY] = useState(null);
+    const emailRef = useRef(null);
+    const phoneRef = useRef(null);
     const isMobile = window.innerWidth < 768;
     const hasErrors = Object.keys(errors).length > 0;
 
@@ -61,6 +64,7 @@ export function FormScreen({ onSubmit, isKiosk }) {
                 // Eğer tıklanan yer bir input değilse ve kiosk modundaysak klavyeyi kapat
                 if (isKiosk && e.target.tagName !== 'INPUT' && e.target.closest('.virtual-keyboard-container') === null) {
                     setActiveField(null);
+                    setKeyboardY(null);
                     // Odaklanmış olan inputu bırak
                     if (document.activeElement instanceof HTMLInputElement) {
                         document.activeElement.blur();
@@ -119,7 +123,13 @@ export function FormScreen({ onSubmit, isKiosk }) {
                                     className={`form-input ${errors.firstName ? 'error' : ''}`}
                                     {...register('firstName')}
                                     placeholder="Ad"
-                                    onFocus={() => isKiosk && setActiveField({ name: 'firstName', type: 'text' })}
+                                    onFocus={() => {
+                                        if (isKiosk && emailRef.current) {
+                                            const rect = emailRef.current.getBoundingClientRect();
+                                            setKeyboardY(rect.bottom + 15);
+                                            setActiveField({ name: 'firstName', type: 'text' });
+                                        }
+                                    }}
                                     inputMode={isKiosk ? 'none' : 'text'}
                                     autoComplete="off"
                                 />
@@ -131,7 +141,13 @@ export function FormScreen({ onSubmit, isKiosk }) {
                                     className={`form-input ${errors.lastName ? 'error' : ''}`}
                                     {...register('lastName')}
                                     placeholder="Soyad"
-                                    onFocus={() => isKiosk && setActiveField({ name: 'lastName', type: 'text' })}
+                                    onFocus={() => {
+                                        if (isKiosk && emailRef.current) {
+                                            const rect = emailRef.current.getBoundingClientRect();
+                                            setKeyboardY(rect.bottom + 15);
+                                            setActiveField({ name: 'lastName', type: 'text' });
+                                        }
+                                    }}
                                     inputMode={isKiosk ? 'none' : 'text'}
                                     autoComplete="off"
                                 />
@@ -144,9 +160,19 @@ export function FormScreen({ onSubmit, isKiosk }) {
                             <input
                                 className={`form-input ${errors.email ? 'error' : ''}`}
                                 {...register('email')}
+                                ref={(e) => {
+                                    register('email').ref(e);
+                                    emailRef.current = e;
+                                }}
                                 placeholder="adiniz@ornek.com"
                                 type={isKiosk ? 'text' : 'email'}
-                                onFocus={() => isKiosk && setActiveField({ name: 'email', type: 'text' })}
+                                onFocus={() => {
+                                    if (isKiosk && emailRef.current) {
+                                        const rect = emailRef.current.getBoundingClientRect();
+                                        setKeyboardY(rect.bottom + 15);
+                                        setActiveField({ name: 'email', type: 'text' });
+                                    }
+                                }}
                                 inputMode={isKiosk ? 'none' : 'email'}
                                 autoComplete="off"
                             />
@@ -162,7 +188,13 @@ export function FormScreen({ onSubmit, isKiosk }) {
                                 type="text"
                                 inputMode={isKiosk ? 'none' : 'numeric'}
                                 maxLength={11}
-                                onFocus={() => isKiosk && setActiveField({ name: 'tcNumber', type: 'tel' })}
+                                onFocus={() => {
+                                    if (isKiosk && phoneRef.current) {
+                                        const rect = phoneRef.current.getBoundingClientRect();
+                                        setKeyboardY(rect.bottom + 15);
+                                        setActiveField({ name: 'tcNumber', type: 'tel' });
+                                    }
+                                }}
                                 autoComplete="off"
                             />
                             {errors.tcNumber && <span className="form-error">{errors.tcNumber.message}</span>}
@@ -175,11 +207,21 @@ export function FormScreen({ onSubmit, isKiosk }) {
                                 {...register('phone', {
                                     onChange: (e) => e.target.value = e.target.value.replace(/\D/g, '')
                                 })}
+                                ref={(e) => {
+                                    register('phone').ref(e);
+                                    phoneRef.current = e;
+                                }}
                                 placeholder="05xx xxx xx xx"
                                 type={isKiosk ? 'text' : 'tel'}
                                 inputMode={isKiosk ? 'none' : 'numeric'}
                                 maxLength={11}
-                                onFocus={() => isKiosk && setActiveField({ name: 'phone', type: 'tel' })}
+                                onFocus={() => {
+                                    if (isKiosk && phoneRef.current) {
+                                        const rect = phoneRef.current.getBoundingClientRect();
+                                        setKeyboardY(rect.bottom + 15);
+                                        setActiveField({ name: 'phone', type: 'tel' });
+                                    }
+                                }}
                                 autoComplete="off"
                             />
                             {errors.phone && <span className="form-error">{errors.phone.message}</span>}
@@ -252,14 +294,26 @@ export function FormScreen({ onSubmit, isKiosk }) {
             {isKiosk && (
                 <VirtualKeyboard
                     visible={!!activeField}
+                    y={keyboardY}
                     type={activeField?.type}
                     onKey={handleKey}
                     onBackspace={handleBackspace}
                     onSpace={() => handleKey(' ')}
                     onDone={() => {
-                        setActiveField(null);
-                        if (document.activeElement instanceof HTMLInputElement) {
-                            document.activeElement.blur();
+                        const fieldsOrder = ['firstName', 'lastName', 'email', 'tcNumber', 'phone'];
+                        const currentIndex = fieldsOrder.indexOf(activeField.name);
+                        
+                        if (currentIndex < fieldsOrder.length - 1) {
+                            // Bir sonraki alana odaklan
+                            const nextField = fieldsOrder[currentIndex + 1];
+                            setFocus(nextField);
+                        } else {
+                            // Son alandaysa klavyeyi kapat
+                            setActiveField(null);
+                            setKeyboardY(null);
+                            if (document.activeElement instanceof HTMLInputElement) {
+                                document.activeElement.blur();
+                            }
                         }
                     }}
                 />
