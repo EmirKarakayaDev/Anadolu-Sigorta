@@ -111,10 +111,10 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                             display: 'grid',
                             gridTemplateColumns: isKiosk ? '1fr' : '1fr 1fr',
                             gap: '0.8rem',
-                            marginBottom: 0,
+                            marginBottom: isKiosk ? 0 : '0.8rem',
                             marginTop: '0'
                         }}>
-                            <div className="form-group">
+                            <div className="form-group" style={{ marginBottom: 0 }}>
                                 <label>Ad <span style={{ color: '#FF6B6B' }}>*</span></label>
                                 <input
                                     className={`form-input ${errors.firstName ? 'error' : ''}`}
@@ -128,7 +128,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                                 />
                                 {errors.firstName && <span className="form-error">{errors.firstName.message}</span>}
                             </div>
-                            <div className="form-group">
+                            <div className="form-group" style={{ marginBottom: 0 }}>
                                 <label>Soyad <span style={{ color: '#FF6B6B' }}>*</span></label>
                                 <input
                                     className={`form-input ${errors.lastName ? 'error' : ''}`}
@@ -181,7 +181,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                             {errors.tcNumber && <span className="form-error">{errors.tcNumber.message}</span>}
                         </div>
 
-                        <div className="form-group" style={{ marginBottom: isKiosk ? 0 : '1.2rem' }}>
+                        <div className="form-group" style={{ marginBottom: isKiosk ? 0 : '0.8rem' }}>
                             <label>Telefon <span style={{ color: '#FF6B6B' }}>*</span></label>
                             <input
                                 className={`form-input ${errors.phone ? 'error' : ''}`}
@@ -204,7 +204,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                             {errors.phone && <span className="form-error">{errors.phone.message}</span>}
                         </div>
 
-                        <div style={{ marginTop: '1.5rem', marginBottom: isKiosk ? '2rem' : '1rem' }}>
+                        <div style={{ marginTop: '0.8rem', marginBottom: isKiosk ? '2rem' : '1rem' }}>
                             <div className="checkbox-group" style={{ padding: isKiosk ? '0' : '0 8px' }}>
                                 <input
                                     type="checkbox"
