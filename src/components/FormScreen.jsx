@@ -205,7 +205,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                         </div>
 
                         <div style={{ marginTop: '1.5rem', marginBottom: isKiosk ? '0' : '1rem' }}>
-                            <div className="checkbox-group" style={{ padding: isKiosk ? '0' : '0 12px' }}>
+                            <div className="checkbox-group" style={{ padding: isKiosk ? '0' : '0 8px' }}>
                                 <input
                                     type="checkbox"
                                     id="confirm"

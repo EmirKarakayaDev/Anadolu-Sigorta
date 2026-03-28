@@ -207,7 +207,7 @@ Alt Veri İşleyenin Tam Adı | Adresi | Veri İşleyen’e Sunduğu Hizmet
                         <div className="checkbox-group" style={{
                             marginTop: '1.5rem',
                             marginBottom: isKiosk ? '2rem' : '1rem',
-                            padding: isKiosk ? '0' : '0 1.2rem'
+                            padding: isKiosk ? '0' : '0 8px'
                         }}>
                             <input
                                 type="checkbox"
