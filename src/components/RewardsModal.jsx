@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Trophy, Gift, Plane, Info } from 'lucide-react';
+import { X, Trophy, Gift, Plane, Info, Ticket } from 'lucide-react';
 
 export function RewardsModal({ isOpen, onClose, isKiosk }) {
     return (
@@ -69,7 +69,7 @@ export function RewardsModal({ isOpen, onClose, isKiosk }) {
                             {/* 1-3 */}
                             <div style={{ display: 'flex', alignItems: 'center', gap: isKiosk ? '2rem' : '1.2rem', padding: isKiosk ? '1.8rem' : '1.2rem', background: 'rgba(33, 88, 217, 0.05)', borderRadius: isKiosk ? '2rem' : '1.5rem', border: '1px solid rgba(33, 88, 217, 0.1)' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: isKiosk ? '80px' : '56px', height: isKiosk ? '80px' : '56px', background: 'rgba(255, 215, 0, 0.1)', borderRadius: isKiosk ? '1.2rem' : '1rem' }}>
-                                    <Trophy size={isKiosk ? 48 : 32} color="#FFD700" />
+                                    <Gift size={isKiosk ? 48 : 32} color="#FFD700" />
                                 </div>
                                 <div style={{ flex: 1 }}>
                                     <div style={{ fontWeight: 900, color: 'var(--as-blue)', fontSize: isKiosk ? '1.6rem' : '1.1rem' }}>1 - 3. Sıra</div>
@@ -80,11 +80,11 @@ export function RewardsModal({ isOpen, onClose, isKiosk }) {
                             {/* 4-5 */}
                             <div style={{ display: 'flex', alignItems: 'center', gap: isKiosk ? '2rem' : '1.2rem', padding: isKiosk ? '1.8rem' : '1.2rem', background: 'rgba(255, 107, 107, 0.05)', borderRadius: isKiosk ? '2rem' : '1.5rem', border: '1px solid rgba(255, 107, 107, 0.1)' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: isKiosk ? '80px' : '56px', height: isKiosk ? '80px' : '56px', background: 'rgba(255, 107, 107, 0.1)', borderRadius: isKiosk ? '1.2rem' : '1rem' }}>
-                                    <Gift size={isKiosk ? 48 : 32} color="#FF6B6B" />
+                                    <Ticket size={isKiosk ? 48 : 32} color="#FF6B6B" />
                                 </div>
                                 <div style={{ flex: 1 }}>
                                     <div style={{ fontWeight: 900, color: '#FF6B6B', fontSize: isKiosk ? '1.6rem' : '1.1rem' }}>4 - 5. Sıra</div>
-                                    <div style={{ color: '#555', fontSize: isKiosk ? '1.3rem' : '0.9rem', fontWeight: 700 }}>AS Hediye Paketi</div>
+                                    <div style={{ color: '#555', fontSize: isKiosk ? '1.3rem' : '0.9rem', fontWeight: 700 }}>Hediye Bileti</div>
                                 </div>
                             </div>
 

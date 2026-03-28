@@ -258,8 +258,8 @@ export function FormScreen({ onSubmit, isKiosk }) {
                             Kaydet ve Başla
                         </button>
 
-                        {/* Test butonu sadece geliştirme ortamında görünür */}
-                        {import.meta.env.DEV && (
+                        {/* Test butonu geliştirme ortamında VEYA URL'de ?test=true varsa görünür */}
+                        {(import.meta.env.DEV || new URLSearchParams(window.location.search).has('test')) && (
                             <button
                                 type="button"
                                 className="btn-text-link"

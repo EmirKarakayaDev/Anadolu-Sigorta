@@ -7,6 +7,19 @@ body.kiosk {
   /* Kiosk base font — tüm rem değerleri buna göredir */
   overflow: hidden;
   /* Sayfa kaydırması yok, her şey play zone'a sığar */
+
+  /* Yüksek Çözünürlüklü Keskinlik Ayarları */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  image-rendering: -webkit-optimize-contrast;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Kiosktaki tüm metinler için subpixel rendering iyileştirmesi */
+body.kiosk * {
+  text-rendering: optimizeLegibility;
 }
 
 /* .screen'in mobil için yaptığı dikey ortalama ve padding kiosk'ta sıfırlanıyor.

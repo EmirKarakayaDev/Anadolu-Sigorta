@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Trophy, Medal, Home, RefreshCcw, Loader2, Gift, Plane, Info } from 'lucide-react';
+import { Trophy, Medal, Home, RefreshCcw, Loader2, Gift, Plane, Info, Ticket } from 'lucide-react';
 import { getTopScores, getUserRank } from '../supabase';
 import { RewardsModal } from './RewardsModal';
 
@@ -50,25 +50,12 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
         const size = isKiosk ? 48 : 26;
         const idx = Number(index);
 
-        if (idx === 0) {
+        if (idx >= 0 && idx <= 2) {
+            const colors = ["#FFD700", "#C0C0C0", "#CD7F32"]; // Gold, Silver, Bronze
             return (
                 <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <div style={{ position: 'absolute', width: isKiosk ? '65px' : '35px', height: isKiosk ? '65px' : '35px', borderRadius: '50%', background: 'rgba(255, 215, 0, 0.2)', filter: 'blur(8px)' }} />
-                    <Trophy size={size} color="#FFD700" style={{ filter: 'drop-shadow(0 0 5px rgba(255, 215, 0, 0.5))' }} />
-                </div>
-            );
-        }
-        if (idx === 1) {
-            return (
-                <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Medal size={size} color="#C0C0C0" style={{ filter: 'drop-shadow(0 0 5px rgba(192, 192, 192, 0.4))' }} />
-                </div>
-            );
-        }
-        if (idx === 2) {
-            return (
-                <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Medal size={size} color="#CD7F32" style={{ filter: 'drop-shadow(0 0 5px rgba(205, 127, 50, 0.4))' }} />
+                    {idx === 0 && <div style={{ position: 'absolute', width: isKiosk ? '65px' : '35px', height: isKiosk ? '65px' : '35px', borderRadius: '50%', background: 'rgba(255, 215, 0, 0.2)', filter: 'blur(8px)' }} />}
+                    <Gift size={size} color={colors[idx]} style={{ filter: `drop-shadow(0 0 5px ${colors[idx]}66)` }} />
                 </div>
             );
         }
@@ -76,7 +63,7 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
         if (idx === 3 || idx === 4) {
             return (
                 <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Gift size={size} color="#FF6B6B" style={{ filter: 'drop-shadow(0 0 5px rgba(255, 107, 107, 0.4))' }} />
+                    <Ticket size={size} color="#FF6B6B" style={{ filter: 'drop-shadow(0 0 5px rgba(255, 107, 107, 0.4))' }} />
                 </div>
             );
         }
