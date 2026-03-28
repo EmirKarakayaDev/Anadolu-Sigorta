@@ -9,8 +9,8 @@
  * PLAY ZONE TANIMI:
  *   Toplam yükseklik : 1920px
  *   Üst padding      :   80px  (ekranın tepesinden boşluk)
- *   Alt safe zone    :  420px  (kullanıcı diz kırmamalı)
- *   Oynanabilir alan : 1420px  ← tüm içerik bu alanda kalır
+ *   Alt safe zone    :  520px  (kullanıcı diz kırmamalı)
+ *   Oynanabilir alan : 1320px  ← tüm içerik bu alanda kalır
  * ============================================================
  */
 
@@ -51,8 +51,8 @@ body.kiosk .brand-layout-full {
 body.kiosk .brand-layout-full::after {
   content: "";
   display: block;
-  min-height: 420px;
-  height: 420px;
+  min-height: 520px;
+  height: 520px;
   width: 100%;
   flex-shrink: 0;
 }
@@ -82,12 +82,12 @@ body.kiosk .brand-logo {
 }
 
 /* KVKK gibi başlığı olan sayfalarda logodan sonraki mesafe */
-body.kiosk .brand-logo + h1 {
+body.kiosk .brand-logo+h1 {
   margin-top: 2rem !important;
 }
 
 /* Giriş formu gibi doğrudan form gelen sayfalarda logodan sonraki mesafe */
-body.kiosk .brand-logo + form {
+body.kiosk .brand-logo+form {
   margin-top: 8rem !important;
 }
 
@@ -95,6 +95,23 @@ body.kiosk .main-graphic {
   max-width: 580px;
   z-index: 2;
   display: block;
+}
+
+/* ─────────────────────────────────────────
+   LOGO YAPIŞTIRMA (Absolute Bottom)
+   ───────────────────────────────────────── */
+
+body.kiosk .kiosk-logo-fixed {
+  position: absolute !important;
+  bottom: 120px !important;
+  /* Ekranın alt boşluğunun (520px) tam ortasına ortalar */
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 360px !important;
+  /* Logo boyutu artırıldı */
+  height: auto !important;
+  z-index: 100 !important;
+  margin: 0 !important;
 }
 
 /* ─────────────────────────────────────────
@@ -170,6 +187,8 @@ body.kiosk .checkbox-group input {
   width: 32px;
   height: 32px;
   margin-top: 0px;
+  margin-left: 4px !important;
+  /* Her zaman sabit durması için buraya taşındı */
 }
 
 body.kiosk .brand-screen form {
@@ -178,7 +197,6 @@ body.kiosk .brand-screen form {
 
 /* Hata durumunda kırmızılığın soldan kırpılmaması için küçük bir nefes payı */
 body.kiosk .checkbox-group input.checkbox-error {
-  margin-left: 4px !important;
   outline-offset: 3px !important;
   /* Daha belirgin olması için */
 }
@@ -199,15 +217,20 @@ body.kiosk .brand-screen h2 {
   text-align: center;
 }
 
+/* Sadece Giriş Formu (h2) başlığından sonraki formun mesafesini artırır */
+body.kiosk .brand-screen h2+form {
+  margin-top: 2rem !important;
+}
+
 body.kiosk .kvkk-container {
   font-size: 1.55rem;
-  /* Dikey denge noktası: Ne butonları ezen 820px, ne de yukarıda kalan 720px; tam kararı 765px */
-  max-height: 765px !important;
+  /* Dikey denge noktası: Dengeyi bozmadan en uzun metin kutusu için 860px yapıldı */
+  max-height: 860px !important;
   line-height: 1.7;
   padding: 0 1.2rem !important;
   /* Dikey padding tamamen sıfırlandı */
-  margin: 1.2rem 0 !important;
-  /* Üst ve alttan yapışmasını engelleyen emniyet mesafesi */
+  margin: 1.2rem 0 0.4rem 0 !important;
+  /* Üstten 1.2rem, alttan 0.4rem emniyet mesafesi */
 }
 
 /* ─────────────────────────────────────────
@@ -241,13 +264,13 @@ body.kiosk .virtual-keyboard-container {
   bottom: 0;
   left: 0;
   width: 100vw;
-  height: 580px;
-  /* 5 sıra tuş için ideal yükseklik */
+  height: 780px;
+  /* 5 sıra tuş için ideal yükseklik + 200px alt boşluk */
   background: rgba(15, 23, 42, 0.9);
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border-top: 2px solid rgba(255, 255, 255, 0.15);
-  padding: 1.5rem;
+  padding: 1.5rem 1.5rem 200px 1.5rem !important;
   z-index: 1000;
   display: flex;
   flex-direction: column;

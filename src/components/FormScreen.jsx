@@ -70,17 +70,16 @@ export function FormScreen({ onSubmit, isKiosk }) {
         >
             <div className="brand-layout-full">
 
-                <div 
-                    className="brand-screen"
-                    style={isKiosk && hasErrors ? { height: '1550px', minHeight: '1550px' } : {}}
-                >
-                    <motion.img
-                        src="/logo_trn.png"
-                        alt="Kaybetmek Yok"
-                        className="brand-logo"
-                        initial={{ y: -20, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                    />
+                <div className="brand-screen">
+                    {!isKiosk && (
+                        <motion.img
+                            src="/logo_trn.png"
+                            alt="Kaybetmek Yok"
+                            className="brand-logo"
+                            initial={{ y: -20, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                        />
+                    )}
 
                     <motion.h2
                         initial={{ y: -10, opacity: 0 }}
@@ -98,12 +97,13 @@ export function FormScreen({ onSubmit, isKiosk }) {
                     </motion.h2>
 
                     <motion.form
+                        id="kiosk-form"
                         onSubmit={handleSubmit(onSubmit)}
                         style={{
                             width: '100%',
                             display: 'flex',
                             flexDirection: 'column',
-                            flex: 1
+                            flex: isKiosk ? 1 : 'none'
                         }}
                     >
                         <div style={{
@@ -121,6 +121,7 @@ export function FormScreen({ onSubmit, isKiosk }) {
                                     placeholder="Ad" 
                                     onFocus={() => isKiosk && setActiveField({ name: 'firstName', type: 'text' })}
                                     inputMode={isKiosk ? 'none' : 'text'}
+                                    autoComplete="off"
                                 />
                                 {errors.firstName && <span className="form-error">{errors.firstName.message}</span>}
                             </div>
@@ -132,6 +133,7 @@ export function FormScreen({ onSubmit, isKiosk }) {
                                     placeholder="Soyad" 
                                     onFocus={() => isKiosk && setActiveField({ name: 'lastName', type: 'text' })}
                                     inputMode={isKiosk ? 'none' : 'text'}
+                                    autoComplete="off"
                                 />
                                 {errors.lastName && <span className="form-error">{errors.lastName.message}</span>}
                             </div>
@@ -146,6 +148,7 @@ export function FormScreen({ onSubmit, isKiosk }) {
                                 type="email"
                                 onFocus={() => isKiosk && setActiveField({ name: 'email', type: 'text' })}
                                 inputMode={isKiosk ? 'none' : 'email'}
+                                autoComplete="off"
                             />
                             {errors.email && <span className="form-error">{errors.email.message}</span>}
                         </div>
@@ -159,6 +162,7 @@ export function FormScreen({ onSubmit, isKiosk }) {
                                 inputMode={isKiosk ? 'none' : 'numeric'}
                                 maxLength={11}
                                 onFocus={() => isKiosk && setActiveField({ name: 'tcNumber', type: 'tel' })}
+                                autoComplete="off"
                             />
                             {errors.tcNumber && <span className="form-error">{errors.tcNumber.message}</span>}
                         </div>
@@ -175,6 +179,7 @@ export function FormScreen({ onSubmit, isKiosk }) {
                                 inputMode={isKiosk ? 'none' : 'numeric'}
                                 maxLength={11}
                                 onFocus={() => isKiosk && setActiveField({ name: 'phone', type: 'tel' })}
+                                autoComplete="off"
                             />
                             {errors.phone && <span className="form-error">{errors.phone.message}</span>}
                         </div>
@@ -190,33 +195,56 @@ export function FormScreen({ onSubmit, isKiosk }) {
                                 <label htmlFor="confirm">Verdiğim bilgilerin doğruluğunu onaylıyorum <span style={{ color: '#FF6B6B' }}>*</span></label>
                             </div>
                         </div>
-
-                        <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '0.4rem', alignItems: 'center' }}>
-                            <button type="submit" className="btn-primary">
-                                Kaydet ve Başla
-                            </button>
-
-                            {/* Test butonu sadece geliştirme ortamında görünür, production'da (kiosk dahil) gizlenir */}
-                            {import.meta.env.DEV && (
-                                <button
-                                    type="button"
-                                    className="btn-text-link"
-                                    onClick={() => {
-                                        setValue('firstName', 'Test');
-                                        setValue('lastName', 'Kullanıcı');
-                                        setValue('email', 'test@test.com');
-                                        setValue('tcNumber', '11111111111');
-                                        setValue('phone', '5551112233');
-                                        setValue('confirm', true, { shouldValidate: true });
-                                    }}
-                                    style={{ textDecoration: 'underline', color: 'rgba(255, 255, 255, 0.4)' }}
-                                >
-                                    Test Modu (Hızlı Geçiş)
-                                </button>
-                            )}
-                        </div>
                     </motion.form>
+
+                    {/* Bottom Buttons - Stationary outside form so they stick to bottom of parent */}
+                    <div style={{ 
+                        marginTop: isKiosk ? '0' : '1.5rem', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        gap: '0.4rem', 
+                        alignItems: 'center',
+                        width: '100%',
+                        paddingBottom: isKiosk ? '1rem' : '0'
+                    }}>
+                        <button 
+                            type="submit" 
+                            form="kiosk-form"
+                            className="btn-primary"
+                        >
+                            Kaydet ve Başla
+                        </button>
+
+                        {/* Test butonu sadece geliştirme ortamında görünür */}
+                        {import.meta.env.DEV && (
+                            <button
+                                type="button"
+                                className="btn-text-link"
+                                onClick={() => {
+                                    setValue('firstName', 'Test');
+                                    setValue('lastName', 'Kullanıcı');
+                                    setValue('email', 'test@test.com');
+                                    setValue('tcNumber', '11111111111');
+                                    setValue('phone', '5551112233');
+                                    setValue('confirm', true, { shouldValidate: true });
+                                }}
+                                style={{ textDecoration: 'underline', color: 'rgba(255, 255, 255, 0.4)' }}
+                            >
+                                Test Modu (Hızlı Geçiş)
+                            </button>
+                        )}
+                    </div>
                 </div>
+
+                {isKiosk && (
+                    <motion.img
+                        src="/logo_trn.png"
+                        alt="Kaybetmek Yok"
+                        className="brand-logo kiosk-logo-fixed"
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                    />
+                )}
             </div>
 
             {/* Virtual Keyboard */}

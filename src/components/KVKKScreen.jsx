@@ -171,82 +171,93 @@ Alt Veri İşleyenin Tam Adı | Adresi | Veri İşleyen’e Sunduğu Hizmet
         >
             <div className="brand-layout-full">
                 <div className="brand-screen">
-                    <img
-                        src="/logo_trn.png"
-                        alt="Anadolu Sigorta"
-                        className="brand-logo"
-                        style={{ height: 'auto' }}
-                    />
+                    {!isKiosk && (
+                        <img
+                            src="/logo_trn.png"
+                            alt="Anadolu Sigorta"
+                            className="brand-logo"
+                            style={{ height: 'auto' }}
+                        />
+                    )}
 
+                    {/* Block 1: Header */}
                     <h1 style={{
-                        // Kiosk modunda fontSize'ı undefined bırak → kiosk.css'deki 2.5rem kuralı devreye girer
-                        // Mobil: isMobile ? 1.4rem : 1.8rem (değişmedi)
                         fontSize: isKiosk ? undefined : (isMobile ? '1.4rem' : '1.8rem'),
                         fontWeight: 800,
                         textAlign: 'center',
                         marginTop: '0',
-                        marginBottom: '-5px'
+                        marginBottom: isKiosk ? '1rem' : '-5px'
                     }}>
                         Aydınlatma Metni
                     </h1>
 
-                    <div className="kvkk-container">
-                        {kvkkText}
+                    {/* Block 2: Middle - Text Box + Tick Box Together */}
+                    <div className="kvkk-mid-block" style={{ 
+                        flex: isKiosk ? 1 : 'none', 
+                        display: 'flex', 
+                        flexDirection: 'column',
+                        width: '100%'
+                    }}>
+                        <div className="kvkk-container">
+                            {kvkkText}
+                        </div>
+
+                        {/* Checkbox - Immediately below the text box */}
+                        <div className="checkbox-group" style={{ 
+                            marginTop: isKiosk ? '1.5rem' : '0.5rem',
+                            marginBottom: isKiosk ? '2rem' : '0'
+                        }}>
+                            <input 
+                                type="checkbox" 
+                                id="kvkk-confirm" 
+                                className={showError && !isChecked ? 'checkbox-error' : ''} 
+                                checked={isChecked}
+                                onChange={(e) => {
+                                    setIsChecked(e.target.checked);
+                                    if (e.target.checked) setShowError(false);
+                                }}
+                            />
+                            <label htmlFor="kvkk-confirm">
+                                Aydınlatma metnini okudum ve onaylıyorum <span style={{ color: '#FF6B6B' }}>*</span>
+                            </label>
+                        </div>
                     </div>
 
-                    {/* Action Group: Checkbox ve Butonları tek paket yapıyoruz */}
+                    {/* Block 3: Action Buttons at the extreme bottom */}
                     <div className="action-group" style={{ 
                         width: '100%', 
                         display: 'flex', 
-                        flexDirection: 'column', 
-                        gap: isKiosk ? '2.5rem' : '1rem', // Checkbox ile Butonlar arası mesafe azaldı (mobilde)
-                        marginTop: isKiosk ? '0' : 'auto' 
+                        gap: isKiosk ? '1.5rem' : '1rem',
+                        flexDirection: (isKiosk || isMobile) ? 'column' : 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginTop: isKiosk ? '0' : 'auto',
+                        paddingBottom: isKiosk ? '1rem' : '0'
                     }}>
-                        {/* Checkbox */}
-                        <div style={{ marginBottom: '0', width: '100%' }}>
-                            <div className="checkbox-group">
-                                <input 
-                                    type="checkbox" 
-                                    id="kvkk-confirm" 
-                                    className={showError && !isChecked ? 'checkbox-error' : ''} 
-                                    checked={isChecked}
-                                    onChange={(e) => {
-                                        setIsChecked(e.target.checked);
-                                        if (e.target.checked) setShowError(false);
-                                    }}
-                                />
-                                <label htmlFor="kvkk-confirm">
-                                    Aydınlatma metnini okudum ve onaylıyorum <span style={{ color: '#FF6B6B' }}>*</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        {/* Buttons Container */}
-                        <div style={{
-                            display: 'flex',
-                            gap: isKiosk ? '1.2rem' : '1rem', // Butonlar arası mesafe artırıldı
-                            width: '100%',
-                            flexDirection: (isKiosk || isMobile) ? 'column' : 'row',
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                        }}>
-                            <button
-                                className="btn-primary"
-                                style={{ flex: 1, width: '100%' }}
-                                onClick={handleAcceptClick}
-                            >
-                                Onayla ve Devam Et
-                            </button>
-                            <button
-                                className="btn-outline"
-                                style={{ flex: 1, width: '100%' }}
-                                onClick={onDecline}
-                            >
-                                Geri Dön
-                            </button>
-                        </div>
+                        <button
+                            className="btn-primary"
+                            style={{ flex: 1, width: '100%' }}
+                            onClick={handleAcceptClick}
+                        >
+                            Onayla ve Devam Et
+                        </button>
+                        <button
+                            className="btn-outline"
+                            style={{ flex: 1, width: '100%' }}
+                            onClick={onDecline}
+                        >
+                            Geri Dön
+                        </button>
                     </div>
                 </div>
+
+                {isKiosk && (
+                    <img
+                        src="/logo_trn.png"
+                        alt="Anadolu Sigorta"
+                        className="brand-logo kiosk-logo-fixed"
+                    />
+                )}
             </div>
         </motion.div>
     );
