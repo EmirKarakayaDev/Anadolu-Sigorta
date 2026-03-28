@@ -202,9 +202,9 @@ Alt Veri İşleyenin Tam Adı | Adresi | Veri İşleyen’e Sunduğu Hizmet
                             {kvkkText}
                         </div>
 
-                        {/* Checkbox - Immediately below the text box */}
+                        {/* Checkbox - Separated with consistent 1.2rem margin for better layout */}
                         <div className="checkbox-group" style={{
-                            marginTop: isKiosk ? '1.5rem' : '0.5rem',
+                            marginTop: isKiosk ? '1.5rem' : '1.2rem',
                             marginBottom: isKiosk ? '2rem' : '0'
                         }}>
                             <input

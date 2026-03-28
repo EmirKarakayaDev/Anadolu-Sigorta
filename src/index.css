@@ -264,7 +264,8 @@ body {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem; /* Standart alt boşluk */
+  width: 100%; /* Sola hizalama için tam genişlik */
   cursor: pointer;
 }
 
@@ -290,14 +291,14 @@ body {
 
 /* KVKK / Digital Document Text */
 .kvkk-container {
-  max-height: 38vh;
+  max-height: 42vh; /* Kısıtlayıcı 38vh yerine 42vh'ye çıkarıldı */
   overflow-y: auto;
   background: rgba(0, 0, 0, 0.4);
   padding: 0 1.2rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   margin-bottom: 0;
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   line-height: 1.5;
   text-align: left;
   border-left: 4px solid var(--as-blue-light);
@@ -356,17 +357,35 @@ body {
   align-items: center;
   justify-content: flex-start;
   padding: 3rem 1.5rem 0rem 1.5rem;
+  padding: calc(2.4rem + env(safe-area-inset-top)) 1.5rem calc(0.5rem + env(safe-area-inset-bottom)) 1.5rem; /* Safe Area Desteği */
   overflow-y: auto;
   position: relative;
 }
 
+@media (max-width: 600px) {
+  .brand-layout-full {
+    padding: calc(1.8rem + env(safe-area-inset-top)) 1.2rem calc(0.5rem + env(safe-area-inset-bottom)) 1.2rem;
+  }
+
+  /* Çok dar ekranlarda (iPhone SE gibi) form alanlarını üst üste binmek yerine stackle */
+  #kiosk-form > div:first-child {
+    grid-template-columns: 1fr !important;
+    gap: 0.8rem !important; /* Standart dikey boşluk */
+  }
+
+  .kvkk-container {
+    max-height: 48vh; /* Mobilde daha geniş metin alanı */
+  }
+}
+
 @media (display-mode: browser) {
   .brand-layout-full {
-    padding-top: 0 !important; /* Tam sıfırlanmış, tavan hizasında logo */
+    padding-top: calc(0.3rem + env(safe-area-inset-top)) !important; /* Tarayıcıda tavan mesafesini safe area'ya göre optimize et */
   }
 
   .brand-logo {
     margin-bottom: 0.5rem !important;
+    width: 150px; /* Tarayıcıda biraz daha kompakt */
   }
 }
 
@@ -378,15 +397,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 1.5rem;
+  gap: 1.2rem; /* Mobilde daha sıkı düzen için 1.5rem'den 1.2rem'e çekildi */
   flex: 1;
-  /* Stretch to fill brand-layout-full */
-}
-
-@media (max-width: 600px) {
-  .brand-layout-full {
-    padding: 2.8rem 1.2rem 0rem 1.2rem;
-  }
 }
 
 /* Oyun ekranına özel dikey simetri sağlayan sınıf */
