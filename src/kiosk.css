@@ -13,6 +13,12 @@ body.kiosk {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   image-rendering: -webkit-optimize-contrast;
+  
+  /* Donanım Hızlandırmalı Ölçekleme (DPI Düzeltme) */
+  zoom: 1.1; /* %110 ölçekleme ile pikselleri 'oturtur' */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0); /* GPU render'ı zorlar */
+  perspective: 1000px;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
