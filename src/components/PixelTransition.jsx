@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { audioManager } from '../utils/audioManager';
 
-export function PixelTransition({ onMidpoint, onComplete }) {
+export function PixelTransition({ onMidpoint, onComplete, isKiosk }) {
     const [phase, setPhase] = useState('entering');
 
     useEffect(() => {
@@ -63,9 +63,9 @@ export function PixelTransition({ onMidpoint, onComplete }) {
                             src="/logo_trn.png" 
                             alt="Anadolu Sigorta" 
                             style={{ 
-                                width: '60vw', 
-                                maxWidth: '300px',
-                                filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.4))'
+                                width: isKiosk ? '80vw' : '60vw', 
+                                maxWidth: isKiosk ? '600px' : '300px',
+                                filter: isKiosk ? 'drop-shadow(0 0 40px rgba(255,255,255,0.4))' : 'drop-shadow(0 0 20px rgba(255,255,255,0.4))'
                             }} 
                         />
                     </motion.div>

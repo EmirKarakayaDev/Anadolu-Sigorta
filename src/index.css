@@ -17,6 +17,7 @@
 
 html {
   background-color: var(--as-blue);
+  overscroll-behavior: none;
 }
 
 * {
@@ -47,6 +48,7 @@ body {
   font-family: var(--font-main);
   background-color: var(--as-blue);
   background-attachment: fixed;
+  overscroll-behavior: none;
   color: var(--text);
   overflow: hidden;
   height: 100dvh;
@@ -299,10 +301,10 @@ body.checkerboard-active {
 
 /* KVKK / Digital Document Text */
 .kvkk-container {
-  max-height: 45vh;
+  max-height: 38vh;
   overflow-y: auto;
   background: rgba(0, 0, 0, 0.4);
-  padding: 1.2rem;
+  padding: 0 1.2rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   margin-bottom: 0;

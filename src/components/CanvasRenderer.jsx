@@ -1,13 +1,15 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { BLOCK_SIZE, COLORS, PIECE_ASSETS, PIECE_DIMENSIONS } from '../game/constants';
 
-export function CanvasRenderer({ grid, activePiece, ghostPiece, trail, isSettling, clearingLines = [], clearingStage = 0, images = {} }) {
+export function CanvasRenderer({ grid, activePiece, ghostPiece, trail, isSettling, clearingLines = [], clearingStage = 0, images = {}, isKiosk = false }) {
     const canvasRef = useRef(null);
+    const KIOSK_BLOCK_SIZE = 58; // Devasa dikey doluluk için optimize edildi (1080x1920 Kiosk)
+    const blockSize = isKiosk ? KIOSK_BLOCK_SIZE : BLOCK_SIZE;
 
     const drawBlock = (ctx, x, y, type, pX = 0, pY = 0, pShape = null, highlight = false, isGhost = false, isClearing = false, blockX = 0, rotation = 0) => {
-        const size = BLOCK_SIZE;
-        const px = x * BLOCK_SIZE;
-        const py = y * BLOCK_SIZE;
+        const size = blockSize;
+        const px = x * blockSize;
+        const py = y * blockSize;
 
         if (isClearing) {
             const distFromCenter = Math.abs(blockX - 4.5);
@@ -37,8 +39,13 @@ export function CanvasRenderer({ grid, activePiece, ghostPiece, trail, isSettlin
         const img = images[type];
         if (img && !isGhost) {
             const dims = PIECE_DIMENSIONS[type] || { w: 1, h: 1 };
-            const unit = img.width / dims.w;
-            const unitH = img.height / dims.h;
+            
+            // Use naturalWidth for consistent SVG coordinate mapping
+            const sW = img.naturalWidth || img.width;
+            const sH = img.naturalHeight || img.height;
+            
+            const unit = sW / dims.w;
+            const unitH = sH / dims.h;
             
             ctx.save();
             ctx.imageSmoothingEnabled = true;
@@ -97,7 +104,21 @@ export function CanvasRenderer({ grid, activePiece, ghostPiece, trail, isSettlin
         const canvas = canvasRef.current;
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // High-DPI (Retina) scaling
+        const dpr = window.devicePixelRatio || 1;
+        const logicalWidth = grid[0].length * blockSize;
+        const logicalHeight = grid.length * blockSize;
+
+        if (canvas.width !== logicalWidth * dpr || canvas.height !== logicalHeight * dpr) {
+            canvas.width = logicalWidth * dpr;
+            canvas.height = logicalHeight * dpr;
+            canvas.style.width = `${logicalWidth}px`;
+            canvas.style.height = `${logicalHeight}px`;
+        }
+
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.clearRect(0, 0, logicalWidth, logicalHeight);
 
         // Draw Base Grid Lines (Subtle)
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
@@ -106,16 +127,16 @@ export function CanvasRenderer({ grid, activePiece, ghostPiece, trail, isSettlin
         // Vertical lines
         for (let x = 0; x <= grid[0].length; x++) {
             ctx.beginPath();
-            ctx.moveTo(x * BLOCK_SIZE, 0);
-            ctx.lineTo(x * BLOCK_SIZE, canvas.height);
+            ctx.moveTo(x * blockSize, 0);
+            ctx.lineTo(x * blockSize, canvas.height);
             ctx.stroke();
         }
         
         // Horizontal lines
         for (let y = 0; y <= grid.length; y++) {
             ctx.beginPath();
-            ctx.moveTo(0, y * BLOCK_SIZE);
-            ctx.lineTo(canvas.width, y * BLOCK_SIZE);
+            ctx.moveTo(0, y * blockSize);
+            ctx.lineTo(canvas.width, y * blockSize);
             ctx.stroke();
         }
 
@@ -157,16 +178,16 @@ export function CanvasRenderer({ grid, activePiece, ghostPiece, trail, isSettlin
             ctx.globalAlpha = trail.opacity || 1; 
             const color = COLORS[trail.type] || '#fff';
             trail.cols.forEach(col => {
-                const x = col.x * BLOCK_SIZE;
-                const startY_px = trail.startY * BLOCK_SIZE;
-                const endY_px = col.endY * BLOCK_SIZE;
+                const x = col.x * blockSize;
+                const startY_px = trail.startY * blockSize;
+                const endY_px = col.endY * blockSize;
                 const drawHeight = endY_px - startY_px;
                 if (drawHeight > 0) {
                     const gradient = ctx.createLinearGradient(x, startY_px, x, endY_px);
                     gradient.addColorStop(0, 'rgba(255,255,255,0)');
                     gradient.addColorStop(1, color + '44');
                     ctx.fillStyle = gradient;
-                    ctx.fillRect(x, startY_px, BLOCK_SIZE, drawHeight);
+                    ctx.fillRect(x, startY_px, blockSize, drawHeight);
                 }
             });
             ctx.restore();
@@ -193,6 +214,6 @@ export function CanvasRenderer({ grid, activePiece, ghostPiece, trail, isSettlin
         }
     }, [grid, activePiece, ghostPiece, trail, isSettling, clearingLines, clearingStage, images]);
 
-    return <canvas ref={canvasRef} width={300} height={600} style={{ background: '#4a4a4a' }} />;
+    return <canvas ref={canvasRef} width={grid[0].length * blockSize} height={grid.length * blockSize} style={{ background: '#4a4a4a' }} />;
 }
 

@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { RefreshCcw, Trophy, Home } from 'lucide-react';
+import { RefreshCcw, Trophy, Home, Info } from 'lucide-react';
 import { audioManager } from '../utils/audioManager';
+import { RewardsModal } from './RewardsModal';
 
-export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard }) {
+export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, isKiosk }) {
+    const [isRewardsModalOpen, setIsRewardsModalOpen] = useState(false);
+
     useEffect(() => {
         audioManager.startBGM(4); // Skor ekranı müziğine geç (BGM 4)
     }, []);
@@ -17,7 +20,7 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard })
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
         >
-            <div className="brand-screen">
+            <div className="brand-screen" style={isKiosk ? { justifyContent: 'center' } : {}}>
                 {/* Top Graphic - Fixed at top like Menu Logo */}
                 <motion.img 
                     src="/logo_trn.png" 
@@ -36,37 +39,67 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard })
                         flexDirection: 'column',
                         alignItems: 'center',
                         gap: '1rem',
-                        marginTop: '1.5rem' // Logo ile metin grubu arasındaki mesafe
+                        marginTop: isKiosk ? '0' : '1.5rem' // Logo ile metin grubu arasındaki mesafe
                     }}
                     initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.4 }}
                 >
-                    <h2 style={{ 
-                        fontSize: isMobile ? '1.8rem' : '2.5rem', 
-                        fontWeight: 900, 
-                        color: 'white',
-                        margin: '0 0 1.2rem 0', // Alttaki box ile mesafe
-                        textShadow: '0 4px 10px rgba(0,0,0,0.2)'
+                    <div style={{ 
+                        width: '100%', 
+                        position: 'relative', 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center',
+                        marginBottom: isKiosk ? '2rem' : '1.2rem'
                     }}>
-                        {score === 0 ? 'OYUN BİTTİ!' : 'TEBRİKLER!'}
-                    </h2>
+                        <h2 style={{ 
+                            fontSize: isKiosk ? '3.5rem' : (isMobile ? '1.8rem' : '2.5rem'), 
+                            fontWeight: 900, 
+                            color: 'white',
+                            margin: 0,
+                            textAlign: 'center',
+                            textShadow: '0 4px 10px rgba(0,0,0,0.2)'
+                        }}>
+                            {score === 0 ? 'OYUN BİTTİ!' : 'TEBRİKLER!'}
+                        </h2>
+                        <button 
+                            onClick={() => setIsRewardsModalOpen(true)}
+                            style={{ 
+                                position: 'absolute',
+                                right: 0,
+                                background: 'rgba(255,255,255,0.2)', 
+                                border: '1px solid rgba(255,255,255,0.4)', 
+                                borderRadius: '50%', 
+                                width: isKiosk ? '64px' : '36px', 
+                                height: isKiosk ? '64px' : '36px', 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                justifyContent: 'center',
+                                color: 'white',
+                                cursor: 'pointer',
+                                backdropFilter: 'blur(5px)'
+                            }}
+                        >
+                            <Info size={isKiosk ? 32 : 20} />
+                        </button>
+                    </div>
 
                     {/* Score Card */}
                     <div style={{
                         background: 'white',
-                        padding: isMobile ? '1.5rem' : '2rem',
-                        borderRadius: '2rem',
+                        padding: isKiosk ? '3rem' : (isMobile ? '1.5rem' : '2rem'),
+                        borderRadius: isKiosk ? '3rem' : '2rem',
                         width: '100%',
                         boxShadow: '0 15px 35px rgba(0,0,0,0.2)',
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        gap: '0.5rem'
+                        gap: isKiosk ? '1.5rem' : '0.8rem'
                     }}>
-                        <span style={{ color: 'var(--as-blue)', fontWeight: 800, fontSize: '0.9rem', letterSpacing: '2px' }}>FİNAL SKORU</span>
+                        <span style={{ color: 'var(--as-blue)', fontWeight: 900, fontSize: isKiosk ? '2.2rem' : '1.2rem', letterSpacing: '4px', opacity: 0.7 }}>FİNAL SKORU</span>
                         <span style={{ 
-                            fontSize: isMobile ? '4.5rem' : '5rem', 
+                            fontSize: isKiosk ? '7.5rem' : (isMobile ? '4.5rem' : '5rem'), 
                             fontWeight: 900, 
                             color: 'var(--as-blue)',
                             lineHeight: 1
@@ -82,26 +115,31 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard })
                         width: '100%', 
                         display: 'flex', 
                         flexDirection: 'column', 
-                        gap: '0.8rem',
-                        marginTop: 'auto' // Butonları en alta iter
+                        gap: isKiosk ? '1.2rem' : '0.8rem',
+                        alignItems: 'center',
+                        marginTop: isKiosk ? '4rem' : 'auto' // Kioskta dikey merkezleme için auto'yu kaldırdık
                     }}
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.6 }}
                 >
-                    <button className="btn-primary" onClick={onShowLeaderboard}>
+                    <button className={isKiosk ? "btn-outline" : "btn-primary"} onClick={onShowLeaderboard}>
                         Skor Tablosu
                     </button>
  
-                    <button className="btn-outline" onClick={onPlayAgain}>
-                        Yeniden Oyna 
-                    </button>
+                    {!isKiosk && (
+                        <button className="btn-outline" onClick={onPlayAgain}>
+                            Yeniden Oyna 
+                        </button>
+                    )}
  
-                    <button className="btn-text-link" onClick={onReset}>
-                        <Home size={16} /> Ana Ekran
+                    <button className={isKiosk ? "btn-primary" : "btn-text-link"} onClick={onReset}>
+                        <Home size={isKiosk ? 24 : 16} style={{ marginRight: isKiosk ? '12px' : '4px' }} /> Ana Ekran
                     </button>
                 </motion.div>
             </div>
+
+            <RewardsModal isOpen={isRewardsModalOpen} onClose={() => setIsRewardsModalOpen(false)} isKiosk={isKiosk} />
         </motion.div>
     );
 }

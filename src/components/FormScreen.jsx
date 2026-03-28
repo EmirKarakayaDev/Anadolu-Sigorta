@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import { VirtualKeyboard } from './VirtualKeyboard';
 
 const schema = z.object({
     firstName: z.string().min(2, "Ad en az 2 karakter olmalıdır"),
@@ -13,14 +14,41 @@ const schema = z.object({
     confirm: z.boolean().refine(v => v === true, "Onaylanmalıdır")
 });
 
-export function FormScreen({ onSubmit }) {
-    const { register, handleSubmit, formState: { errors } } = useForm({
+export function FormScreen({ onSubmit, isKiosk }) {
+    const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm({
         resolver: zodResolver(schema),
         defaultValues: {
-            confirm: false
+            confirm: false,
+            firstName: '',
+            lastName: '',
+            email: '',
+            tcNumber: '',
+            phone: ''
         }
     });
+
+    const [activeField, setActiveField] = useState(null); // { name, type }
     const isMobile = window.innerWidth < 768;
+    const hasErrors = Object.keys(errors).length > 0;
+
+    const handleKey = (key) => {
+        if (!activeField) return;
+        const currentVal = watch(activeField.name) || '';
+        
+        // TC ve Telefon için rakam kontrolü ve 11 hane sınırı
+        if ((activeField.name === 'tcNumber' || activeField.name === 'phone')) {
+            if (!/^\d+$/.test(key)) return;
+            if (currentVal.length >= 11) return;
+        }
+
+        setValue(activeField.name, currentVal + key, { shouldValidate: true });
+    };
+
+    const handleBackspace = () => {
+        if (!activeField) return;
+        const currentVal = watch(activeField.name) || '';
+        setValue(activeField.name, currentVal.slice(0, -1), { shouldValidate: true });
+    };
 
     return (
         <motion.div
@@ -29,10 +57,23 @@ export function FormScreen({ onSubmit }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
+            onClick={(e) => {
+                // Eğer tıklanan yer bir input değilse ve kiosk modundaysak klavyeyi kapat
+                if (isKiosk && e.target.tagName !== 'INPUT' && e.target.closest('.virtual-keyboard-container') === null) {
+                    setActiveField(null);
+                    // Odaklanmış olan inputu bırak
+                    if (document.activeElement instanceof HTMLInputElement) {
+                        document.activeElement.blur();
+                    }
+                }
+            }}
         >
             <div className="brand-layout-full">
-                <div className="brand-screen">
-                    {/* Top Graphic - Fixed at top like Result Screen */}
+
+                <div 
+                    className="brand-screen"
+                    style={isKiosk && hasErrors ? { height: '1550px', minHeight: '1550px' } : {}}
+                >
                     <motion.img
                         src="/logo_trn.png"
                         alt="Kaybetmek Yok"
@@ -41,19 +82,30 @@ export function FormScreen({ onSubmit }) {
                         animate={{ y: 0, opacity: 1 }}
                     />
 
+                    <motion.h2
+                        initial={{ y: -10, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.2 }}
+                        style={{ 
+                            fontSize: isKiosk ? undefined : (isMobile ? '1.4rem' : '1.8rem'),
+                            fontWeight: 800, 
+                            color: 'white', 
+                            margin: isKiosk ? '0 0 1.5rem 0' : '0.5rem 0 1.2rem 0',
+                            textAlign: 'center'
+                        }}
+                    >
+                        Giriş Formu
+                    </motion.h2>
+
                     <motion.form
                         onSubmit={handleSubmit(onSubmit)}
                         style={{
                             width: '100%',
                             display: 'flex',
                             flexDirection: 'column',
-                            flex: 1 // Kalan alanı kaplaması için
+                            flex: 1
                         }}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.2 }}
                     >
-                        {/* Name & Surname Group */}
                         <div style={{
                             display: 'grid',
                             gridTemplateColumns: '1fr 1fr',
@@ -63,40 +115,54 @@ export function FormScreen({ onSubmit }) {
                         }}>
                             <div className="form-group" style={{ marginBottom: 0 }}>
                                 <label>Ad <span style={{ color: '#FF6B6B' }}>*</span></label>
-                                <input className={`form-input ${errors.firstName ? 'error' : ''}`} {...register('firstName')} placeholder="Ad" />
+                                <input 
+                                    className={`form-input ${errors.firstName ? 'error' : ''}`} 
+                                    {...register('firstName')} 
+                                    placeholder="Ad" 
+                                    onFocus={() => isKiosk && setActiveField({ name: 'firstName', type: 'text' })}
+                                    inputMode={isKiosk ? 'none' : 'text'}
+                                />
                                 {errors.firstName && <span className="form-error">{errors.firstName.message}</span>}
                             </div>
                             <div className="form-group" style={{ marginBottom: 0 }}>
                                 <label>Soyad <span style={{ color: '#FF6B6B' }}>*</span></label>
-                                <input className={`form-input ${errors.lastName ? 'error' : ''}`} {...register('lastName')} placeholder="Soyad" />
+                                <input 
+                                    className={`form-input ${errors.lastName ? 'error' : ''}`} 
+                                    {...register('lastName')} 
+                                    placeholder="Soyad" 
+                                    onFocus={() => isKiosk && setActiveField({ name: 'lastName', type: 'text' })}
+                                    inputMode={isKiosk ? 'none' : 'text'}
+                                />
                                 {errors.lastName && <span className="form-error">{errors.lastName.message}</span>}
                             </div>
                         </div>
 
-                        {/* Email */}
                         <div className="form-group" style={{ marginBottom: '0.8rem' }}>
                             <label>E-posta <span style={{ color: '#FF6B6B' }}>*</span></label>
-                            <input className={`form-input ${errors.email ? 'error' : ''}`} {...register('email')} placeholder="adiniz@ornek.com" />
+                            <input 
+                                className={`form-input ${errors.email ? 'error' : ''}`} 
+                                {...register('email')} 
+                                placeholder="adiniz@ornek.com"
+                                type="email"
+                                onFocus={() => isKiosk && setActiveField({ name: 'email', type: 'text' })}
+                                inputMode={isKiosk ? 'none' : 'email'}
+                            />
                             {errors.email && <span className="form-error">{errors.email.message}</span>}
                         </div>
 
-                        {/* T.C. Number */}
                         <div className="form-group" style={{ marginBottom: '0.8rem' }}>
                             <label>T.C. Kimlik Numarası <span style={{ color: '#FF6B6B' }}>*</span></label>
                             <input
                                 className={`form-input ${errors.tcNumber ? 'error' : ''}`}
-                                {...register('tcNumber', {
-                                    onChange: (e) => e.target.value = e.target.value.replace(/\D/g, '')
-                                })}
+                                {...register('tcNumber')}
                                 placeholder="11 haneli T.C. kimlik numaranız"
-                                inputMode="numeric"
-                                pattern="[0-9]*"
+                                inputMode={isKiosk ? 'none' : 'numeric'}
                                 maxLength={11}
+                                onFocus={() => isKiosk && setActiveField({ name: 'tcNumber', type: 'tel' })}
                             />
                             {errors.tcNumber && <span className="form-error">{errors.tcNumber.message}</span>}
                         </div>
 
-                        {/* Phone */}
                         <div className="form-group" style={{ marginBottom: '1.2rem' }}>
                             <label>Telefon <span style={{ color: '#FF6B6B' }}>*</span></label>
                             <input
@@ -106,13 +172,13 @@ export function FormScreen({ onSubmit }) {
                                 })}
                                 placeholder="05xx xxx xx xx"
                                 type="tel"
-                                inputMode="numeric"
+                                inputMode={isKiosk ? 'none' : 'numeric'}
                                 maxLength={11}
+                                onFocus={() => isKiosk && setActiveField({ name: 'phone', type: 'tel' })}
                             />
                             {errors.phone && <span className="form-error">{errors.phone.message}</span>}
                         </div>
 
-                        {/* Checkboxes */}
                         <div style={{ marginBottom: '1.2rem' }}>
                             <div className="checkbox-group">
                                 <input
@@ -125,31 +191,50 @@ export function FormScreen({ onSubmit }) {
                             </div>
                         </div>
 
-                        {/* Actions Group - Pushed to bottom */}
-                        <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                        <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '0.4rem', alignItems: 'center' }}>
                             <button type="submit" className="btn-primary">
                                 Kaydet ve Başla
                             </button>
 
-                            <button
-                                type="button"
-                                className="btn-text-link"
-                                onClick={() => onSubmit({
-                                    firstName: 'Test',
-                                    lastName: 'Kullanıcı',
-                                    email: 'test@test.com',
-                                    tcNumber: '11111111111',
-                                    phone: '5551112233',
-                                    confirm: true
-                                })}
-                                style={{ textDecoration: 'underline', color: 'rgba(255, 255, 255, 0.4)' }}
-                            >
-                                Test Modu (Hızlı Geçiş)
-                            </button>
+                            {/* Test butonu sadece geliştirme ortamında görünür, production'da (kiosk dahil) gizlenir */}
+                            {import.meta.env.DEV && (
+                                <button
+                                    type="button"
+                                    className="btn-text-link"
+                                    onClick={() => {
+                                        setValue('firstName', 'Test');
+                                        setValue('lastName', 'Kullanıcı');
+                                        setValue('email', 'test@test.com');
+                                        setValue('tcNumber', '11111111111');
+                                        setValue('phone', '5551112233');
+                                        setValue('confirm', true, { shouldValidate: true });
+                                    }}
+                                    style={{ textDecoration: 'underline', color: 'rgba(255, 255, 255, 0.4)' }}
+                                >
+                                    Test Modu (Hızlı Geçiş)
+                                </button>
+                            )}
                         </div>
                     </motion.form>
                 </div>
             </div>
+
+            {/* Virtual Keyboard */}
+            {isKiosk && (
+                <VirtualKeyboard 
+                    visible={!!activeField}
+                    type={activeField?.type}
+                    onKey={handleKey}
+                    onBackspace={handleBackspace}
+                    onSpace={() => handleKey(' ')}
+                    onDone={() => {
+                        setActiveField(null);
+                        if (document.activeElement instanceof HTMLInputElement) {
+                            document.activeElement.blur();
+                        }
+                    }}
+                />
+            )}
         </motion.div>
     );
 }

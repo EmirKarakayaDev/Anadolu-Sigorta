@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
-export function KVKKScreen({ onAccept, onDecline }) {
+export function KVKKScreen({ onAccept, onDecline, isKiosk }) {
     const [isChecked, setIsChecked] = useState(false);
     const [showError, setShowError] = useState(false);
     const isMobile = window.innerWidth < 768;
@@ -174,11 +174,14 @@ Alt Veri İşleyenin Tam Adı | Adresi | Veri İşleyen’e Sunduğu Hizmet
                     <img
                         src="/logo_trn.png"
                         alt="Anadolu Sigorta"
-                        style={{ width: '40%', maxWidth: '160px', height: 'auto', marginBottom: '0.4rem' }}
+                        className="brand-logo"
+                        style={{ height: 'auto' }}
                     />
 
                     <h1 style={{
-                        fontSize: isMobile ? '1.4rem' : '1.8rem',
+                        // Kiosk modunda fontSize'ı undefined bırak → kiosk.css'deki 2.5rem kuralı devreye girer
+                        // Mobil: isMobile ? 1.4rem : 1.8rem (değişmedi)
+                        fontSize: isKiosk ? undefined : (isMobile ? '1.4rem' : '1.8rem'),
                         fontWeight: 800,
                         textAlign: 'center',
                         marginTop: '0',
@@ -191,46 +194,57 @@ Alt Veri İşleyenin Tam Adı | Adresi | Veri İşleyen’e Sunduğu Hizmet
                         {kvkkText}
                     </div>
 
-                    {/* Checkbox */}
-                    <div style={{ marginBottom: '0', width: '100%' }}>
-                        <div className="checkbox-group">
-                            <input 
-                                type="checkbox" 
-                                id="kvkk-confirm" 
-                                className={showError && !isChecked ? 'checkbox-error' : ''} 
-                                checked={isChecked}
-                                onChange={(e) => {
-                                    setIsChecked(e.target.checked);
-                                    if (e.target.checked) setShowError(false);
-                                }}
-                            />
-                            <label htmlFor="kvkk-confirm">
-                                Aydınlatma metnini okudum ve onaylıyorum <span style={{ color: '#FF6B6B' }}>*</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div style={{
-                        display: 'flex',
-                        gap: '1rem',
-                        width: '100%',
-                        flexDirection: isMobile ? 'column' : 'row',
-                        marginTop: 'auto'
+                    {/* Action Group: Checkbox ve Butonları tek paket yapıyoruz */}
+                    <div className="action-group" style={{ 
+                        width: '100%', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        gap: isKiosk ? '2.5rem' : '1rem', // Checkbox ile Butonlar arası mesafe azaldı (mobilde)
+                        marginTop: isKiosk ? '0' : 'auto' 
                     }}>
-                        <button
-                            className="btn-outline"
-                            style={{ flex: 1 }}
-                            onClick={onDecline}
-                        >
-                            Geri Dön
-                        </button>
-                        <button
-                            className="btn-primary"
-                            style={{ flex: 1 }}
-                            onClick={handleAcceptClick}
-                        >
-                            Onayla ve Devam Et
-                        </button>
+                        {/* Checkbox */}
+                        <div style={{ marginBottom: '0', width: '100%' }}>
+                            <div className="checkbox-group">
+                                <input 
+                                    type="checkbox" 
+                                    id="kvkk-confirm" 
+                                    className={showError && !isChecked ? 'checkbox-error' : ''} 
+                                    checked={isChecked}
+                                    onChange={(e) => {
+                                        setIsChecked(e.target.checked);
+                                        if (e.target.checked) setShowError(false);
+                                    }}
+                                />
+                                <label htmlFor="kvkk-confirm">
+                                    Aydınlatma metnini okudum ve onaylıyorum <span style={{ color: '#FF6B6B' }}>*</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        {/* Buttons Container */}
+                        <div style={{
+                            display: 'flex',
+                            gap: isKiosk ? '1.2rem' : '1rem', // Butonlar arası mesafe artırıldı
+                            width: '100%',
+                            flexDirection: (isKiosk || isMobile) ? 'column' : 'row',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}>
+                            <button
+                                className="btn-primary"
+                                style={{ flex: 1, width: '100%' }}
+                                onClick={handleAcceptClick}
+                            >
+                                Onayla ve Devam Et
+                            </button>
+                            <button
+                                className="btn-outline"
+                                style={{ flex: 1, width: '100%' }}
+                                onClick={onDecline}
+                            >
+                                Geri Dön
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

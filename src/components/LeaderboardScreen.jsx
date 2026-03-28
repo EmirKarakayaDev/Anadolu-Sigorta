@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Trophy, Medal, Home, RefreshCcw, Loader2 } from 'lucide-react';
+import { Trophy, Medal, Home, RefreshCcw, Loader2, Gift, Plane, Info } from 'lucide-react';
 import { getTopScores, getUserRank } from '../supabase';
+import { RewardsModal } from './RewardsModal';
 
-export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId }) {
+export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk }) {
     const [scores, setScores] = useState([]);
     const [loading, setLoading] = useState(true);
     const [userRankData, setUserRankData] = useState(null);
+    const [isRewardsModalOpen, setIsRewardsModalOpen] = useState(false);
     const userRowRef = useRef(null); // Kullanıcının bulunduğu satıra odaklanmak için
     const isMobile = window.innerWidth < 768;
 
@@ -31,7 +33,7 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId }) {
         fetchScores();
     }, [lastSessionId]);
 
-    // Loading bittiğinde ve veriler geldiğinde kullanıcının satırına odakla
+    // Loading bittiğinde ve veriler gelenlerde kullanıcının satırına odakla
     useEffect(() => {
         if (!loading && userRowRef.current) {
             const timer = setTimeout(() => {
@@ -45,51 +47,76 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId }) {
     }, [loading, scores, userRankData]);
 
     const getRankBadge = (index) => {
-        const size = 24;
-        switch (index) {
-            case 0: return (
+        const size = isKiosk ? 48 : 26;
+        const idx = Number(index);
+
+        if (idx === 0) {
+            return (
                 <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <div style={{ position: 'absolute', width: '35px', height: '35px', borderRadius: '50%', background: 'rgba(255, 215, 0, 0.2)', filter: 'blur(8px)' }} />
+                    <div style={{ position: 'absolute', width: isKiosk ? '65px' : '35px', height: isKiosk ? '65px' : '35px', borderRadius: '50%', background: 'rgba(255, 215, 0, 0.2)', filter: 'blur(8px)' }} />
                     <Trophy size={size} color="#FFD700" style={{ filter: 'drop-shadow(0 0 5px rgba(255, 215, 0, 0.5))' }} />
                 </div>
             );
-            case 1: return (
+        }
+        if (idx === 1) {
+            return (
                 <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <Medal size={size} color="#C0C0C0" style={{ filter: 'drop-shadow(0 0 5px rgba(192, 192, 192, 0.4))' }} />
                 </div>
             );
-            case 2: return (
+        }
+        if (idx === 2) {
+            return (
                 <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <Medal size={size} color="#CD7F32" style={{ filter: 'drop-shadow(0 0 5px rgba(205, 127, 50, 0.4))' }} />
                 </div>
             );
-            default: return (
-                <div style={{ 
-                    width: '32px', 
-                    height: '32px', 
-                    borderRadius: '50%', 
-                    background: 'rgba(0,0,0,0.05)', 
-                    color: 'rgba(0,0,0,0.4)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontWeight: 900,
-                    fontSize: '0.9rem'
-                }}>
-                    {index + 1}
+        }
+        // Rank 4 and 5 (index 3 and 4)
+        if (idx === 3 || idx === 4) {
+            return (
+                <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Gift size={size} color="#FF6B6B" style={{ filter: 'drop-shadow(0 0 5px rgba(255, 107, 107, 0.4))' }} />
                 </div>
             );
         }
+        // Rank 6 to 10 (index 5 to 9)
+        if (idx >= 5 && idx <= 9) {
+            return (
+                <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Plane size={size} color="#3A7BD5" style={{ filter: 'drop-shadow(0 0 5px rgba(58, 123, 213, 0.4))' }} />
+                </div>
+            );
+        }
+
+        // Rank 11+ (veya fallback)
+        return (
+            <div style={{ 
+                width: isKiosk ? '56px' : '32px', 
+                height: isKiosk ? '56px' : '32px', 
+                borderRadius: '50%', 
+                background: 'rgba(0,0,0,0.05)', 
+                color: 'rgba(0,0,0,0.4)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: 900,
+                fontSize: isKiosk ? '1.4rem' : '0.9rem'
+            }}>
+                {idx + 1}
+            </div>
+        );
     };
 
     return (
         <motion.div
             className="brand-layout-full"
+            style={{ overflowY: 'hidden' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
         >
-            <div className="brand-screen" style={{ height: '100%' }}>
+            <div className="brand-screen" style={{ height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                 {/* Top Graphic - Desktop Only for space efficiency */}
                 {!isMobile && (
                     <motion.img 
@@ -104,21 +131,48 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId }) {
                 {/* Header Title */}
                 <div style={{ 
                     width: '100%', 
+                    position: 'relative',
                     textAlign: 'center', 
-                    marginBottom: '1.2rem',
-                    marginTop: isMobile ? '1.5rem' : '0' // Mobilde logo gidince başlığın tavanla bağı
+                    marginBottom: isKiosk ? '2rem' : '1.2rem',
+                    marginTop: isKiosk ? '4rem' : (isMobile ? '1.5rem' : '0'), // Logo ile başlık arası mesafe - Kioskta ferahlık sağlandı
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                 }}>
-                    <h2 style={{ fontSize: isMobile ? '1.8rem' : '2.2rem', fontWeight: 900, color: 'white', margin: 0 }}>Liderlik Tablosu</h2>
-                    <p style={{ 
-                        color: 'white', 
-                        fontSize: '1.15rem', 
-                        margin: '0.3rem 0 0 0', 
-                        fontWeight: 800,
-                        letterSpacing: '0.5px' 
-                    }}>
-                        En İyi 10
-                    </p>
+                    <h2 style={{ fontSize: isKiosk ? '3.5rem' : (isMobile ? '1.8rem' : '2.2rem'), fontWeight: 900, color: 'white', margin: 0 }}>Liderlik Tablosu</h2>
+                    <button 
+                        onClick={() => setIsRewardsModalOpen(true)}
+                        style={{ 
+                            position: 'absolute',
+                            right: 0,
+                            background: 'rgba(255,255,255,0.2)', 
+                            border: '1px solid rgba(255,255,255,0.4)', 
+                            borderRadius: '50%', 
+                            width: isKiosk ? '80px' : '38px', 
+                            height: isKiosk ? '80px' : '38px', 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center',
+                            color: 'white',
+                            cursor: 'pointer',
+                            backdropFilter: 'blur(5px)'
+                        }}
+                    >
+                        <Info size={isKiosk ? 40 : 22} />
+                    </button>
                 </div>
+
+                <p style={{ 
+                    color: 'white', 
+                    fontSize: isKiosk ? '1.8rem' : '1.15rem', 
+                    margin: isKiosk ? '-1rem 0 1.5rem 0' : '-0.3rem 0 1rem 0', // Başlığın altına daha yakın durması için
+                    fontWeight: 800,
+                    letterSpacing: '0.5px',
+                    textAlign: 'center'
+                }}>
+                    En İyi 10
+                </p>
+
 
                 {/* Score List Container */}
                 <motion.div 
@@ -127,11 +181,12 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId }) {
                         borderRadius: '2rem',
                         width: '100%',
                         flex: 1,
+                        minHeight: 0, // Crucial for inner scroll
                         overflow: 'hidden',
                         display: 'flex',
                         flexDirection: 'column',
                         boxShadow: '0 15px 35px rgba(0,0,0,0.2)',
-                        marginBottom: '1.2rem'
+                        marginBottom: isKiosk ? '3rem' : '1.2rem'
                     }}
                     initial={{ scale: 0.95, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
@@ -166,25 +221,25 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId }) {
                                         style={{
                                             display: 'flex',
                                             alignItems: 'center',
-                                            padding: '0.8rem 1rem',
+                                            padding: isKiosk ? '1.5rem 2rem' : '0.8rem 1rem',
                                             background: isCurrent ? 'rgba(33, 88, 217, 0.08)' : 'transparent',
                                             border: isCurrent ? '2px solid var(--as-blue)' : 'none',
-                                            borderRadius: '1rem',
-                                            margin: isCurrent ? '4px 0' : '0'
+                                            borderRadius: isKiosk ? '2rem' : '1rem',
+                                            margin: isCurrent ? '8px 0' : '0'
                                         }}
                                     >
-                                    <div style={{ width: '40px', display: 'flex', justifyContent: 'center' }}>
+                                    <div style={{ width: isKiosk ? '80px' : '40px', display: 'flex', justifyContent: 'center' }}>
                                         {getRankBadge(i)}
                                     </div>
-                                        <div style={{ flex: 1, marginLeft: '1rem', textAlign: 'left' }}>
-                                            <div style={{ fontWeight: 800, color: isCurrent ? 'var(--as-blue)' : '#333' }}>
+                                        <div style={{ flex: 1, marginLeft: isKiosk ? '2rem' : '1rem', textAlign: 'left' }}>
+                                            <div style={{ fontWeight: 800, fontSize: isKiosk ? '1.8rem' : '1rem', color: isCurrent ? 'var(--as-blue)' : '#333' }}>
                                                 {s.first_name} {s.last_name ? s.last_name[0] + '.' : ''}
-                                                {isCurrent && <span style={{ marginLeft: '8px', fontSize: '0.6rem', background: 'var(--as-blue)', color: 'white', padding: '2px 8px', borderRadius: '10px' }}>SEN</span>}
+                                                {isCurrent && <span style={{ marginLeft: '12px', fontSize: isKiosk ? '0.9rem' : '0.6rem', background: 'var(--as-blue)', color: 'white', padding: '4px 12px', borderRadius: '20px' }}>SEN</span>}
                                             </div>
                                         </div>
                                         <div style={{ 
                                             fontWeight: 900, 
-                                            fontSize: '1.4rem', 
+                                            fontSize: isKiosk ? '2.5rem' : '1.4rem', 
                                             color: isCurrent ? 'var(--as-blue)' : '#222' 
                                         }}>
                                             {s.score}
@@ -201,7 +256,7 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId }) {
                         {/* Sizin Sıralamanız (Eğer ilk 10'da değilse) */}
                         {!loading && userRankData && (
                             <div 
-                                ref={userRowRef}
+                                ref={userRankData.rank > 10 ? userRowRef : null} // Sadece ilk 10'da değilse buraya odaklan
                                 style={{
                                 borderTop: '2px dashed rgba(33, 88, 217, 0.15)',
                                 marginTop: '1rem',
@@ -210,18 +265,18 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId }) {
                                 <div style={{
                                     display: 'flex',
                                     alignItems: 'center',
-                                    padding: '0.8rem 1rem',
+                                    padding: isKiosk ? '1.5rem 2rem' : '0.8rem 1rem',
                                     background: 'rgba(33, 88, 217, 0.05)',
-                                    borderRadius: '1.2rem',
+                                    borderRadius: isKiosk ? '2rem' : '1.2rem',
                                     border: '1px solid rgba(33, 88, 217, 0.2)'
                                 }}>
-                                    <div style={{ width: '40px', textAlign: 'center', fontWeight: 900, fontSize: '0.9rem', color: '#666' }}>
-                                        {userRankData.rank}.
+                                    <div style={{ width: isKiosk ? '80px' : '40px', display: 'flex', justifyContent: 'center' }}>
+                                        {getRankBadge(userRankData.rank - 1)}
                                     </div>
-                                    <div style={{ flex: 1, marginLeft: '1rem', textAlign: 'left' }}>
-                                        <div style={{ fontWeight: 800, color: 'var(--as-blue)', fontSize: '1rem' }}>Sizin Sıralamanız</div>
+                                    <div style={{ flex: 1, marginLeft: isKiosk ? '2rem' : '1rem', textAlign: 'left' }}>
+                                        <div style={{ fontWeight: 800, color: 'var(--as-blue)', fontSize: isKiosk ? '1.8rem' : '1rem' }}>Sizin Sıralamanız</div>
                                     </div>
-                                    <div style={{ fontWeight: 900, fontSize: '1.4rem', color: 'var(--as-blue)' }}>
+                                    <div style={{ fontWeight: 900, fontSize: isKiosk ? '2.5rem' : '1.4rem', color: 'var(--as-blue)' }}>
                                         {userRankData.score}
                                     </div>
                                 </div>
@@ -231,15 +286,25 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId }) {
                 </motion.div>
  
                 {/* Footer Actions - Pushed to bottom */}
-                <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '0.8rem', marginTop: 'auto' }}>
-                    <button className="btn-primary" onClick={onPlayAgain}>
-                        Yeniden Oyna
-                    </button>
-                    <button className="btn-text-link" onClick={onReset}>
-                        <Home size={16} /> Ana Ekran
+                <div style={{ 
+                    width: '100%', 
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    alignItems: 'center', 
+                    gap: isKiosk ? '1.5rem' : '0.8rem', 
+                    marginTop: 'auto' 
+                }}>
+                    {!isKiosk && (
+                        <button className="btn-primary" onClick={onPlayAgain}>
+                            Yeniden Oyna
+                        </button>
+                    )}
+                    <button className={isKiosk ? "btn-primary" : "btn-text-link"} onClick={onReset} style={isKiosk ? { fontSize: '1.4rem' } : {}}>
+                        <Home size={isKiosk ? 24 : 16} style={{ marginRight: isKiosk ? '12px' : '4px' }} /> Ana Ekran
                     </button>
                 </div>
             </div>
+            <RewardsModal isOpen={isRewardsModalOpen} onClose={() => setIsRewardsModalOpen(false)} isKiosk={isKiosk} />
         </motion.div>
     );
 }

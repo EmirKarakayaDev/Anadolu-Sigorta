@@ -6,7 +6,7 @@ import { COLS, ROWS, BLOCK_SIZE, COLORS, SHAPES, PIECE_ASSETS } from '../game/co
 import { Trophy, Clock, Volume2, VolumeX } from 'lucide-react';
 import { audioManager } from '../utils/audioManager';
 
-export function GameScreen({ onGameOver }) {
+export function GameScreen({ onGameOver, isKiosk }) {
     const [timeLeft, setTimeLeft] = useState(120); // 2 minutes game
     const [countdown, setCountdown] = useState(3);
     const [isCounting, setIsCounting] = useState(true);
@@ -36,6 +36,7 @@ export function GameScreen({ onGameOver }) {
                     setImages(loadedImages);
                 }
             };
+            // Triggering src after setting listener for SVG stability
             img.src = PIECE_ASSETS[type];
         });
     }, []);
@@ -91,7 +92,7 @@ export function GameScreen({ onGameOver }) {
                 return prev - 1;
             });
         }, 1000);
-        
+
         return () => {
             clearInterval(timer);
             if (bgmTimeout) clearTimeout(bgmTimeout);
@@ -115,7 +116,7 @@ export function GameScreen({ onGameOver }) {
         if (timeLeft <= 0 || gameOver) {
             if (!gameOverTriggeredRef.current) {
                 gameOverTriggeredRef.current = true;
-                
+
                 gameFinishTimeout = setTimeout(() => {
                     // Sadece oyun zaten bitmemişse (süre bittiğinde) triggerGameOver çağır
                     if (!gameOver) {
@@ -147,8 +148,8 @@ export function GameScreen({ onGameOver }) {
     }, [gameOver]);
 
     // Interaction handlers (Unified Pointer Events)
-    const [lastX, setLastX] = useState(0);
-    const [lastY, setLastY] = useState(0);
+    const lastX = useRef(0);
+    const lastY = useRef(0);
     const interactionStartRef = useRef(null);
     const lastRotateTime = useRef(0);
 
@@ -162,8 +163,8 @@ export function GameScreen({ onGameOver }) {
             totalDist: 0,
             lock: null
         };
-        setLastX(e.clientX);
-        setLastY(e.clientY);
+        lastX.current = e.clientX;
+        lastY.current = e.clientY;
     };
 
     const handlePointerMove = (e) => {
@@ -175,25 +176,41 @@ export function GameScreen({ onGameOver }) {
 
         interaction.totalDist = Math.max(interaction.totalDist || 0, totalDx, totalDy);
 
+        // Thresholds based on platform - Heavily increased for Kiosk to give more weight/control
+        const moveThreshold = isKiosk ? 60 : 25;
+        const dropThreshold = isKiosk ? 80 : 30;
+        const lockThreshold = isKiosk ? 40 : 15;
+
         if (!interaction.lock) {
-            if (totalDx > 15) interaction.lock = 'horizontal';
-            else if (totalDy > 15) interaction.lock = 'vertical';
+            if (totalDx > lockThreshold) interaction.lock = 'horizontal';
+            else if (totalDy > lockThreshold) interaction.lock = 'vertical';
         }
 
-        if (interaction.lock === 'horizontal' || (!interaction.lock && totalDx > 15)) {
-            const dragDist = e.clientX - lastX;
-            if (Math.abs(dragDist) > 25) { // Kullanıcı geri bildirimine göre 30 -> 25 olarak güncellendi
-                move(dragDist > 0 ? 1 : -1);
-                setLastX(e.clientX);
+        // Horizontal Movement (Continuous Swipe Support)
+        if (interaction.lock === 'horizontal' || (!interaction.lock && totalDx > lockThreshold)) {
+            const dragDist = e.clientX - lastX.current;
+            const steps = Math.floor(Math.abs(dragDist) / moveThreshold);
+            
+            if (steps > 0) {
+                const dir = dragDist > 0 ? 1 : -1;
+                for (let i = 0; i < steps; i++) {
+                    move(dir);
+                }
+                // Update reference by the exact steps distance to keep it steady
+                lastX.current += steps * moveThreshold * dir;
             }
         }
 
-        // Vertical Movement (Soft Drop)
-        if (interaction.lock === 'vertical' || (!interaction.lock && totalDy > 15)) {
-            const dragDistY = e.clientY - lastY;
-            if (dragDistY > 34) { // Dikey hassasiyeti de aynı oranda (30 yerine 34) dengelendi
-                drop();
-                setLastY(e.clientY);
+        // Vertical Movement (Continuous Soft Drop Support)
+        if (interaction.lock === 'vertical' || (!interaction.lock && totalDy > lockThreshold)) {
+            const dragDistY = e.clientY - lastY.current;
+            const stepsY = Math.floor(Math.abs(dragDistY) / dropThreshold);
+
+            if (stepsY > 0 && dragDistY > 0) { // Only drop downwards
+                for (let i = 0; i < stepsY; i++) {
+                    drop();
+                }
+                lastY.current += stepsY * dropThreshold;
             }
         }
     };
@@ -205,14 +222,18 @@ export function GameScreen({ onGameOver }) {
         const dy = e.clientY - interaction.y;
         const dt = Date.now() - interaction.time;
         const now = Date.now();
-        const velocityY = dy / dt; // pixels per ms
+        const velocityY = dy / (dt || 1); // pixels per ms
 
-        if (interaction.totalDist < 15 && (now - lastRotateTime.current > 200)) {
+        const tapThreshold = isKiosk ? 30 : 15;
+        const flickThreshold = isKiosk ? 240 : 100;
+        const velocityThreshold = isKiosk ? 1.0 : 0.8;
+
+        if (interaction.totalDist < tapThreshold && (now - lastRotateTime.current > 200)) {
             rotate();
             lastRotateTime.current = now;
         }
         // HARD DROP: High speed flick
-        else if (velocityY > 0.8 && dy > 100) {
+        else if (velocityY > velocityThreshold && dy > flickThreshold) {
             hardDrop();
         }
 
@@ -222,9 +243,9 @@ export function GameScreen({ onGameOver }) {
     return (
         <motion.div
             className="brand-layout-full no-select game-screen-layout"
-            style={{ 
-                touchAction: 'none', 
-                position: 'relative', 
+            style={{
+                touchAction: 'none',
+                position: 'relative',
                 height: '100dvh',
                 overflow: 'hidden',
                 justifyContent: 'flex-start'
@@ -251,8 +272,9 @@ export function GameScreen({ onGameOver }) {
                             zIndex: 1000,
                             display: 'flex',
                             flexDirection: 'column',
-                            justifyContent: 'center',
+                            justifyContent: isKiosk ? 'flex-start' : 'center',
                             alignItems: 'center',
+                            paddingTop: isKiosk ? '32vh' : '0',
                             background: 'transparent', // Karartma kaldırıldı
                             pointerEvents: 'none'
                         }}
@@ -260,22 +282,22 @@ export function GameScreen({ onGameOver }) {
                         <motion.span
                             style={{
                                 color: '#FFFFFF',
-                                fontSize: '1.4rem',
+                                fontSize: isKiosk ? '2.8rem' : '1.4rem',
                                 fontWeight: 900,
                                 letterSpacing: '5px',
-                                marginBottom: '1.5rem',
+                                marginBottom: isKiosk ? '6rem' : '1.5rem',
                                 textShadow: '4px 4px 0px #1D1D46' // Belirgin sert gölge (3D efekti)
                             }}
                         >
                             HAZIR MISIN?
                         </motion.span>
-                        <div style={{ 
-                            position: 'relative', 
-                            height: '10rem', 
-                            width: '100%', 
-                            display: 'flex', 
-                            justifyContent: 'center', 
-                            alignItems: 'center' 
+                        <div style={{
+                            position: 'relative',
+                            height: '10rem',
+                            width: '100%',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center'
                         }}>
                             <AnimatePresence>
                                 <motion.div
@@ -286,7 +308,7 @@ export function GameScreen({ onGameOver }) {
                                     transition={{ duration: 0.4, type: 'spring', stiffness: 120 }}
                                     style={{
                                         position: 'absolute',
-                                        fontSize: '12rem',
+                                        fontSize: isKiosk ? '18rem' : '12rem',
                                         fontWeight: 900,
                                         // Ana dolgu ve Desen (Diamond Pattern simülasyonu)
                                         background: `
@@ -326,27 +348,32 @@ export function GameScreen({ onGameOver }) {
                     </motion.div>
                 )}
             </AnimatePresence>
-            <div className="game-container" style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '1.2rem',
-                width: '100%',
-                maxWidth: '500px',
-                flex: 1, // Ensures it takes full height
-                padding: 0
-            }}>
 
-                {/* Reference-style Top Bar */}
-                <div 
+            <div
+                className={isKiosk ? "brand-screen" : "game-container"}
+                style={!isKiosk ? {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '1.2rem',
+                    width: '100%',
+                    maxWidth: '500px',
+                    flex: 1,
+                    padding: 0
+                } : {}}
+            >
+                {/* Top Statistics Bar */}
+                <div
                     onPointerDown={(e) => e.stopPropagation()}
                     onPointerUp={(e) => e.stopPropagation()}
                     style={{
                         display: 'flex',
-                        gap: '8px',
+                        gap: isKiosk ? '15px' : '8px',
                         width: '100%',
+                        maxWidth: isKiosk ? '700px' : '100%',
+                        margin: isKiosk ? '0 auto' : '0',
                         alignItems: 'stretch',
-                        height: '80px',
+                        height: isKiosk ? '140px' : '82px',
                         position: 'relative'
                     }}
                 >
@@ -357,17 +384,17 @@ export function GameScreen({ onGameOver }) {
                         flexDirection: 'column',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        gap: '8px',
+                        gap: '2px',
                         background: 'rgba(0, 0, 0, 0.4)',
-                        border: '2px solid rgba(255, 255, 255, 0.5)',
-                        borderRadius: '4px',
+                        border: isKiosk ? '3px solid rgba(255, 255, 255, 0.6)' : '2px solid rgba(255, 255, 255, 0.5)',
+                        borderRadius: isKiosk ? '8px' : '4px',
                         backdropFilter: 'blur(10px)',
                         boxShadow: 'none'
                     }}>
-                        <span style={{ fontSize: '0.8rem', color: 'white', fontWeight: 900, letterSpacing: '1px' }}>Skor</span>
-                        <span style={{ fontSize: '1.5rem', fontWeight: 900 }}>{score}</span>
+                        <span style={{ fontSize: isKiosk ? '1.4rem' : '0.75rem', color: 'white', fontWeight: 900, letterSpacing: '1px' }}>Skor</span>
+                        <span style={{ fontSize: isKiosk ? '3rem' : '1.4rem', fontWeight: 900 }}>{score}</span>
                     </div>
- 
+
                     {/* Center: Timer */}
                     <div className="glass-panel" style={{
                         flex: 1.5,
@@ -375,179 +402,211 @@ export function GameScreen({ onGameOver }) {
                         flexDirection: 'column',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        gap: '8px',
+                        gap: '2px',
                         background: 'rgba(0, 0, 0, 0.4)',
-                        border: '2px solid rgba(255, 255, 255, 0.5)',
-                        borderRadius: '4px',
+                        border: isKiosk ? '3px solid rgba(255, 255, 255, 0.6)' : '2px solid rgba(255, 255, 255, 0.5)',
+                        borderRadius: isKiosk ? '8px' : '4px',
                         backdropFilter: 'blur(10px)',
                         boxShadow: 'none'
                     }}>
-                        <span style={{ fontSize: '0.8rem', color: 'white', fontWeight: 900, letterSpacing: '1px' }}>Süre</span>
-                        <span style={{ fontSize: '1.5rem', fontWeight: 900 }}>
+                        <span style={{ fontSize: isKiosk ? '1.4rem' : '0.75rem', color: 'white', fontWeight: 900, letterSpacing: '1px' }}>Süre</span>
+                        <span style={{ fontSize: isKiosk ? '3rem' : '1.4rem', fontWeight: 900 }}>
                             {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
                         </span>
                     </div>
- 
+
+                    {/* Right: Next Piece */}
                     <div className="glass-panel" style={{
                         flex: 1,
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        gap: '8px',
+                        gap: '2px',
                         background: 'rgba(0, 0, 0, 0.4)',
-                        border: '2px solid rgba(255, 255, 255, 0.5)',
-                        borderRadius: '4px',
+                        border: isKiosk ? '3px solid rgba(255, 255, 255, 0.6)' : '2px solid rgba(255, 255, 255, 0.5)',
+                        borderRadius: isKiosk ? '8px' : '4px',
                         backdropFilter: 'blur(10px)',
+                        boxShadow: 'none',
                         position: 'relative',
-                        overflow: 'hidden',
-                        boxShadow: 'none'
+                        overflow: 'hidden'
                     }}>
-                        <span style={{ fontSize: '0.8rem', color: 'white', fontWeight: 900, letterSpacing: '1px' }}>Sıradaki</span>
-                        <div style={{ padding: '0px', height: '40px', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <span style={{ fontSize: isKiosk ? '1.4rem' : '0.75rem', color: 'white', fontWeight: 900, letterSpacing: '1px' }}>Sıradaki</span>
+                        <div style={{ padding: '0px', height: isKiosk ? '72px' : '36px', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             {nextPieces[0] && (
-                                <NextPiecePreview piece={nextPieces[0]} images={images} />
+                                <NextPiecePreview piece={nextPieces[0]} images={images} isKiosk={isKiosk} />
                             )}
                         </div>
                     </div>
-
                 </div>
 
-                <div className="game-main-area" style={{ position: 'relative', margin: 'auto 0' }}>
-                    {/* Floating Score Feedback */}
-                    <AnimatePresence>
-                        {feedback && (
-                            <motion.div
-                                key={feedback.id}
-                                initial={{ opacity: 0, y: 100, scale: 0.5, rotate: -5 }}
-                                animate={{ opacity: 1, y: -20, scale: 1.2, rotate: 0 }}
-                                exit={{ opacity: 0, scale: 1.5, y: -100 }}
-                                transition={{ duration: 0.2 }}
-                                style={{
-                                    position: 'absolute',
-                                    top: '40%',
-                                    left: 0,
-                                    right: 0,
-                                    zIndex: 100,
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    pointerEvents: 'none'
-                                }}
-                            >
-                                <div style={{
-                                    background: feedback.text.includes('BİTTİ') ? 'var(--primary)' : (feedback.text === 'TETRIS' ? 'linear-gradient(to bottom, #FF8C42, #FF5E5B)' : 'var(--secondary)'),
-                                    color: 'white',
-                                    padding: '1.2rem 2.5rem',
-                                    width: feedback.text.includes('BİTTİ') ? '92%' : 'auto',
-                                    maxWidth: feedback.text.includes('BİTTİ') ? '450px' : 'none',
-                                    borderRadius: '8px',
-                                    fontWeight: 900,
-                                    fontSize: feedback.text.includes('BİTTİ') ? '3rem' : (feedback.text === 'TETRIS' ? '3rem' : '2.2rem'),
-                                    textShadow: '0 0 20px rgba(0,0,0,0.5)',
-                                    boxShadow: '0 0 50px rgba(0, 0, 0, 0.5)',
-                                    letterSpacing: '4px',
-                                    transform: 'skewX(-10deg)',
-                                    border: '4px solid white',
-                                    whiteSpace: 'pre-line',
-                                    textAlign: 'center',
-                                    lineHeight: 1.1
-                                }}>
-                                    {feedback.text}
-                                </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
+                {/* Game Area Wrapper - Conditional Layout for Kiosk */}
+                <div style={isKiosk ? {
+                    flex: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '100%',
+                    margin: '0',
+                    pointerEvents: 'none' // Transparent to gestures
+                } : {
+                    position: 'relative',
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    margin: 'auto 0',
+                    pointerEvents: 'none' // Transparent to gestures
+                }}>
+                    <div className="game-main-area" style={{ position: 'relative', pointerEvents: 'none' }}>
+                        {/* Floating Score Feedback */}
+                        <AnimatePresence>
+                            {feedback && (
+                                <motion.div
+                                    key={feedback.id}
+                                    initial={{ opacity: 0, y: 100, scale: 0.5, rotate: -5 }}
+                                    animate={{ opacity: 1, y: -20, scale: 1.2, rotate: 0 }}
+                                    exit={{ opacity: 0, scale: 1.5, y: -100 }}
+                                    transition={{ duration: 0.2 }}
+                                    style={{
+                                        position: 'absolute',
+                                        top: '40%',
+                                        left: 0,
+                                        right: 0,
+                                        zIndex: 100,
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        pointerEvents: 'none'
+                                    }}
+                                >
+                                    <div style={{
+                                        background: feedback.text.includes('BİTTİ') ? 'var(--primary)' : (feedback.text === 'TETRIS' ? 'linear-gradient(to bottom, #FF8C42, #FF5E5B)' : 'var(--secondary)'),
+                                        color: 'white',
+                                        padding: '1.2rem 2.5rem',
+                                        width: feedback.text.includes('BİTTİ') ? '92%' : 'auto',
+                                        maxWidth: feedback.text.includes('BİTTİ') ? '450px' : 'none',
+                                        borderRadius: '8px',
+                                        fontWeight: 900,
+                                        fontSize: feedback.text.includes('BİTTİ') ? '3rem' : (feedback.text === 'TETRIS' ? '3rem' : '2.2rem'),
+                                        textShadow: '0 0 20px rgba(0,0,0,0.5)',
+                                        boxShadow: '0 0 50px rgba(0, 0, 0, 0.5)',
+                                        letterSpacing: '4px',
+                                        transform: 'skewX(-10deg)',
+                                        border: '4px solid white',
+                                        whiteSpace: 'pre-line',
+                                        textAlign: 'center',
+                                        lineHeight: 1.1
+                                    }}>
+                                        {feedback.text}
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
 
-                    {/* Main Game Board */}
-                    <motion.div
-                        className="glass-panel checkerboard"
-                        animate={
-                            trail ? { y: [0, 8, -4, 2, 0] } : { y: 0 }
-                        }
-                        transition={{
-                            duration: 0.3,
-                            ease: "easeOut"
-                        }}
-                        style={{
-                            padding: 0,
-                            border: '2px solid rgba(255, 255, 255, 0.6)',
-                            boxShadow: '0 0 40px rgba(0,0,0,0.5)',
-                            background: 'transparent',
-                            borderRadius: 0,
-                            backdropFilter: 'none',
-                            WebkitBackdropFilter: 'none',
-                            lineHeight: 0, // Prevents inline block extra space
-                            display: 'flex',
-                            originY: 1
-                        }}
-                    >
-                        <CanvasRenderer 
-                            grid={grid} 
-                            activePiece={activePiece} 
-                            ghostPiece={ghostPiece} 
-                            trail={trail} 
-                            isSettling={isSettling} 
-                            clearingLines={clearingLines} 
-                            clearingStage={clearingStage}
-                            images={images}
-                        />
-                    </motion.div>
+                        {/* Main Game Board */}
+                        <motion.div
+                            className="glass-panel checkerboard"
+                            animate={trail ? { y: [0, 8, -4, 2, 0] } : { y: 0 }}
+                            transition={{ duration: 0.3, ease: "easeOut" }}
+                            style={{
+                                padding: 0,
+                                border: '2px solid rgba(255, 255, 255, 0.6)',
+                                boxShadow: '0 0 40px rgba(0,0,0,0.5)',
+                                background: 'transparent',
+                                borderRadius: 0,
+                                backdropFilter: 'none',
+                                WebkitBackdropFilter: 'none',
+                                lineHeight: 0,
+                                display: 'flex',
+                                originY: 1,
+                                pointerEvents: 'none' // Ensure board doesn't eat gestures
+                            }}
+                        >
+                            <CanvasRenderer
+                                grid={grid}
+                                activePiece={activePiece}
+                                ghostPiece={ghostPiece}
+                                trail={trail}
+                                isSettling={isSettling}
+                                clearingLines={clearingLines}
+                                clearingStage={clearingStage}
+                                images={images}
+                                isKiosk={isKiosk}
+                            />
+                        </motion.div>
 
-                    {/* Exterior Mute Button (Sticking to border) */}
+                        {/* Exterior Mute Button */}
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                const newMute = audioManager.toggleMute();
+                                setIsMuted(newMute);
+                            }}
+                            onPointerDown={(e) => e.stopPropagation()}
+                            onPointerUp={(e) => e.stopPropagation()}
+                            style={{
+                                position: 'absolute',
+                                top: '4px',
+                                left: '100%',
+                                marginLeft: isKiosk ? '15px' : '8px',
+                                background: 'rgba(0, 0, 0, 0.4)',
+                                border: '1px solid rgba(255, 255, 255, 0.5)',
+                                borderRadius: '8px',
+                                width: isKiosk ? '80px' : '42px',
+                                height: isKiosk ? '80px' : '42px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                color: 'white',
+                                cursor: 'pointer',
+                                zIndex: 20,
+                                backdropFilter: 'blur(5px)',
+                                pointerEvents: 'auto' // Re-enable for the button
+                            }}
+                        >
+                            {isMuted ? <VolumeX size={isKiosk ? 40 : 22} /> : <Volume2 size={isKiosk ? 40 : 22} />}
+                        </button>
+                    </div>
+                </div>
+
+                {/* Bottom Action Button */}
+                {isKiosk ? (
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center', paddingBottom: '0' }}>
+                        <button
+                            className={`btn-speed-filled ${isFastMode ? 'active' : ''}`}
+                            disabled={isCounting || gameOver}
+                            onClick={() => {
+                                if (isCounting || gameOver) return;
+                                setIsFastMode(!isFastMode);
+                            }}
+                            onPointerDown={(e) => e.stopPropagation()}
+                            onPointerUp={(e) => e.stopPropagation()}
+                        >
+                            {isFastMode ? 'Normal Hız' : '2x Hızlandır'}
+                        </button>
+                    </div>
+                ) : (
                     <button
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            const newMute = audioManager.toggleMute();
-                            setIsMuted(newMute);
+                        className={`btn-speed-filled ${isFastMode ? 'active' : ''}`}
+                        disabled={isCounting || gameOver}
+                        onClick={() => {
+                            if (isCounting || gameOver) return;
+                            setIsFastMode(!isFastMode);
                         }}
                         onPointerDown={(e) => e.stopPropagation()}
                         onPointerUp={(e) => e.stopPropagation()}
-                        style={{
-                            position: 'absolute',
-                            top: '2px', // Align with the top border
-                            left: '100%',
-                            marginLeft: '8px', // Gap from the border
-                            background: 'rgba(0, 0, 0, 0.4)',
-                            border: '1px solid rgba(255, 255, 255, 0.5)',
-                            borderRadius: '8px', // Square-ish matching the panel
-                            width: '42px',
-                            height: '42px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            color: 'white',
-                            cursor: 'pointer',
-                            zIndex: 20,
-                            backdropFilter: 'blur(5px)'
-                        }}
                     >
-                        {isMuted ? <VolumeX size={22} /> : <Volume2 size={22} />}
+                        {isFastMode ? 'Normal Hız' : '2x Hızlandır'}
                     </button>
-                </div>
-
-                {/* Speed Button */}
-                <button 
-                  className={`btn-speed-filled ${isFastMode ? 'active' : ''}`}
-                  disabled={isCounting || gameOver}
-                  onClick={() => {
-                      if (isCounting || gameOver) return;
-                      setIsFastMode(!isFastMode);
-                  }}
-                  // Oyun kontrollerinin (döndürme gibi) buton tıklamasıyla karışmaması için durduruyoruz
-                  onPointerDown={(e) => e.stopPropagation()}
-                  onPointerUp={(e) => e.stopPropagation()}
-                >
-                  {isFastMode ? 'Normal Hız' : '2x Hızlandır'}
-                </button>
+                )}
             </div>
         </motion.div>
     );
 }
 
 // Minimal preview renderer for the Next Piece
-function NextPiecePreview({ piece, images }) {
+function NextPiecePreview({ piece, images, isKiosk }) {
     const canvasRef = useRef(null);
-    const PREVIEW_BLOCK_SIZE = 12;
+    const PREVIEW_BLOCK_SIZE = isKiosk ? 16 : 12;
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -557,8 +616,13 @@ function NextPiecePreview({ piece, images }) {
 
         const img = images[piece.type];
         const dims = PIECE_DIMENSIONS[piece.type] || { w: 1, h: 1 };
-        const unit = img.width / dims.w;
-        const unitH = img.height / dims.h;
+        
+        // Use natural dimensions for reliable SVG slicing
+        const sW = img.naturalWidth || img.width;
+        const sH = img.naturalHeight || img.height;
+        
+        const unit = sW / dims.w;
+        const unitH = sH / dims.h;
 
         // Calculate actual bounds of blocks to center them
         let minX = 4, maxX = 0, minY = 4, maxY = 0;
@@ -583,15 +647,15 @@ function NextPiecePreview({ piece, images }) {
                 if (cell && typeof cell === 'object') {
                     const px = startX + (x - minX) * PREVIEW_BLOCK_SIZE;
                     const py = startY + (y - minY) * PREVIEW_BLOCK_SIZE;
-                    
+
                     ctx.save();
                     ctx.imageSmoothingEnabled = true;
                     ctx.translate(px + PREVIEW_BLOCK_SIZE / 2, py + PREVIEW_BLOCK_SIZE / 2);
                     // Rotation is always 0 for preview
                     ctx.drawImage(
-                        img, 
-                        cell.pX * unit, cell.pY * unitH, unit, unitH, 
-                        -PREVIEW_BLOCK_SIZE / 2, -PREVIEW_BLOCK_SIZE / 2, 
+                        img,
+                        cell.pX * unit, cell.pY * unitH, unit, unitH,
+                        -PREVIEW_BLOCK_SIZE / 2, -PREVIEW_BLOCK_SIZE / 2,
                         PREVIEW_BLOCK_SIZE, PREVIEW_BLOCK_SIZE
                     );
                     ctx.restore();
@@ -600,9 +664,11 @@ function NextPiecePreview({ piece, images }) {
         });
     }, [piece, images]);
 
-    const { PIECE_DIMENSIONS } = { PIECE_DIMENSIONS: {
-        I: { w: 1, h: 4 }, J: { w: 2, h: 3 }, L: { w: 2, h: 3 }, O: { w: 2, h: 2 }, S: { w: 3, h: 2 }, T: { w: 3, h: 2 }, Z: { w: 3, h: 2 }
-    }};
+    const { PIECE_DIMENSIONS } = {
+        PIECE_DIMENSIONS: {
+            I: { w: 1, h: 4 }, J: { w: 2, h: 3 }, L: { w: 2, h: 3 }, O: { w: 2, h: 2 }, S: { w: 3, h: 2 }, T: { w: 3, h: 2 }, Z: { w: 3, h: 2 }
+        }
+    };
 
-    return <canvas ref={canvasRef} width={60} height={60} />;
+    return <canvas ref={canvasRef} width={isKiosk ? 80 : 60} height={isKiosk ? 80 : 60} />;
 }

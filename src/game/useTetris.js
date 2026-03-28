@@ -64,38 +64,43 @@ export function useTetris({ isPaused = false } = {}) {
     }, []); // Empty dependency array as it only depends on constants
 
     const rotate = () => {
-        if (!activePiece || gameOver || isSettling || isPaused) return; // Added isPaused check
+        setActivePiece(prev => {
+            if (!prev || gameOver || isSettling || isPaused) return prev; // Added isPaused check
 
-        const newShape = activePiece.shape[0].map((_, i) =>
-            activePiece.shape.map(row => row[i]).reverse()
-        );
+            const newShape = prev.shape[0].map((_, i) =>
+                prev.shape.map(row => row[i]).reverse()
+            );
 
-        const rotatedPiece = { ...activePiece, shape: newShape, rotation: (activePiece.rotation + 1) % 4 };
+            const rotatedPiece = { ...prev, shape: newShape, rotation: (prev.rotation + 1) % 4 };
 
-        // Wall Kick Logic: If rotation fails, try shifting left or right
-        const xOffsets = [0, -1, 1, -2, 2];
+            // Wall Kick Logic: If rotation fails, try shifting left or right
+            const xOffsets = [0, -1, 1, -2, 2];
 
-        for (const offset of xOffsets) {
-            const kickedPiece = {
-                ...rotatedPiece,
-                pos: { ...rotatedPiece.pos, x: rotatedPiece.pos.x + offset }
-            };
+            for (const offset of xOffsets) {
+                const kickedPiece = {
+                    ...rotatedPiece,
+                    pos: { ...rotatedPiece.pos, x: rotatedPiece.pos.x + offset }
+                };
 
-            if (!collision(kickedPiece, grid)) {
-                setActivePiece(kickedPiece);
-                audioManager.play('rotate');
-                return;
+                if (!collision(kickedPiece, grid)) {
+                    audioManager.play('rotate');
+                    return kickedPiece;
+                }
             }
-        }
+            return prev;
+        });
     };
 
     const move = (dir) => {
-        if (!activePiece || gameOver || isSettling || isPaused) return; // Added isPaused check
-        const movedPiece = { ...activePiece, pos: { ...activePiece.pos, x: activePiece.pos.x + dir } };
-        if (!collision(movedPiece, grid)) {
-            setActivePiece(movedPiece);
-            audioManager.play('move');
-        }
+        setActivePiece(prev => {
+            if (!prev || gameOver || isSettling || isPaused) return prev; // Added isPaused check
+            const movedPiece = { ...prev, pos: { ...prev.pos, x: prev.pos.x + dir } };
+            if (!collision(movedPiece, grid)) {
+                audioManager.play('move');
+                return movedPiece;
+            }
+            return prev;
+        });
     };
 
     const activePieceRef = useRef(activePiece);
@@ -211,7 +216,8 @@ export function useTetris({ isPaused = false } = {}) {
                         }
 
                         const multipliers = { 1: 100, 2: 300, 3: 700, 4: 1200 };
-                        setScore(prev => prev + (multipliers[linesCleared] || linesCleared * 100));
+                        const basePoints = multipliers[linesCleared] || linesCleared * 100;
+                        setScore(prev => prev + Math.floor(basePoints * (isFastMode ? 1.5 : 1)));
 
                         setGrid(filteredGrid);
                         setClearingLines([]);
@@ -228,21 +234,28 @@ export function useTetris({ isPaused = false } = {}) {
             setGrid(newGrid);
             spawnNext(newGrid);
         }, 150);
-    }, [getRandomPiece, collision]);
+    }, [getRandomPiece, collision, isFastMode]);
 
     const drop = useCallback(() => { // Moved drop to top-level and wrapped in useCallback
-        if (gameOverRef.current || !activePieceRef.current || isSettling || landLockRef.current || isPaused) return; // Added isPaused check
+        let shouldLand = false;
+        setActivePiece(prev => {
+            if (gameOverRef.current || !prev || isSettling || landLockRef.current || isPaused) return prev;
 
-        const droppedPiece = {
-            ...activePieceRef.current,
-            pos: { ...activePieceRef.current.pos, y: activePieceRef.current.pos.y + 1 }
-        };
+            const droppedPiece = {
+                ...prev,
+                pos: { ...prev.pos, y: prev.pos.y + 1 }
+            };
 
-        if (!collision(droppedPiece, gridRef.current)) {
-            setActivePiece(droppedPiece);
-        } else {
-            // Land piece if it hit something (GameOver check is now handled in spawnNext for fairness)
-            landPiece(); 
+            if (!collision(droppedPiece, gridRef.current)) {
+                return droppedPiece;
+            } else {
+                shouldLand = true;
+                return prev;
+            }
+        });
+
+        if (shouldLand) {
+            landPiece();
         }
     }, [landPiece, isSettling, collision, isPaused]); // Dependencies for drop
 
@@ -338,7 +351,7 @@ export function useTetris({ isPaused = false } = {}) {
 
     useEffect(() => {
         if (!gameOver && !isSettling && !isPaused) { // Added isPaused check
-            timerRef.current = setInterval(drop, isFastMode ? 400 : 800);
+            timerRef.current = setInterval(drop, isFastMode ? 200 : 400);
         }
         return () => clearInterval(timerRef.current);
     }, [drop, gameOver, isSettling, isPaused, isFastMode]); // Added isSettling to dependencies

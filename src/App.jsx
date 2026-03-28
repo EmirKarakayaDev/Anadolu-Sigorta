@@ -19,6 +19,12 @@ const SCREENS = {
   LEADERBOARD: 'leaderboard'
 };
 
+// Kiosk tespiti:
+// 1. Öncelik: URL'de ?kiosk parametresi varsa (ör. https://site.com/?kiosk)
+// 2. Fallback: Ekran yüksekliği 1800px ve üzeriyse (fiziksel kiosk ekranı)
+const urlParams = new URLSearchParams(window.location.search);
+const isKiosk = urlParams.has('kiosk') || window.screen.height >= 1800;
+
 function App() {
   const [currentScreen, setCurrentScreen] = useState(SCREENS.MENU);
   const [userData, setUserData] = useState(null);
@@ -28,16 +34,26 @@ function App() {
   const [transitionTarget, setTransitionTarget] = useState(null);
   const isSavingRef = React.useRef(false);
 
+  // Kiosk modunda body'e .kiosk class'ı ekle
+  React.useEffect(() => {
+    if (isKiosk) {
+      document.body.classList.add('kiosk');
+    }
+    return () => document.body.classList.remove('kiosk');
+  }, []);
+
   const handleStart = () => {
-    // Attempt fullscreen on first interaction for immersion
-    try {
-      if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen().catch(() => { });
-      } else if (document.documentElement.webkitRequestFullscreen) {
-        document.documentElement.webkitRequestFullscreen();
+    // Attempt fullscreen on first interaction for immersion (sadece mobil/desktop için, kiosk zaten tam ekran)
+    if (!isKiosk) {
+      try {
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen().catch(() => { });
+        } else if (document.documentElement.webkitRequestFullscreen) {
+          document.documentElement.webkitRequestFullscreen();
+        }
+      } catch (e) {
+        console.warn("Fullscreen request failed", e);
       }
-    } catch (e) {
-      console.warn("Fullscreen request failed", e);
     }
     setCurrentScreen(SCREENS.KVKK);
   };
@@ -82,22 +98,22 @@ function App() {
     <div className="app-container">
       <AnimatePresence mode="wait">
         {currentScreen === SCREENS.MENU && (
-          <MenuScreen key="menu" onStart={handleStart} />
+          <MenuScreen key="menu" onStart={handleStart} isKiosk={isKiosk} />
         )}
         {currentScreen === SCREENS.KVKK && (
-          <KVKKScreen key="kvkk" onAccept={handleKVKKAccept} onDecline={handleReset} />
+          <KVKKScreen key="kvkk" onAccept={handleKVKKAccept} onDecline={handleReset} isKiosk={isKiosk} />
         )}
         {currentScreen === SCREENS.FORM && (
-          <FormScreen key="form" onSubmit={handleFormSubmit} />
+          <FormScreen key="form" onSubmit={handleFormSubmit} isKiosk={isKiosk} />
         )}
         {currentScreen === SCREENS.GAME && (
-          <GameScreen key="game" onGameOver={handleGameOver} />
+          <GameScreen key="game" onGameOver={handleGameOver} isKiosk={isKiosk} />
         )}
         {currentScreen === SCREENS.RESULT && (
-          <ResultScreen key="result" score={finalScore} onReset={handleReset} onPlayAgain={handlePlayAgain} onShowLeaderboard={() => setCurrentScreen(SCREENS.LEADERBOARD)} />
+          <ResultScreen key="result" score={finalScore} onReset={handleReset} onPlayAgain={handlePlayAgain} onShowLeaderboard={() => setCurrentScreen(SCREENS.LEADERBOARD)} isKiosk={isKiosk} />
         )}
         {currentScreen === SCREENS.LEADERBOARD && (
-          <LeaderboardScreen key="leaderboard" onReset={handleReset} onPlayAgain={handlePlayAgain} lastSessionId={lastSessionId} />
+          <LeaderboardScreen key="leaderboard" onReset={handleReset} onPlayAgain={handlePlayAgain} lastSessionId={lastSessionId} isKiosk={isKiosk} />
         )}
       </AnimatePresence>
 
@@ -105,6 +121,7 @@ function App() {
         {isTransitioning && (
           <PixelTransition
             key="pixel-transition"
+            isKiosk={isKiosk}
             onMidpoint={() => {
               if (transitionTarget) {
                 setCurrentScreen(transitionTarget);
