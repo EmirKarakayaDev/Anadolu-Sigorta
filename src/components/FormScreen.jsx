@@ -27,7 +27,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
         }
     });
 
-    const [activeField, setActiveField] = useState(null); 
+    const [activeField, setActiveField] = useState(null);
     const [keyboardY, setKeyboardY] = useState(null);
     const emailRef = useRef(null);
     const phoneRef = useRef(null);
@@ -93,7 +93,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                             fontSize: isKiosk ? undefined : (isMobile ? '1.4rem' : '1.8rem'),
                             fontWeight: 800,
                             color: 'white',
-                            margin: isKiosk ? '0 0 1.5rem 0' : '0.5rem 0 1.2rem 0',
+                            margin: isKiosk ? '0 0 0.5rem 0' : '0.5rem 0 0.4rem 0',
                             textAlign: 'center'
                         }}
                     >
@@ -115,7 +115,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                             gridTemplateColumns: '1fr 1fr',
                             gap: '0.8rem',
                             marginBottom: 0,
-                            marginTop: '1rem'
+                            marginTop: '0.4rem'
                         }}>
                             <div className="form-group">
                                 <label>Ad <span style={{ color: '#FF6B6B' }}>*</span></label>
@@ -227,7 +227,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                             {errors.phone && <span className="form-error">{errors.phone.message}</span>}
                         </div>
 
-                        <div style={{ marginBottom: '1.2rem' }}>
+                        <div style={{ marginBottom: isMobile ? '0.4rem' : '1.2rem' }}>
                             <div className="checkbox-group">
                                 <input
                                     type="checkbox"
@@ -242,7 +242,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
 
                     {/* Alt Butonlar */}
                     <div style={{
-                        marginTop: isKiosk ? '0' : '1.5rem',
+                        marginTop: isKiosk ? '0' : (isMobile ? '0.6rem' : '1.5rem'),
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '0.4rem',
@@ -302,7 +302,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                     onDone={() => {
                         const fieldsOrder = ['firstName', 'lastName', 'email', 'tcNumber', 'phone'];
                         const currentIndex = fieldsOrder.indexOf(activeField.name);
-                        
+
                         if (currentIndex < fieldsOrder.length - 1) {
                             // Bir sonraki alana odaklan
                             const nextField = fieldsOrder[currentIndex + 1];
