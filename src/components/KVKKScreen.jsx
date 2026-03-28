@@ -186,7 +186,7 @@ Alt Veri İşleyenin Tam Adı | Adresi | Veri İşleyen’e Sunduğu Hizmet
                         fontWeight: 800,
                         textAlign: 'center',
                         marginTop: '0',
-                        marginBottom: isKiosk ? '1rem' : '0.5rem'
+                        marginBottom: '0.5rem'
                     }}>
                         Aydınlatma Metni
                     </h1>
@@ -196,7 +196,8 @@ Alt Veri İşleyenin Tam Adı | Adresi | Veri İşleyen’e Sunduğu Hizmet
                         flex: isKiosk ? 1 : 'none',
                         display: 'flex',
                         flexDirection: 'column',
-                        width: '100%'
+                        width: '100%',
+                        marginTop: isKiosk ? '1.5rem' : 0
                     }}>
                         <div className="kvkk-container">
                             {kvkkText}

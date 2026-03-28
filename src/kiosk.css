@@ -216,7 +216,7 @@ body.kiosk .brand-screen h2 {
 
 /* Sadece Giriş Formu (h2) başlığından sonraki formun mesafesini artırır */
 body.kiosk .brand-screen h2+form {
-  margin-top: 2rem !important;
+  margin-top: 1.5rem !important;
 }
 
 body.kiosk .kvkk-container {

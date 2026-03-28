@@ -31,7 +31,6 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
     const emailRef = useRef(null);
     const phoneRef = useRef(null);
     const isMobile = window.innerWidth < 768;
-    const hasErrors = Object.keys(errors).length > 0;
 
     const handleKey = (key) => {
         if (!activeField) return;
@@ -91,7 +90,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                             fontSize: isKiosk ? undefined : (isMobile ? '1.4rem' : '1.8rem'),
                             fontWeight: 800,
                             color: 'white',
-                            margin: isKiosk ? '0 0 0.5rem 0' : '0 0 0 0',
+                            margin: '0 0 0.5rem 0',
                             textAlign: 'center'
                         }}
                     >
@@ -205,7 +204,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                             {errors.phone && <span className="form-error">{errors.phone.message}</span>}
                         </div>
 
-                        <div style={{ marginTop: isKiosk ? '0' : '1.5rem', marginBottom: isKiosk ? '0' : '1rem' }}>
+                        <div style={{ marginTop: '1.5rem', marginBottom: isKiosk ? '0' : '1rem' }}>
                             <div className="checkbox-group" style={{ padding: isKiosk ? '0' : '0 12px' }}>
                                 <input
                                     type="checkbox"
