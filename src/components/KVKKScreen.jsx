@@ -186,7 +186,7 @@ Alt Veri İşleyenin Tam Adı | Adresi | Veri İşleyen’e Sunduğu Hizmet
                         fontWeight: 800,
                         textAlign: 'center',
                         marginTop: '0',
-                        marginBottom: isKiosk ? '1rem' : '-5px'
+                        marginBottom: isKiosk ? '1rem' : '0.5rem'
                     }}>
                         Aydınlatma Metni
                     </h1>
