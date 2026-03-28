@@ -34,7 +34,7 @@ export function FormScreen({ onSubmit, isKiosk }) {
     const handleKey = (key) => {
         if (!activeField) return;
         const currentVal = watch(activeField.name) || '';
-        
+
         // TC ve Telefon için rakam kontrolü ve 11 hane sınırı
         if ((activeField.name === 'tcNumber' || activeField.name === 'phone')) {
             if (!/^\d+$/.test(key)) return;
@@ -85,10 +85,10 @@ export function FormScreen({ onSubmit, isKiosk }) {
                         initial={{ y: -10, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.2 }}
-                        style={{ 
+                        style={{
                             fontSize: isKiosk ? undefined : (isMobile ? '1.4rem' : '1.8rem'),
-                            fontWeight: 800, 
-                            color: 'white', 
+                            fontWeight: 800,
+                            color: 'white',
                             margin: isKiosk ? '0 0 1.5rem 0' : '0.5rem 0 1.2rem 0',
                             textAlign: 'center'
                         }}
@@ -110,27 +110,27 @@ export function FormScreen({ onSubmit, isKiosk }) {
                             display: 'grid',
                             gridTemplateColumns: '1fr 1fr',
                             gap: '0.8rem',
-                            marginBottom: '0.8rem',
+                            marginBottom: 0,
                             marginTop: '1rem'
                         }}>
-                            <div className="form-group" style={{ marginBottom: 0 }}>
+                            <div className="form-group">
                                 <label>Ad <span style={{ color: '#FF6B6B' }}>*</span></label>
-                                <input 
-                                    className={`form-input ${errors.firstName ? 'error' : ''}`} 
-                                    {...register('firstName')} 
-                                    placeholder="Ad" 
+                                <input
+                                    className={`form-input ${errors.firstName ? 'error' : ''}`}
+                                    {...register('firstName')}
+                                    placeholder="Ad"
                                     onFocus={() => isKiosk && setActiveField({ name: 'firstName', type: 'text' })}
                                     inputMode={isKiosk ? 'none' : 'text'}
                                     autoComplete="off"
                                 />
                                 {errors.firstName && <span className="form-error">{errors.firstName.message}</span>}
                             </div>
-                            <div className="form-group" style={{ marginBottom: 0 }}>
+                            <div className="form-group">
                                 <label>Soyad <span style={{ color: '#FF6B6B' }}>*</span></label>
-                                <input 
-                                    className={`form-input ${errors.lastName ? 'error' : ''}`} 
-                                    {...register('lastName')} 
-                                    placeholder="Soyad" 
+                                <input
+                                    className={`form-input ${errors.lastName ? 'error' : ''}`}
+                                    {...register('lastName')}
+                                    placeholder="Soyad"
                                     onFocus={() => isKiosk && setActiveField({ name: 'lastName', type: 'text' })}
                                     inputMode={isKiosk ? 'none' : 'text'}
                                     autoComplete="off"
@@ -139,11 +139,11 @@ export function FormScreen({ onSubmit, isKiosk }) {
                             </div>
                         </div>
 
-                        <div className="form-group" style={{ marginBottom: '0.8rem' }}>
+                        <div className="form-group" style={{ marginBottom: isKiosk ? 0 : '0.8rem' }}>
                             <label>E-posta <span style={{ color: '#FF6B6B' }}>*</span></label>
-                            <input 
-                                className={`form-input ${errors.email ? 'error' : ''}`} 
-                                {...register('email')} 
+                            <input
+                                className={`form-input ${errors.email ? 'error' : ''}`}
+                                {...register('email')}
                                 placeholder="adiniz@ornek.com"
                                 type="email"
                                 onFocus={() => isKiosk && setActiveField({ name: 'email', type: 'text' })}
@@ -153,7 +153,7 @@ export function FormScreen({ onSubmit, isKiosk }) {
                             {errors.email && <span className="form-error">{errors.email.message}</span>}
                         </div>
 
-                        <div className="form-group" style={{ marginBottom: '0.8rem' }}>
+                        <div className="form-group" style={{ marginBottom: isKiosk ? 0 : '0.8rem' }}>
                             <label>T.C. Kimlik Numarası <span style={{ color: '#FF6B6B' }}>*</span></label>
                             <input
                                 className={`form-input ${errors.tcNumber ? 'error' : ''}`}
@@ -167,7 +167,7 @@ export function FormScreen({ onSubmit, isKiosk }) {
                             {errors.tcNumber && <span className="form-error">{errors.tcNumber.message}</span>}
                         </div>
 
-                        <div className="form-group" style={{ marginBottom: '1.2rem' }}>
+                        <div className="form-group" style={{ marginBottom: isKiosk ? 0 : '1.2rem' }}>
                             <label>Telefon <span style={{ color: '#FF6B6B' }}>*</span></label>
                             <input
                                 className={`form-input ${errors.phone ? 'error' : ''}`}
@@ -198,17 +198,17 @@ export function FormScreen({ onSubmit, isKiosk }) {
                     </motion.form>
 
                     {/* Bottom Buttons - Stationary outside form so they stick to bottom of parent */}
-                    <div style={{ 
-                        marginTop: isKiosk ? '0' : '1.5rem', 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        gap: '0.4rem', 
+                    <div style={{
+                        marginTop: isKiosk ? '0' : '1.5rem',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.4rem',
                         alignItems: 'center',
                         width: '100%',
                         paddingBottom: isKiosk ? '1rem' : '0'
                     }}>
-                        <button 
-                            type="submit" 
+                        <button
+                            type="submit"
                             form="kiosk-form"
                             className="btn-primary"
                         >
@@ -249,7 +249,7 @@ export function FormScreen({ onSubmit, isKiosk }) {
 
             {/* Virtual Keyboard */}
             {isKiosk && (
-                <VirtualKeyboard 
+                <VirtualKeyboard
                     visible={!!activeField}
                     type={activeField?.type}
                     onKey={handleKey}
