@@ -14,7 +14,7 @@
   --glass-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
   --font-main: 'Nunito Sans', sans-serif;
 }
-
+ 
 html {
   background-color: var(--as-blue);
   overscroll-behavior: none;

@@ -145,7 +145,7 @@ export function FormScreen({ onSubmit, isKiosk }) {
                                 className={`form-input ${errors.email ? 'error' : ''}`}
                                 {...register('email')}
                                 placeholder="adiniz@ornek.com"
-                                type="email"
+                                type={isKiosk ? 'text' : 'email'}
                                 onFocus={() => isKiosk && setActiveField({ name: 'email', type: 'text' })}
                                 inputMode={isKiosk ? 'none' : 'email'}
                                 autoComplete="off"
@@ -159,6 +159,7 @@ export function FormScreen({ onSubmit, isKiosk }) {
                                 className={`form-input ${errors.tcNumber ? 'error' : ''}`}
                                 {...register('tcNumber')}
                                 placeholder="11 haneli T.C. kimlik numaranız"
+                                type="text"
                                 inputMode={isKiosk ? 'none' : 'numeric'}
                                 maxLength={11}
                                 onFocus={() => isKiosk && setActiveField({ name: 'tcNumber', type: 'tel' })}
@@ -175,7 +176,7 @@ export function FormScreen({ onSubmit, isKiosk }) {
                                     onChange: (e) => e.target.value = e.target.value.replace(/\D/g, '')
                                 })}
                                 placeholder="05xx xxx xx xx"
-                                type="tel"
+                                type={isKiosk ? 'text' : 'tel'}
                                 inputMode={isKiosk ? 'none' : 'numeric'}
                                 maxLength={11}
                                 onFocus={() => isKiosk && setActiveField({ name: 'phone', type: 'tel' })}
