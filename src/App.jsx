@@ -43,18 +43,22 @@ function App() {
   }, []);
 
   const handleStart = () => {
-    // Attempt fullscreen on first interaction for immersion (sadece mobil/desktop için, kiosk zaten tam ekran)
-    if (!isKiosk) {
-      try {
-        if (document.documentElement.requestFullscreen) {
-          document.documentElement.requestFullscreen().catch(() => { });
-        } else if (document.documentElement.webkitRequestFullscreen) {
-          document.documentElement.webkitRequestFullscreen();
-        }
-      } catch (e) {
-        console.warn("Fullscreen request failed", e);
+    // Tarayıcı güvenlik politikası gereği ilk etkileşimde (user gesture) tam ekranı tetikliyoruz.
+    try {
+      const docElm = document.documentElement;
+      if (docElm.requestFullscreen) {
+        docElm.requestFullscreen().catch(() => { });
+      } else if (docElm.webkitRequestFullscreen) {
+        docElm.webkitRequestFullscreen();
+      } else if (docElm.msRequestFullscreen) {
+        docElm.msRequestFullscreen();
+      } else if (docElm.mozRequestFullScreen) {
+        docElm.mozRequestFullScreen();
       }
+    } catch (e) {
+      console.warn("Fullscreen request failed", e);
     }
+
     setCurrentScreen(SCREENS.KVKK);
   };
   const handleKVKKAccept = () => setCurrentScreen(SCREENS.FORM);
