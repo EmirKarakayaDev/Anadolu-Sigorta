@@ -45,10 +45,11 @@ export function MenuScreen({ onStart, isKiosk }) {
 
                     {/* Action Button */}
                     <motion.div
+                        className="action-group"
                         initial={{ y: 20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.5 }}
-                        style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
+                        style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', paddingBottom: isKiosk ? '1rem' : '0' }}
                     >
                         <button
                             className="btn-primary"

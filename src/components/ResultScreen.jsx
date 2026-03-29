@@ -123,7 +123,8 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
                         flexDirection: 'column',
                         gap: isKiosk ? '1.2rem' : '0.8rem',
                         alignItems: 'center',
-                        marginTop: isKiosk ? '0' : 'auto'
+                        marginTop: isKiosk ? '0' : 'auto',
+                        paddingBottom: isKiosk ? '1rem' : '0'
                     }}
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}

@@ -298,7 +298,8 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
                     flexDirection: 'column',
                     alignItems: 'center',
                     gap: isKiosk ? '1.5rem' : '0.8rem',
-                    marginTop: isKiosk ? '1.5rem' : 'auto'
+                    marginTop: isKiosk ? '1.5rem' : 'auto',
+                    paddingBottom: isKiosk ? '1rem' : '0'
                 }}>
                     {!isKiosk && (
                         <button className="btn-primary" onClick={onPlayAgain}>
