@@ -9,17 +9,19 @@ body.kiosk {
   /* Sayfa kaydırması yok, her şey play zone'a sığar */
 
   /* Yüksek Çözünürlüklü Keskinlik Ayarları */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* subpixel-antialiased: Windows Chrome'da ClearType aktifleşir — antialiased'dan belirgin şekilde daha keskin */
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
   text-rendering: optimizeLegibility;
+  /* high-quality: modern Chrome için standart; -webkit-optimize-contrast eski Chrome içindi */
+  image-rendering: high-quality;
   image-rendering: -webkit-optimize-contrast;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 }
 
 /* Kiosktaki tüm metinler için subpixel rendering iyileştirmesi */
 body.kiosk * {
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 /* .screen'in mobil için yaptığı dikey ortalama ve padding kiosk'ta sıfırlanıyor.
@@ -76,6 +78,8 @@ body.kiosk .brand-screen>*:last-child {
 body.kiosk .brand-logo {
   width: 260px;
   margin-bottom: 1rem !important;
+  image-rendering: high-quality;
+  image-rendering: -webkit-optimize-contrast;
 }
 
 /* KVKK gibi başlığı olan sayfalarda logodan sonraki mesafe */
