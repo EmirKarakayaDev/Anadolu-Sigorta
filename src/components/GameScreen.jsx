@@ -439,21 +439,13 @@ export function GameScreen({ onGameOver, isKiosk }) {
                     </div>
                 </div>
 
-                {/* Game Area Wrapper - Conditional Layout for Kiosk */}
-                <div style={isKiosk ? {
+                {/* Game Area Wrapper - flex:1 to fill remaining space, board centered inside */}
+                <div style={{
                     flex: 1,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     width: '100%',
-                    margin: '0',
-                    pointerEvents: 'none' // Transparent to gestures
-                } : {
-                    position: 'relative',
-                    width: '100%',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    margin: 'auto 0',
                     pointerEvents: 'none' // Transparent to gestures
                 }}>
                     <div className="game-main-area" style={{ position: 'relative', pointerEvents: 'none' }}>
