@@ -46,7 +46,7 @@ export function MenuScreen({ onStart, isKiosk }) {
                         initial={{ y: 20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.5 }}
-                        style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
+                        style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', marginTop: isKiosk ? undefined : 'auto' }}
                     >
                         <button
                             className="btn-primary"
