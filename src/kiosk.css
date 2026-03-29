@@ -24,6 +24,11 @@ body.kiosk * {
   -webkit-font-smoothing: subpixel-antialiased;
 }
 
+/* Inline SVG ikonlar (Lucide vb.) — geometricPrecision eğri kenarları düzgün anti-alias eder */
+body.kiosk svg {
+  shape-rendering: geometricPrecision;
+}
+
 /* .screen'in mobil için yaptığı dikey ortalama ve padding kiosk'ta sıfırlanıyor.
    brand-layout-full kendi play zone padding'ini tam olarak kontrol edebilsin. */
 body.kiosk .screen {
