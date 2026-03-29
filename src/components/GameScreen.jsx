@@ -15,7 +15,7 @@ export function GameScreen({ onGameOver, isKiosk }) {
     const {
         grid, activePiece, ghostPiece, trail, clearingLines, clearingStage, nextPieces,
         score, gameOver, isSettling, feedback, isFastMode, setIsFastMode,
-        move, rotate, drop, hardDrop, initGame, triggerGameOver
+        move, rotate, drop, hardDrop, triggerGameOver
     } = useTetris({ isPaused: isCounting });
 
     const [images, setImages] = useState({});
@@ -87,19 +87,10 @@ export function GameScreen({ onGameOver, isKiosk }) {
     const gameOverTriggeredRef = useRef(false);
 
     const audioPlayOnceRef = useRef(false);
-    // Geri sayım ve müzik yönetimi.
-    // 1) Görseller hazır olunca oyun state'i önceden kurulur (initGame).
-    //    Böylece geri sayım bittiğinde sadece drop timer başlar; state burst olmaz.
-    // 2) setIsCounting(false) 450ms gecikmeli çağrılır. "1" rakamının çıkış
-    //    animasyonu tamamlandıktan sonra oyun başlar, GPU çakışması olmaz.
     useEffect(() => {
         if (!imagesReady) return;
 
         audioManager.stopBGM();
-
-        // Oyun parçalarını geri sayım sırasında hazırla (isPaused=true olduğundan
-        // drop timer başlamaz, yalnızca grid/parça state'leri kurulur)
-        initGame();
 
         if (!audioPlayOnceRef.current) {
             audioManager.play('countdown');
@@ -107,19 +98,14 @@ export function GameScreen({ onGameOver, isKiosk }) {
         }
 
         let bgmTimeout = null;
-        let startTimeout = null;
         const timer = setInterval(() => {
             setCountdown(prev => {
                 if (prev <= 1) {
                     clearInterval(timer);
-                    // "1" rakamının exit animasyonu (~400ms spring) bitmesini bekle,
-                    // sonra oyunu başlat. GPU'da animasyon ile oyun başlangıcı çakışmaz.
-                    startTimeout = setTimeout(() => {
-                        setIsCounting(false);
-                        bgmTimeout = setTimeout(() => {
-                            audioManager.startBGM(2);
-                        }, 50);
-                    }, 450);
+                    setIsCounting(false);
+                    bgmTimeout = setTimeout(() => {
+                        audioManager.startBGM(2);
+                    }, 50);
                     return 0;
                 }
                 return prev - 1;
@@ -128,7 +114,6 @@ export function GameScreen({ onGameOver, isKiosk }) {
 
         return () => {
             clearInterval(timer);
-            if (startTimeout) clearTimeout(startTimeout);
             if (bgmTimeout) clearTimeout(bgmTimeout);
         };
     }, [imagesReady]);
@@ -332,39 +317,36 @@ export function GameScreen({ onGameOver, isKiosk }) {
                                 justifyContent: 'center',
                                 alignItems: 'center'
                             }}>
-                                <AnimatePresence mode="popLayout">
+                                <AnimatePresence mode="wait">
                                     <motion.div
                                         key={countdown}
                                         initial={{ scale: 3, opacity: 0, rotate: -30 }}
                                         animate={{ scale: 1, opacity: 1, rotate: 0 }}
-                                        exit={{ opacity: 0, transition: { duration: 0.15, ease: 'easeIn' } }}
-                                        transition={{ duration: 0.4, type: 'spring', stiffness: 120 }}
+                                        exit={{ opacity: 0, transition: { duration: 0.12, ease: 'easeIn' } }}
+                                        transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
                                         style={{
                                             position: 'absolute',
                                             fontSize: isKiosk ? '18rem' : '12rem',
                                             fontWeight: 900,
-                                            willChange: 'transform, opacity, filter',
-                                            background: `
-                                                linear-gradient(135deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%) -10px 0,
-                                                linear-gradient(225deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%) -10px 0,
-                                                linear-gradient(315deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%),
-                                                linear-gradient(45deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%),
-                                                linear-gradient(to bottom, #FFD166, #F7B500, #F27121)
-                                            `,
-                                            backgroundSize: '20px 20px, 20px 20px, 20px 20px, 20px 20px, 100% 100%',
+                                            willChange: 'transform, opacity',
+                                            // GPU-composited: transform + opacity Framer Motion tarafından
+                                            // compositor thread'de çalıştırılır (CPU sıfır yük).
+                                            //
+                                            // WebkitTextStroke → keskin beyaz dış kontur (GPU-accelerated)
+                                            // textShadow       → koyu iç kontur (GPU-accelerated, her frame'de hesaplanmaz)
+                                            // filter: drop-shadow KALDIRILDI → 9 adet CPU-pass'i ortadan kalktı
+                                            WebkitTextStroke: isKiosk ? '10px #FFFFFF' : '7px #FFFFFF',
+                                            paintOrder: 'stroke fill',
+                                            textShadow: [
+                                                '3px 3px 0 #1D1D46',
+                                                '-3px -3px 0 #1D1D46',
+                                                '3px -3px 0 #1D1D46',
+                                                '-3px 3px 0 #1D1D46',
+                                                '0 0 24px rgba(0,0,0,0.35)',
+                                            ].join(', '),
+                                            background: 'linear-gradient(to bottom, #FFD166, #F7B500, #F27121)',
                                             WebkitBackgroundClip: 'text',
                                             WebkitTextFillColor: 'transparent',
-                                            filter: `
-                                                drop-shadow(2px 2px 0px #1D1D46) 
-                                                drop-shadow(-2px -2px 0px #1D1D46) 
-                                                drop-shadow(2px -2px 0px #1D1D46) 
-                                                drop-shadow(-2px 2px 0px #1D1D46)
-                                                drop-shadow(4px 4px 0px #FFFFFF)
-                                                drop-shadow(-4px -4px 0px #FFFFFF)
-                                                drop-shadow(4px -4px 0px #FFFFFF)
-                                                drop-shadow(-4px 4px 0px #FFFFFF)
-                                                drop-shadow(0px 0px 20px rgba(0,0,0,0.3))
-                                            `,
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
