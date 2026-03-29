@@ -49,7 +49,8 @@ export function CanvasRenderer({ grid, activePiece, ghostPiece, trail, isSettlin
             
             ctx.save();
             ctx.imageSmoothingEnabled = true;
-            
+            ctx.imageSmoothingQuality = 'high';
+
             // Özel efekt gölgeleri
             if (highlight === 'hard') {
                 ctx.shadowBlur = 15;

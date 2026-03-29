@@ -19,34 +19,44 @@ export function GameScreen({ onGameOver, isKiosk }) {
     } = useTetris({ isPaused: isCounting });
 
     const [images, setImages] = useState({});
+    const [imagesReady, setImagesReady] = useState(false);
 
-    // Görsel varlıkları preload et
-    // SVG dosyaları explicit width/height attribute içermediğinden naturalWidth
-    // tarayıcıya göre 0 dönebilir (Chrome/Windows bu şekilde davranır).
-    // Çözüm: her SVG'yi load sonrası offscreen canvas'a sabit boyutta render et.
-    // Canvas'ın .width/.height her zaman güvenilirdir.
+    // SVG dosyalarını offscreen canvas'a önceden render et.
+    // Chrome/Windows'ta SVG'lerin naturalWidth=0 dönmesi sorununu çözer.
+    // Canvas .width/.height her zaman güvenilirdir.
+    // DPR'a göre boyutlandırılır → yüksek yoğunluklu ekranlarda keskinlik.
     useEffect(() => {
         const loadedImages = {};
         let loadedCount = 0;
         const pieceKeys = Object.keys(PIECE_ASSETS);
         const total = pieceKeys.length;
-        const CELL_PX = 200; // Her hücre için referans piksel boyutu
+        const dpr = window.devicePixelRatio || 1;
+        const CELL_PX = Math.min(400, Math.ceil(200 * dpr)); // max 400px (bellek koruması)
+
+        const finalize = () => {
+            setImages(loadedImages);
+            setImagesReady(true);
+        };
 
         pieceKeys.forEach((type) => {
             const img = new Image();
             const dims = PIECE_DIMENSIONS[type];
             img.onload = () => {
-                // SVG'yi offscreen canvas'a sabit boyutta çiz
                 const offscreen = document.createElement('canvas');
                 offscreen.width = dims.w * CELL_PX;
                 offscreen.height = dims.h * CELL_PX;
                 const ctx2d = offscreen.getContext('2d');
+                ctx2d.imageSmoothingEnabled = true;
+                ctx2d.imageSmoothingQuality = 'high';
                 ctx2d.drawImage(img, 0, 0, offscreen.width, offscreen.height);
                 loadedImages[type] = offscreen;
                 loadedCount++;
-                if (loadedCount === total) {
-                    setImages(loadedImages);
-                }
+                if (loadedCount === total) finalize();
+            };
+            img.onerror = () => {
+                // Görsel yüklenemese bile oyunu bloklamaz
+                loadedCount++;
+                if (loadedCount === total) finalize();
             };
             img.src = PIECE_ASSETS[type];
         });
@@ -77,12 +87,14 @@ export function GameScreen({ onGameOver, isKiosk }) {
     const gameOverTriggeredRef = useRef(false);
 
     const audioPlayOnceRef = useRef(false);
-    // Geri sayım ve müzik yönetimi
+    // Geri sayım ve müzik yönetimi.
+    // Görseller tamamen hazır olmadan geri sayım başlamaz → animasyon ve
+    // ilk parça, main thread yükleme baskısı olmadan pürüzsüz çalışır.
     useEffect(() => {
-        // Oyun ekranına gelir gelmez menü müziğini kes
+        if (!imagesReady) return;
+
         audioManager.stopBGM();
 
-        // 3-2-1 sesini sadece bir kez çal
         if (!audioPlayOnceRef.current) {
             audioManager.play('countdown');
             audioPlayOnceRef.current = true;
@@ -94,7 +106,6 @@ export function GameScreen({ onGameOver, isKiosk }) {
                 if (prev <= 1) {
                     clearInterval(timer);
                     setIsCounting(false);
-                    // Sayaç bitince Normal müziği başlat
                     bgmTimeout = setTimeout(() => {
                         audioManager.startBGM(2);
                     }, 50);
@@ -108,7 +119,7 @@ export function GameScreen({ onGameOver, isKiosk }) {
             clearInterval(timer);
             if (bgmTimeout) clearTimeout(bgmTimeout);
         };
-    }, []);
+    }, [imagesReady]);
 
     // Hız moduna göre müziği değiştir (Normal vs 2x)
     useEffect(() => {
@@ -652,6 +663,7 @@ function NextPiecePreview({ piece, images, isKiosk }) {
 
                     ctx.save();
                     ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
                     ctx.translate(px + PREVIEW_BLOCK_SIZE / 2, py + PREVIEW_BLOCK_SIZE / 2);
                     // Rotation is always 0 for preview
                     ctx.drawImage(
