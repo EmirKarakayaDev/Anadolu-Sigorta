@@ -93,8 +93,9 @@ body.kiosk .form-mid-block {
   margin-top: 3.5rem;
 }
 
-/* form-mid-block içindeki h2 — CSS !important çakışmasını önler */
-body.kiosk .form-mid-block h2 {
+/* mid-block içindeki h2 — CSS !important çakışmasını önler */
+body.kiosk .form-mid-block h2,
+body.kiosk .leaderboard-mid-block h2 {
   margin: 0 !important;
 }
 
@@ -238,8 +239,10 @@ body.kiosk .kvkk-container {
   margin: 0 !important;
 }
 
-/* kvkk-mid-block — logodan sonra boşluk */
-body.kiosk .kvkk-mid-block {
+/* mid-block'lar — logodan sonra boşluk (tüm ekranlarda ortak) */
+body.kiosk .kvkk-mid-block,
+body.kiosk .form-mid-block,
+body.kiosk .leaderboard-mid-block {
   margin-top: 3.5rem;
 }
 

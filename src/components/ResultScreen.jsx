@@ -30,7 +30,7 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
                     className="brand-logo"
                     initial={{ y: -20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    style={{ width: isKiosk ? '280px' : '180px', height: 'auto', marginBottom: isKiosk ? '2rem' : '1rem' }}
+                    style={{ width: isKiosk ? undefined : '180px', height: 'auto', marginBottom: isKiosk ? undefined : '1rem' }}
                 />
 
                 {/* Main Content (Score) - Centered in remaining space */}
@@ -115,14 +115,15 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
                 </div>
 
                 {/* Actions */}
-                <motion.div 
-                    style={{ 
-                        width: '100%', 
-                        display: 'flex', 
-                        flexDirection: 'column', 
+                <motion.div
+                    className="action-group"
+                    style={{
+                        width: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
                         gap: isKiosk ? '1.2rem' : '0.8rem',
                         alignItems: 'center',
-                        marginTop: isKiosk ? '4rem' : 'auto' // Kioskta dikey merkezleme için auto'yu kaldırdık
+                        marginTop: isKiosk ? '0' : 'auto'
                     }}
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}

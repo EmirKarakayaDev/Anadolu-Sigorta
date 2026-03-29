@@ -112,8 +112,18 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
                     className="brand-logo"
                     initial={{ y: -20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    style={{ width: isKiosk ? '280px' : '180px', height: 'auto', marginBottom: isKiosk ? '1.5rem' : '12px' }}
+                    style={{ width: isKiosk ? undefined : '180px', height: 'auto', marginBottom: isKiosk ? undefined : '12px' }}
                 />
+
+                <div className="leaderboard-mid-block" style={{
+                    flex: 1,
+                    minHeight: 0,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: '100%',
+                    gap: isKiosk ? '1.5rem' : 0,
+                    marginTop: !isKiosk ? (isMobile ? '1.5rem' : '0') : '0',
+                }}>
 
                 {/* Header Title + Subtitle Group */}
                 <div style={{
@@ -122,8 +132,7 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
                     flexDirection: 'column',
                     alignItems: 'center',
                     gap: isKiosk ? '0.5rem' : '0.2rem',
-                    marginTop: isKiosk ? '4rem' : (isMobile ? '1.5rem' : '0'),
-                    marginBottom: isKiosk ? '2rem' : '1rem'
+                    marginBottom: isKiosk ? '0' : '1rem'
                 }}>
                     <div style={{
                         width: '100%',
@@ -181,7 +190,7 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
                         display: 'flex',
                         flexDirection: 'column',
                         boxShadow: '0 15px 35px rgba(0,0,0,0.2)',
-                        marginBottom: isKiosk ? '3rem' : '1.2rem'
+                        marginBottom: isKiosk ? '0' : '1.2rem'
                     }}
                     initial={{ scale: 0.95, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
@@ -280,14 +289,16 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
                     </div>
                 </motion.div>
  
-                {/* Footer Actions - Pushed to bottom */}
-                <div style={{ 
-                    width: '100%', 
-                    display: 'flex', 
-                    flexDirection: 'column', 
-                    alignItems: 'center', 
-                    gap: isKiosk ? '1.5rem' : '0.8rem', 
-                    marginTop: 'auto' 
+                </div>{/* /leaderboard-mid-block */}
+
+                {/* Footer Actions */}
+                <div className="action-group" style={{
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: isKiosk ? '1.5rem' : '0.8rem',
+                    marginTop: isKiosk ? '0' : 'auto'
                 }}>
                     {!isKiosk && (
                         <button className="btn-primary" onClick={onPlayAgain}>
