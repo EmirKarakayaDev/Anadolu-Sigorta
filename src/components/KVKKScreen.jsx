@@ -230,7 +230,7 @@ Alt Veri İşleyenin Tam Adı | Adresi | Veri İşleyen’e Sunduğu Hizmet
                         flexDirection: (isKiosk || isMobile) ? 'column' : 'row',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        marginTop: isKiosk ? '0' : 'auto',
+                        marginTop: isKiosk ? '2rem' : 'auto',
                         paddingBottom: isKiosk ? '1rem' : '0'
                     }}>
                         <button
