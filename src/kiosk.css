@@ -90,7 +90,7 @@ body.kiosk .brand-logo+form {
 
 /* Form başlığı (h2) olan sayfalarda logodan sonraki mesafe */
 body.kiosk .brand-logo+h2 {
-  margin-top: 2rem !important;
+  margin-top: 3.5rem !important;
 }
 
 body.kiosk .main-graphic {
@@ -231,6 +231,11 @@ body.kiosk .kvkk-container {
   line-height: 1.7;
   padding: 0 1.2rem !important;
   margin: 0 !important;
+}
+
+/* kvkk-mid-block — logodan sonra boşluk */
+body.kiosk .kvkk-mid-block {
+  margin-top: 3.5rem;
 }
 
 /* kvkk-mid-block içindeki h1 — gap spacing yönettiği için margin sıfır */

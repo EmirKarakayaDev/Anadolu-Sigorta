@@ -107,7 +107,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                     >
                         <div style={{
                             display: 'grid',
-                            gridTemplateColumns: isKiosk ? '1fr' : '1fr 1fr',
+                            gridTemplateColumns: '1fr 1fr',
                             gap: '0.8rem',
                             marginBottom: isKiosk ? 0 : '0.8rem',
                             marginTop: '0'
