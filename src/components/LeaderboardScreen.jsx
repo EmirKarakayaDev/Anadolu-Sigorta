@@ -115,50 +115,58 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
                     style={{ width: isKiosk ? '280px' : '180px', height: 'auto', marginBottom: isKiosk ? '1.5rem' : '12px' }}
                 />
 
-                {/* Header Title */}
-                <div style={{ 
-                    width: '100%', 
-                    position: 'relative',
-                    textAlign: 'center', 
-                    marginBottom: isKiosk ? '2rem' : '1.2rem',
-                    marginTop: isKiosk ? '4rem' : (isMobile ? '1.5rem' : '0'), // Logo ile başlık arası mesafe - Kioskta ferahlık sağlandı
+                {/* Header Title + Subtitle Group */}
+                <div style={{
+                    width: '100%',
                     display: 'flex',
+                    flexDirection: 'column',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    gap: isKiosk ? '0.5rem' : '0.2rem',
+                    marginTop: isKiosk ? '4rem' : (isMobile ? '1.5rem' : '0'),
+                    marginBottom: isKiosk ? '2rem' : '1rem'
                 }}>
-                    <h2 style={{ fontSize: isKiosk ? '3.5rem' : (isMobile ? '1.8rem' : '2.2rem'), fontWeight: 900, color: 'white', margin: 0 }}>Liderlik Tablosu</h2>
-                    <button 
-                        onClick={() => setIsRewardsModalOpen(true)}
-                        style={{ 
-                            position: 'absolute',
-                            right: 0,
-                            background: 'rgba(255,255,255,0.2)', 
-                            border: '1px solid rgba(255,255,255,0.4)', 
-                            borderRadius: '50%', 
-                            width: isKiosk ? '80px' : '38px', 
-                            height: isKiosk ? '80px' : '38px', 
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            justifyContent: 'center',
-                            color: 'white',
-                            cursor: 'pointer',
-                            backdropFilter: 'blur(5px)'
-                        }}
-                    >
-                        <Info size={isKiosk ? 40 : 22} />
-                    </button>
-                </div>
+                    <div style={{
+                        width: '100%',
+                        position: 'relative',
+                        textAlign: 'center',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>
+                        <h2 style={{ fontSize: isKiosk ? '3.5rem' : (isMobile ? '1.8rem' : '2.2rem'), fontWeight: 900, color: 'white', margin: 0 }}>Liderlik Tablosu</h2>
+                        <button
+                            onClick={() => setIsRewardsModalOpen(true)}
+                            style={{
+                                position: 'absolute',
+                                right: 0,
+                                background: 'rgba(255,255,255,0.2)',
+                                border: '1px solid rgba(255,255,255,0.4)',
+                                borderRadius: '50%',
+                                width: isKiosk ? '80px' : '38px',
+                                height: isKiosk ? '80px' : '38px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                color: 'white',
+                                cursor: 'pointer',
+                                backdropFilter: 'blur(5px)'
+                            }}
+                        >
+                            <Info size={isKiosk ? 40 : 22} />
+                        </button>
+                    </div>
 
-                <p style={{ 
-                    color: 'white', 
-                    fontSize: isKiosk ? '1.8rem' : '1.15rem', 
-                    margin: isKiosk ? '-1rem 0 1.5rem 0' : '-0.3rem 0 1rem 0', // Başlığın altına daha yakın durması için
-                    fontWeight: 800,
-                    letterSpacing: '0.5px',
-                    textAlign: 'center'
-                }}>
-                    En İyi 10
-                </p>
+                    <p style={{
+                        color: 'white',
+                        fontSize: isKiosk ? '1.8rem' : '1.15rem',
+                        margin: 0,
+                        fontWeight: 800,
+                        letterSpacing: '0.5px',
+                        textAlign: 'center'
+                    }}>
+                        En İyi 10
+                    </p>
+                </div>
 
 
                 {/* Score List Container */}
