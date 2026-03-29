@@ -316,18 +316,7 @@ body {
 }
 
 /* Mobile Scaling & Viewport Fixes */
-@media (max-height: 800px) and (max-width: 600px) {
-  .game-container {
-    transform: scale(0.92);
-    transform-origin: center center;
-  }
-}
-
-@media (max-height: 700px) and (max-width: 600px) {
-  .game-container {
-    transform: scale(0.82);
-  }
-}
+/* game-container artık dinamik blockSize ile ölçekleniyor — CSS scale'e gerek yok */
 
 .app-container {
   height: 100%;

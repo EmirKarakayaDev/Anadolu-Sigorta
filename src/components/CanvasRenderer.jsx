@@ -1,10 +1,10 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { BLOCK_SIZE, COLORS, PIECE_ASSETS, PIECE_DIMENSIONS } from '../game/constants';
 
-export function CanvasRenderer({ grid, activePiece, ghostPiece, trail, isSettling, clearingLines = [], clearingStage = 0, images = {}, isKiosk = false }) {
+export function CanvasRenderer({ grid, activePiece, ghostPiece, trail, isSettling, clearingLines = [], clearingStage = 0, images = {}, isKiosk = false, blockSize: propBlockSize }) {
     const canvasRef = useRef(null);
-    const KIOSK_BLOCK_SIZE = 58; // Kiosk ekranı için optimize edilmiş blok boyutu
-    const blockSize = isKiosk ? KIOSK_BLOCK_SIZE : BLOCK_SIZE;
+    const KIOSK_BLOCK_SIZE = 58;
+    const blockSize = propBlockSize ?? (isKiosk ? KIOSK_BLOCK_SIZE : BLOCK_SIZE);
 
     const drawBlock = (ctx, x, y, type, pX = 0, pY = 0, pShape = null, highlight = false, isGhost = false, isClearing = false, blockX = 0, rotation = 0) => {
         const size = blockSize;

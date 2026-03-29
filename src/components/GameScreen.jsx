@@ -7,6 +7,15 @@ import { Trophy, Clock, Volume2, VolumeX } from 'lucide-react';
 import { audioManager } from '../utils/audioManager';
 
 export function GameScreen({ onGameOver, isKiosk }) {
+    // Dinamik blok boyutu: stats(82) + buton(58) + gap(38) = 178px sabit alan
+    // Sağdaki ses butonu için yatayda 100px rezerv (50px buton + 50px simetri)
+    const dynamicBlockSize = React.useMemo(() => {
+        if (isKiosk) return 58;
+        const byHeight = Math.floor((window.innerHeight - 178) / ROWS);
+        const byWidth = Math.floor((window.innerWidth - 100) / COLS);
+        return Math.max(16, Math.min(byHeight, byWidth, BLOCK_SIZE));
+    }, [isKiosk]);
+
     const [timeLeft, setTimeLeft] = useState(120);
     const [countdown, setCountdown] = useState(3);
     const [isCounting, setIsCounting] = useState(true);
@@ -523,6 +532,7 @@ export function GameScreen({ onGameOver, isKiosk }) {
                                 clearingStage={clearingStage}
                                 images={images}
                                 isKiosk={isKiosk}
+                                blockSize={dynamicBlockSize}
                             />
                         </motion.div>
 
