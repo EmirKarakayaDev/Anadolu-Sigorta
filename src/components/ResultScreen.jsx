@@ -15,7 +15,8 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
 
     return (
         <motion.div
-            className="brand-layout-full" // Regular layout like Menu (3rem top, 0 bottom)
+            className="brand-layout-full"
+            style={{ paddingBottom: isKiosk ? undefined : 0 }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -33,7 +34,8 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
                 />
 
                 {/* Main Content (Score) - Centered in remaining space */}
-                <motion.div 
+                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+                <motion.div
                     style={{
                         width: '100%',
                         textAlign: 'center',
@@ -41,7 +43,7 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
                         flexDirection: 'column',
                         alignItems: 'center',
                         gap: '1rem',
-                        marginTop: isKiosk ? '0' : '1.5rem' // Logo ile metin grubu arasındaki mesafe
+                        marginTop: isKiosk ? '0' : '0'
                     }}
                     initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
@@ -110,7 +112,8 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
                         </span>
                     </div>
                 </motion.div>
- 
+                </div>
+
                 {/* Actions */}
                 <motion.div 
                     style={{ 

@@ -98,7 +98,7 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
     return (
         <motion.div
             className="brand-layout-full"
-            style={{ overflowY: 'hidden' }}
+            style={{ overflowY: 'hidden', paddingBottom: isKiosk ? undefined : 0 }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
