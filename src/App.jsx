@@ -23,7 +23,7 @@ const SCREENS = {
 // Öncelik URL parametresi (?kiosk), alternatif olarak yüksek çözünürlüklü dikey ekran tespiti.
 const urlParams = new URLSearchParams(window.location.search);
 const isKiosk = urlParams.has('kiosk') || window.screen.height >= 1800;
-const isTest = import.meta.env.DEV || urlParams.has('test');
+const isTest = true; // TODO: gerçek yayın öncesi kaldır → import.meta.env.DEV || urlParams.has('test')
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState(SCREENS.MENU);
