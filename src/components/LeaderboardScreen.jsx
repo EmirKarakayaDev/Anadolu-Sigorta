@@ -97,12 +97,12 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
 
     return (
         <motion.div
-            className="brand-layout-full"
-            style={{ overflowY: 'hidden', paddingBottom: isKiosk ? undefined : 0 }}
+            className="screen no-select"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
         >
+        <div className="brand-layout-full" style={{ overflowY: 'hidden', paddingBottom: isKiosk ? undefined : 0 }}>
             <div className="brand-screen" style={{ height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                 {/* Top Graphic - Desktop Only for space efficiency */}
                 {/* Top Brand Logo */}
@@ -310,6 +310,7 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
             )}
 
             <RewardsModal isOpen={isRewardsModalOpen} onClose={() => setIsRewardsModalOpen(false)} isKiosk={isKiosk} />
+        </div>
         </motion.div>
     );
 }

@@ -15,12 +15,12 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
 
     return (
         <motion.div
-            className="brand-layout-full"
-            style={{ paddingBottom: isKiosk ? undefined : 0 }}
+            className="screen no-select"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
         >
+        <div className="brand-layout-full" style={{ paddingBottom: isKiosk ? undefined : 0 }}>
             <div className="brand-screen">
                 {/* Top Graphic - Fixed at top like Menu Logo */}
                 {/* Top Brand Logo */}
@@ -155,6 +155,7 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
             )}
 
             <RewardsModal isOpen={isRewardsModalOpen} onClose={() => setIsRewardsModalOpen(false)} isKiosk={isKiosk} />
+        </div>
         </motion.div>
     );
 }
