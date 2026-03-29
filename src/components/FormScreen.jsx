@@ -72,15 +72,13 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
             <div className="brand-layout-full">
 
                 <div className="brand-screen">
-                    {!isKiosk && (
-                        <motion.img
-                            src="/logo_trn.png"
-                            alt="Kaybetmek Yok"
-                            className="brand-logo"
-                            initial={{ y: -20, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                        />
-                    )}
+                    <motion.img
+                        src={isKiosk ? "/beyaz_as_logo.png" : "/logo_trn.png"}
+                        alt={isKiosk ? "Anadolu Sigorta" : "Kaybetmek Yok"}
+                        className="brand-logo"
+                        initial={{ y: -20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                    />
 
                     <motion.h2
                         initial={{ y: -10, opacity: 0 }}

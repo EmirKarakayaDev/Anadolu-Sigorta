@@ -88,6 +88,11 @@ body.kiosk .brand-logo+form {
   margin-top: 8rem !important;
 }
 
+/* Form başlığı (h2) olan sayfalarda logodan sonraki mesafe */
+body.kiosk .brand-logo+h2 {
+  margin-top: 2rem !important;
+}
+
 body.kiosk .main-graphic {
   max-width: 580px;
   z-index: 2;

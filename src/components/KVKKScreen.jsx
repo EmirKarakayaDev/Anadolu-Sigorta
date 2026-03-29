@@ -171,14 +171,12 @@ Alt Veri İşleyenin Tam Adı | Adresi | Veri İşleyen’e Sunduğu Hizmet
         >
             <div className="brand-layout-full">
                 <div className="brand-screen">
-                    {!isKiosk && (
-                        <img
-                            src="/logo_trn.png"
-                            alt="Anadolu Sigorta"
-                            className="brand-logo"
-                            style={{ height: 'auto' }}
-                        />
-                    )}
+                    <img
+                        src={isKiosk ? "/beyaz_as_logo.png" : "/logo_trn.png"}
+                        alt="Anadolu Sigorta"
+                        className="brand-logo"
+                        style={{ height: 'auto' }}
+                    />
 
                     {/* Block 1: Header */}
                     <h1 style={{
