@@ -3,8 +3,12 @@ import { BLOCK_SIZE, COLORS, PIECE_ASSETS, PIECE_DIMENSIONS } from '../game/cons
 
 export function CanvasRenderer({ grid, activePiece, ghostPiece, trail, isSettling, clearingLines = [], clearingStage = 0, images = {}, isKiosk = false }) {
     const canvasRef = useRef(null);
-    const KIOSK_BLOCK_SIZE = 58; // Kiosk ekranı için optimize edilmiş blok boyutu
-    const blockSize = isKiosk ? KIOSK_BLOCK_SIZE : BLOCK_SIZE;
+    // Kiosk blok boyutunu ekran yüksekliğine göre dinamik hesapla.
+    // Overhead: top-padding(42) + safe-zone(600) + stats(140) + buton(93) + gap(28) = 903px
+    const KIOSK_OVERHEAD = 903;
+    const blockSize = isKiosk
+        ? Math.max(30, Math.floor((window.screen.height - KIOSK_OVERHEAD) / grid.length))
+        : BLOCK_SIZE;
 
     const drawBlock = (ctx, x, y, type, pX = 0, pY = 0, pShape = null, highlight = false, isGhost = false, isClearing = false, blockX = 0, rotation = 0) => {
         const size = blockSize;

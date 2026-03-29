@@ -281,6 +281,11 @@ body.kiosk .game-screen-layout {
   box-sizing: border-box !important;
 }
 
+/* Stats bar, oyun alanı ve hız butonu arasına nefes boşluğu */
+body.kiosk .game-screen-layout .brand-screen {
+  gap: 14px !important;
+}
+
 /* ─────────────────────────────────────────
    SANAL KLAVYE — Premium Kiosk Tasarımı
    Sadece body.kiosk modunda aktif
