@@ -31,22 +31,24 @@ export function MenuScreen({ onStart, isKiosk }) {
                         transition={{ delay: 0.2 }}
                     />
 
-                    {/* Center Graphic */}
-                    <motion.div
-                        className="main-graphic"
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ type: "spring", stiffness: 100, delay: 0.3 }}
-                    >
-                        <img src="/logo_trn.png" alt="Kaybetmek Yok" style={{ width: '100%' }} />
-                    </motion.div>
+                    {/* Center Graphic — flex:1 wrapper ile logo ve butonlar arasında tam ortada */}
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+                        <motion.div
+                            className="main-graphic"
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ type: "spring", stiffness: 100, delay: 0.3 }}
+                        >
+                            <img src="/logo_trn.png" alt="Kaybetmek Yok" style={{ width: '100%' }} />
+                        </motion.div>
+                    </div>
 
                     {/* Action Button */}
                     <motion.div
                         initial={{ y: 20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.5 }}
-                        style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', marginTop: isKiosk ? undefined : 'auto' }}
+                        style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
                     >
                         <button
                             className="btn-primary"
