@@ -15,7 +15,7 @@ export function GameScreen({ onGameOver, isKiosk }) {
     const {
         grid, activePiece, ghostPiece, trail, clearingLines, clearingStage, nextPieces,
         score, gameOver, isSettling, feedback, isFastMode, setIsFastMode,
-        move, rotate, drop, hardDrop, triggerGameOver
+        move, rotate, drop, hardDrop, initGame, triggerGameOver
     } = useTetris({ isPaused: isCounting });
 
     const [images, setImages] = useState({});
@@ -88,12 +88,18 @@ export function GameScreen({ onGameOver, isKiosk }) {
 
     const audioPlayOnceRef = useRef(false);
     // Geri sayım ve müzik yönetimi.
-    // Görseller tamamen hazır olmadan geri sayım başlamaz → animasyon ve
-    // ilk parça, main thread yükleme baskısı olmadan pürüzsüz çalışır.
+    // 1) Görseller hazır olunca oyun state'i önceden kurulur (initGame).
+    //    Böylece geri sayım bittiğinde sadece drop timer başlar; state burst olmaz.
+    // 2) setIsCounting(false) 450ms gecikmeli çağrılır. "1" rakamının çıkış
+    //    animasyonu tamamlandıktan sonra oyun başlar, GPU çakışması olmaz.
     useEffect(() => {
         if (!imagesReady) return;
 
         audioManager.stopBGM();
+
+        // Oyun parçalarını geri sayım sırasında hazırla (isPaused=true olduğundan
+        // drop timer başlamaz, yalnızca grid/parça state'leri kurulur)
+        initGame();
 
         if (!audioPlayOnceRef.current) {
             audioManager.play('countdown');
@@ -101,14 +107,19 @@ export function GameScreen({ onGameOver, isKiosk }) {
         }
 
         let bgmTimeout = null;
+        let startTimeout = null;
         const timer = setInterval(() => {
             setCountdown(prev => {
                 if (prev <= 1) {
                     clearInterval(timer);
-                    setIsCounting(false);
-                    bgmTimeout = setTimeout(() => {
-                        audioManager.startBGM(2);
-                    }, 50);
+                    // "1" rakamının exit animasyonu (~400ms spring) bitmesini bekle,
+                    // sonra oyunu başlat. GPU'da animasyon ile oyun başlangıcı çakışmaz.
+                    startTimeout = setTimeout(() => {
+                        setIsCounting(false);
+                        bgmTimeout = setTimeout(() => {
+                            audioManager.startBGM(2);
+                        }, 50);
+                    }, 450);
                     return 0;
                 }
                 return prev - 1;
@@ -117,6 +128,7 @@ export function GameScreen({ onGameOver, isKiosk }) {
 
         return () => {
             clearInterval(timer);
+            if (startTimeout) clearTimeout(startTimeout);
             if (bgmTimeout) clearTimeout(bgmTimeout);
         };
     }, [imagesReady]);
@@ -282,91 +294,88 @@ export function GameScreen({ onGameOver, isKiosk }) {
             {/* Global Countdown Overlay */}
             <AnimatePresence>
                 {isCounting && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        style={{
-                            position: 'fixed',
-                            top: 0, left: 0, right: 0, bottom: 0,
-                            zIndex: 1000,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            paddingTop: isKiosk ? '42px' : '0',
-                            paddingBottom: isKiosk ? '600px' : '0',
-                            background: 'transparent', // Karartma kaldırıldı
-                            pointerEvents: 'none'
-                        }}
-                    >
-                        <motion.span
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0, transition: { duration: 0 } }}
                             style={{
-                                color: '#FFFFFF',
-                                fontSize: isKiosk ? '2.8rem' : '1.4rem',
-                                fontWeight: 900,
-                                letterSpacing: '5px',
-                                marginBottom: isKiosk ? '6rem' : '1.5rem',
-                                textShadow: '4px 4px 0px #1D1D46'
+                                position: 'fixed',
+                                top: 0, left: 0, right: 0, bottom: 0,
+                                zIndex: 1000,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                paddingTop: isKiosk ? '42px' : '0',
+                                paddingBottom: isKiosk ? '600px' : '0',
+                                background: 'transparent',
+                                pointerEvents: 'none'
                             }}
                         >
-                            HAZIR MISIN?
-                        </motion.span>
-                        <div style={{
-                            position: 'relative',
-                            height: '10rem',
-                            width: '100%',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                            <AnimatePresence>
-                                <motion.div
-                                    key={countdown}
-                                    initial={{ scale: 3, opacity: 0, rotate: -30 }}
-                                    animate={{ scale: 1, opacity: 1, rotate: 0 }}
-                                    exit={{ scale: 0.2, opacity: 0, rotate: 30 }}
-                                    transition={{ duration: 0.4, type: 'spring', stiffness: 120 }}
-                                    style={{
-                                        position: 'absolute',
-                                        fontSize: isKiosk ? '18rem' : '12rem',
-                                        fontWeight: 900,
-                                        // Ana dolgu ve Desen (Diamond Pattern simülasyonu)
-                                        background: `
-                                            linear-gradient(135deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%) -10px 0,
-                                            linear-gradient(225deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%) -10px 0,
-                                            linear-gradient(315deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%),
-                                            linear-gradient(45deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%),
-                                            linear-gradient(to bottom, #FFD166, #F7B500, #F27121)
-                                        `,
-                                        backgroundSize: '20px 20px, 20px 20px, 20px 20px, 20px 20px, 100% 100%',
-                                        WebkitBackgroundClip: 'text',
-                                        WebkitTextFillColor: 'transparent',
-                                        // Çok katmanlı çerçeve ve gölge (Sticker etkisi)
-                                        filter: `
-                                            /* Koyu Lacivert İç Kontur */
-                                            drop-shadow(2px 2px 0px #1D1D46) 
-                                            drop-shadow(-2px -2px 0px #1D1D46) 
-                                            drop-shadow(2px -2px 0px #1D1D46) 
-                                            drop-shadow(-2px 2px 0px #1D1D46)
-                                            /* Kalın Beyaz Dış Çerçeve */
-                                            drop-shadow(4px 4px 0px #FFFFFF)
-                                            drop-shadow(-4px -4px 0px #FFFFFF)
-                                            drop-shadow(4px -4px 0px #FFFFFF)
-                                            drop-shadow(-4px 4px 0px #FFFFFF)
-                                            drop-shadow(0px 0px 20px rgba(0,0,0,0.3))
-                                        `,
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        lineHeight: 1
-                                    }}
-                                >
-                                    {countdown > 0 ? countdown : ''}
-                                </motion.div>
-                            </AnimatePresence>
-                        </div>
-                    </motion.div>
+                            <span
+                                style={{
+                                    color: '#FFFFFF',
+                                    fontSize: isKiosk ? '2.8rem' : '1.4rem',
+                                    fontWeight: 900,
+                                    letterSpacing: '5px',
+                                    marginBottom: isKiosk ? '6rem' : '1.5rem',
+                                    textShadow: '4px 4px 0px #1D1D46'
+                                }}
+                            >
+                                HAZIR MISIN?
+                            </span>
+                            <div style={{
+                                position: 'relative',
+                                height: '10rem',
+                                width: '100%',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                <AnimatePresence mode="popLayout">
+                                    <motion.div
+                                        key={countdown}
+                                        initial={{ scale: 3, opacity: 0, rotate: -30 }}
+                                        animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                                        exit={{ opacity: 0, transition: { duration: 0.15, ease: 'easeIn' } }}
+                                        transition={{ duration: 0.4, type: 'spring', stiffness: 120 }}
+                                        style={{
+                                            position: 'absolute',
+                                            fontSize: isKiosk ? '18rem' : '12rem',
+                                            fontWeight: 900,
+                                            willChange: 'transform, opacity, filter',
+                                            background: `
+                                                linear-gradient(135deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%) -10px 0,
+                                                linear-gradient(225deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%) -10px 0,
+                                                linear-gradient(315deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%),
+                                                linear-gradient(45deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%),
+                                                linear-gradient(to bottom, #FFD166, #F7B500, #F27121)
+                                            `,
+                                            backgroundSize: '20px 20px, 20px 20px, 20px 20px, 20px 20px, 100% 100%',
+                                            WebkitBackgroundClip: 'text',
+                                            WebkitTextFillColor: 'transparent',
+                                            filter: `
+                                                drop-shadow(2px 2px 0px #1D1D46) 
+                                                drop-shadow(-2px -2px 0px #1D1D46) 
+                                                drop-shadow(2px -2px 0px #1D1D46) 
+                                                drop-shadow(-2px 2px 0px #1D1D46)
+                                                drop-shadow(4px 4px 0px #FFFFFF)
+                                                drop-shadow(-4px -4px 0px #FFFFFF)
+                                                drop-shadow(4px -4px 0px #FFFFFF)
+                                                drop-shadow(-4px 4px 0px #FFFFFF)
+                                                drop-shadow(0px 0px 20px rgba(0,0,0,0.3))
+                                            `,
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            lineHeight: 1
+                                        }}
+                                    >
+                                        {countdown > 0 ? countdown : ''}
+                                    </motion.div>
+                                </AnimatePresence>
+                            </div>
+                        </motion.div>
                 )}
             </AnimatePresence>
 
