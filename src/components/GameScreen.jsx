@@ -19,44 +19,34 @@ export function GameScreen({ onGameOver, isKiosk }) {
     } = useTetris({ isPaused: isCounting });
 
     const [images, setImages] = useState({});
-    const [imagesReady, setImagesReady] = useState(false);
 
-    // SVG dosyalarını offscreen canvas'a önceden render et.
-    // Chrome/Windows'ta SVG'lerin naturalWidth=0 dönmesi sorununu çözer.
-    // Canvas .width/.height her zaman güvenilirdir.
-    // DPR'a göre boyutlandırılır → yüksek yoğunluklu ekranlarda keskinlik.
+    // Görsel varlıkları preload et
+    // SVG dosyaları explicit width/height attribute içermediğinden naturalWidth
+    // tarayıcıya göre 0 dönebilir (Chrome/Windows bu şekilde davranır).
+    // Çözüm: her SVG'yi load sonrası offscreen canvas'a sabit boyutta render et.
+    // Canvas'ın .width/.height her zaman güvenilirdir.
     useEffect(() => {
         const loadedImages = {};
         let loadedCount = 0;
         const pieceKeys = Object.keys(PIECE_ASSETS);
         const total = pieceKeys.length;
-        const dpr = window.devicePixelRatio || 1;
-        const CELL_PX = Math.min(400, Math.ceil(200 * dpr)); // max 400px (bellek koruması)
-
-        const finalize = () => {
-            setImages(loadedImages);
-            setImagesReady(true);
-        };
+        const CELL_PX = 512; // Her hücre için referans piksel boyutu (yüksek DPR kiosk ekranları için)
 
         pieceKeys.forEach((type) => {
             const img = new Image();
             const dims = PIECE_DIMENSIONS[type];
             img.onload = () => {
+                // SVG'yi offscreen canvas'a sabit boyutta çiz
                 const offscreen = document.createElement('canvas');
                 offscreen.width = dims.w * CELL_PX;
                 offscreen.height = dims.h * CELL_PX;
                 const ctx2d = offscreen.getContext('2d');
-                ctx2d.imageSmoothingEnabled = true;
-                ctx2d.imageSmoothingQuality = 'high';
                 ctx2d.drawImage(img, 0, 0, offscreen.width, offscreen.height);
                 loadedImages[type] = offscreen;
                 loadedCount++;
-                if (loadedCount === total) finalize();
-            };
-            img.onerror = () => {
-                // Görsel yüklenemese bile oyunu bloklamaz
-                loadedCount++;
-                if (loadedCount === total) finalize();
+                if (loadedCount === total) {
+                    setImages(loadedImages);
+                }
             };
             img.src = PIECE_ASSETS[type];
         });
@@ -87,11 +77,12 @@ export function GameScreen({ onGameOver, isKiosk }) {
     const gameOverTriggeredRef = useRef(false);
 
     const audioPlayOnceRef = useRef(false);
+    // Geri sayım ve müzik yönetimi
     useEffect(() => {
-        if (!imagesReady) return;
-
+        // Oyun ekranına gelir gelmez menü müziğini kes
         audioManager.stopBGM();
 
+        // 3-2-1 sesini sadece bir kez çal
         if (!audioPlayOnceRef.current) {
             audioManager.play('countdown');
             audioPlayOnceRef.current = true;
@@ -103,6 +94,7 @@ export function GameScreen({ onGameOver, isKiosk }) {
                 if (prev <= 1) {
                     clearInterval(timer);
                     setIsCounting(false);
+                    // Sayaç bitince Normal müziği başlat
                     bgmTimeout = setTimeout(() => {
                         audioManager.startBGM(2);
                     }, 50);
@@ -116,7 +108,7 @@ export function GameScreen({ onGameOver, isKiosk }) {
             clearInterval(timer);
             if (bgmTimeout) clearTimeout(bgmTimeout);
         };
-    }, [imagesReady]);
+    }, []);
 
     // Hız moduna göre müziği değiştir (Normal vs 2x)
     useEffect(() => {
@@ -279,85 +271,91 @@ export function GameScreen({ onGameOver, isKiosk }) {
             {/* Global Countdown Overlay */}
             <AnimatePresence>
                 {isCounting && (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0, transition: { duration: 0 } }}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        style={{
+                            position: 'fixed',
+                            top: 0, left: 0, right: 0, bottom: 0,
+                            zIndex: 1000,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            paddingTop: isKiosk ? '42px' : '0',
+                            paddingBottom: isKiosk ? '600px' : '0',
+                            background: 'transparent', // Karartma kaldırıldı
+                            pointerEvents: 'none'
+                        }}
+                    >
+                        <motion.span
                             style={{
-                                position: 'fixed',
-                                top: 0, left: 0, right: 0, bottom: 0,
-                                zIndex: 1000,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                paddingTop: isKiosk ? '42px' : '0',
-                                paddingBottom: isKiosk ? '600px' : '0',
-                                background: 'transparent',
-                                pointerEvents: 'none'
+                                color: '#FFFFFF',
+                                fontSize: isKiosk ? '2.8rem' : '1.4rem',
+                                fontWeight: 900,
+                                letterSpacing: '5px',
+                                marginBottom: isKiosk ? '6rem' : '1.5rem',
+                                textShadow: '4px 4px 0px #1D1D46'
                             }}
                         >
-                            <span
-                                style={{
-                                    color: '#FFFFFF',
-                                    fontSize: isKiosk ? '2.8rem' : '1.4rem',
-                                    fontWeight: 900,
-                                    letterSpacing: '5px',
-                                    marginBottom: isKiosk ? '6rem' : '1.5rem',
-                                    textShadow: '4px 4px 0px #1D1D46'
-                                }}
-                            >
-                                HAZIR MISIN?
-                            </span>
-                            <div style={{
-                                position: 'relative',
-                                height: '10rem',
-                                width: '100%',
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                            }}>
-                                <AnimatePresence mode="wait">
-                                    <motion.div
-                                        key={countdown}
-                                        initial={{ scale: 3, opacity: 0, rotate: -30 }}
-                                        animate={{ scale: 1, opacity: 1, rotate: 0 }}
-                                        exit={{ opacity: 0, transition: { duration: 0.12, ease: 'easeIn' } }}
-                                        transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
-                                        style={{
-                                            position: 'absolute',
-                                            fontSize: isKiosk ? '18rem' : '12rem',
-                                            fontWeight: 900,
-                                            willChange: 'transform, opacity',
-                                            // GPU-composited: transform + opacity Framer Motion tarafından
-                                            // compositor thread'de çalıştırılır (CPU sıfır yük).
-                                            //
-                                            // WebkitTextStroke → keskin beyaz dış kontur (GPU-accelerated)
-                                            // textShadow       → koyu iç kontur (GPU-accelerated, her frame'de hesaplanmaz)
-                                            // filter: drop-shadow KALDIRILDI → 9 adet CPU-pass'i ortadan kalktı
-                                            WebkitTextStroke: isKiosk ? '10px #FFFFFF' : '7px #FFFFFF',
-                                            paintOrder: 'stroke fill',
-                                            textShadow: [
-                                                '3px 3px 0 #1D1D46',
-                                                '-3px -3px 0 #1D1D46',
-                                                '3px -3px 0 #1D1D46',
-                                                '-3px 3px 0 #1D1D46',
-                                                '0 0 24px rgba(0,0,0,0.35)',
-                                            ].join(', '),
-                                            background: 'linear-gradient(to bottom, #FFD166, #F7B500, #F27121)',
-                                            WebkitBackgroundClip: 'text',
-                                            WebkitTextFillColor: 'transparent',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            lineHeight: 1
-                                        }}
-                                    >
-                                        {countdown > 0 ? countdown : ''}
-                                    </motion.div>
-                                </AnimatePresence>
-                            </div>
-                        </motion.div>
+                            HAZIR MISIN?
+                        </motion.span>
+                        <div style={{
+                            position: 'relative',
+                            height: '10rem',
+                            width: '100%',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <AnimatePresence>
+                                <motion.div
+                                    key={countdown}
+                                    initial={{ scale: 3, opacity: 0, rotate: -30 }}
+                                    animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                                    exit={{ scale: 0.2, opacity: 0, rotate: 30 }}
+                                    transition={{ duration: 0.4, type: 'spring', stiffness: 120 }}
+                                    style={{
+                                        position: 'absolute',
+                                        fontSize: isKiosk ? '18rem' : '12rem',
+                                        fontWeight: 900,
+                                        // Ana dolgu ve Desen (Diamond Pattern simülasyonu)
+                                        background: `
+                                            linear-gradient(135deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%) -10px 0,
+                                            linear-gradient(225deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%) -10px 0,
+                                            linear-gradient(315deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%),
+                                            linear-gradient(45deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%),
+                                            linear-gradient(to bottom, #FFD166, #F7B500, #F27121)
+                                        `,
+                                        backgroundSize: '20px 20px, 20px 20px, 20px 20px, 20px 20px, 100% 100%',
+                                        WebkitBackgroundClip: 'text',
+                                        WebkitTextFillColor: 'transparent',
+                                        // Çok katmanlı çerçeve ve gölge (Sticker etkisi)
+                                        filter: `
+                                            /* Koyu Lacivert İç Kontur */
+                                            drop-shadow(2px 2px 0px #1D1D46) 
+                                            drop-shadow(-2px -2px 0px #1D1D46) 
+                                            drop-shadow(2px -2px 0px #1D1D46) 
+                                            drop-shadow(-2px 2px 0px #1D1D46)
+                                            /* Kalın Beyaz Dış Çerçeve */
+                                            drop-shadow(4px 4px 0px #FFFFFF)
+                                            drop-shadow(-4px -4px 0px #FFFFFF)
+                                            drop-shadow(4px -4px 0px #FFFFFF)
+                                            drop-shadow(-4px 4px 0px #FFFFFF)
+                                            drop-shadow(0px 0px 20px rgba(0,0,0,0.3))
+                                        `,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        lineHeight: 1
+                                    }}
+                                >
+                                    {countdown > 0 ? countdown : ''}
+                                </motion.div>
+                            </AnimatePresence>
+                        </div>
+                    </motion.div>
                 )}
             </AnimatePresence>
 
