@@ -122,7 +122,7 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
                     flexDirection: 'column',
                     width: '100%',
                     gap: isKiosk ? '1.5rem' : 0,
-                    marginTop: !isKiosk ? (isMobile ? '1.5rem' : '0') : '0',
+                    marginTop: !isKiosk ? (isMobile ? '1.5rem' : '0') : undefined,
                 }}>
 
                 {/* Header Title + Subtitle Group */}
@@ -298,7 +298,7 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
                     flexDirection: 'column',
                     alignItems: 'center',
                     gap: isKiosk ? '1.5rem' : '0.8rem',
-                    marginTop: isKiosk ? '0' : 'auto'
+                    marginTop: isKiosk ? '1.5rem' : 'auto'
                 }}>
                     {!isKiosk && (
                         <button className="btn-primary" onClick={onPlayAgain}>
