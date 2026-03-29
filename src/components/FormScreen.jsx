@@ -219,7 +219,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
 
                     {/* Alt Butonlar */}
                     <div style={{
-                        marginTop: isKiosk ? '0' : 'auto',
+                        marginTop: isKiosk ? '0' : '2rem',
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '0.4rem',
