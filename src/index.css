@@ -416,7 +416,6 @@ body {
 
 @media (display-mode: browser) {
   .game-screen-layout {
-    justify-content: center !important;
     padding-bottom: 0;
   }
 }
