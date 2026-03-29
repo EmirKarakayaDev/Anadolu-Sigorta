@@ -246,7 +246,8 @@ export function GameScreen({ onGameOver, isKiosk }) {
                 position: 'relative',
                 height: '100dvh',
                 overflow: 'hidden',
-                justifyContent: 'flex-start'
+                justifyContent: 'flex-start',
+                paddingBottom: isKiosk ? undefined : 0
             }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

@@ -411,26 +411,19 @@ body {
 
 /* Oyun ekranına özel dikey simetri sağlayan sınıf */
 .game-screen-layout {
-  padding-bottom: 3rem !important;
-  /* Standalone (Ana Ekran) modunda varsayılan yukarıdan hizalamayı koruyoruz */
+  padding-bottom: 3rem;
 }
 
 @media (display-mode: browser) {
   .game-screen-layout {
-    justify-content: center !important; /* Sadece tarayıcıda dikeyde merkeze alıyoruz */
-    padding-bottom: 1.5rem !important;
+    justify-content: center !important;
+    padding-bottom: 0;
   }
 }
 
 @media (max-width: 600px) {
   .game-screen-layout {
-    padding-bottom: 2.8rem !important;
-  }
-}
-
-@media (max-width: 600px) and (display-mode: browser) {
-  .game-screen-layout {
-    padding-bottom: 1.2rem !important;
+    padding-bottom: 0;
   }
 }
 
