@@ -70,7 +70,7 @@ Ad-Soyad										İmza
                         display: 'flex',
                         flexDirection: 'column',
                         width: '100%',
-                        gap: isKiosk ? '1.5rem' : 0,
+                        gap: isKiosk ? '1.5rem' : '1rem',
                     }}>
                         <h1 style={{
                             fontSize: isKiosk ? undefined : (isMobile ? '1.4rem' : '1.8rem'),
