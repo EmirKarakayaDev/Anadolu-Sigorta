@@ -226,13 +226,16 @@ body.kiosk .brand-screen h2+form {
 
 body.kiosk .kvkk-container {
   font-size: 1.55rem;
-  /* Play zone yüksekliğine göre dinamik: 900px = 42px top + 600px safe zone + başlık/butonlar */
-  max-height: calc(100dvh - 900px) !important;
+  flex: 1;
+  min-height: 0;
   line-height: 1.7;
   padding: 0 1.2rem !important;
-  /* Dikey padding tamamen sıfırlandı */
-  margin: 1.2rem 0 0.4rem 0 !important;
-  /* Üstten 1.2rem, alttan 0.4rem emniyet mesafesi */
+  margin: 0 !important;
+}
+
+/* kvkk-mid-block içindeki h1 — gap spacing yönettiği için margin sıfır */
+body.kiosk .kvkk-mid-block h1 {
+  margin: 0 !important;
 }
 
 /* ─────────────────────────────────────────

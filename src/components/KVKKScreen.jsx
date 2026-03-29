@@ -178,33 +178,32 @@ Alt Veri İşleyenin Tam Adı | Adresi | Veri İşleyen’e Sunduğu Hizmet
                         style={{ height: 'auto' }}
                     />
 
-                    {/* Block 1: Header */}
-                    <h1 style={{
-                        fontSize: isKiosk ? undefined : (isMobile ? '1.4rem' : '1.8rem'),
-                        fontWeight: 800,
-                        textAlign: 'center',
-                        marginTop: '0',
-                        marginBottom: '0.5rem'
-                    }}>
-                        Aydınlatma Metni
-                    </h1>
-
-                    {/* Block 2: Middle - Text Box + Tick Box Together */}
+                    {/* Middle Block: başlık + scroll + checkbox — logo ile butonlar arasında ortalı */}
                     <div className="kvkk-mid-block" style={{
                         flex: isKiosk ? 1 : 'none',
+                        minHeight: isKiosk ? 0 : undefined,
                         display: 'flex',
                         flexDirection: 'column',
                         width: '100%',
-                        marginTop: isKiosk ? '1.5rem' : 0
+                        gap: isKiosk ? '1.5rem' : 0,
                     }}>
-                        <div className="kvkk-container">
+                        <h1 style={{
+                            fontSize: isKiosk ? undefined : (isMobile ? '1.4rem' : '1.8rem'),
+                            fontWeight: 800,
+                            textAlign: 'center',
+                            margin: '0'
+                        }}>
+                            Aydınlatma Metni
+                        </h1>
+
+                        <div className="kvkk-container" style={isKiosk ? { flex: 1, minHeight: 0 } : {}}>
                             {kvkkText}
                         </div>
 
                         {/* Checkbox - Immediately below the text box */}
                         <div className="checkbox-group" style={{
-                            marginTop: '1.5rem',
-                            marginBottom: isKiosk ? '2rem' : '1rem',
+                            marginTop: isKiosk ? '0' : '1.5rem',
+                            marginBottom: isKiosk ? '0' : '1rem',
                             padding: isKiosk ? '0' : '0 8px'
                         }}>
                             <input
