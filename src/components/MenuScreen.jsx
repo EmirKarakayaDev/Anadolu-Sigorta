@@ -19,7 +19,7 @@ export function MenuScreen({ onStart, isKiosk }) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
         >
-            <div className="brand-layout-full">
+            <div className="brand-layout-full" style={{ paddingBottom: isKiosk ? undefined : 0 }}>
                 <div className="brand-screen">
                     {/* Top Logo */}
                     <motion.img
