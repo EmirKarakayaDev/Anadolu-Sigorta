@@ -316,7 +316,18 @@ body {
 }
 
 /* Mobile Scaling & Viewport Fixes */
-/* game-container artık dinamik blockSize ile ölçekleniyor — CSS scale'e gerek yok */
+@media (max-height: 800px) and (max-width: 600px) {
+  .game-container {
+    transform: scale(0.92);
+    transform-origin: center center;
+  }
+}
+
+@media (max-height: 700px) and (max-width: 600px) {
+  .game-container {
+    transform: scale(0.82);
+  }
+}
 
 .app-container {
   height: 100%;
@@ -400,18 +411,26 @@ body {
 
 /* Oyun ekranına özel dikey simetri sağlayan sınıf */
 .game-screen-layout {
-  padding-bottom: 3rem;
+  padding-bottom: 3rem !important;
+  /* Standalone (Ana Ekran) modunda varsayılan yukarıdan hizalamayı koruyoruz */
 }
 
 @media (display-mode: browser) {
   .game-screen-layout {
-    padding-bottom: 0;
+    justify-content: center !important; /* Sadece tarayıcıda dikeyde merkeze alıyoruz */
+    padding-bottom: 1.5rem !important;
   }
 }
 
 @media (max-width: 600px) {
   .game-screen-layout {
-    padding-bottom: 0;
+    padding-bottom: 2.8rem !important;
+  }
+}
+
+@media (max-width: 600px) and (display-mode: browser) {
+  .game-screen-layout {
+    padding-bottom: 1.2rem !important;
   }
 }
 
