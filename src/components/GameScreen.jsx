@@ -21,22 +21,33 @@ export function GameScreen({ onGameOver, isKiosk }) {
     const [images, setImages] = useState({});
 
     // Görsel varlıkları preload et
+    // SVG dosyaları explicit width/height attribute içermediğinden naturalWidth
+    // tarayıcıya göre 0 dönebilir (Chrome/Windows bu şekilde davranır).
+    // Çözüm: her SVG'yi load sonrası offscreen canvas'a sabit boyutta render et.
+    // Canvas'ın .width/.height her zaman güvenilirdir.
     useEffect(() => {
         const loadedImages = {};
         let loadedCount = 0;
         const pieceKeys = Object.keys(PIECE_ASSETS);
         const total = pieceKeys.length;
+        const CELL_PX = 200; // Her hücre için referans piksel boyutu
 
         pieceKeys.forEach((type) => {
             const img = new Image();
+            const dims = PIECE_DIMENSIONS[type];
             img.onload = () => {
-                loadedImages[type] = img;
+                // SVG'yi offscreen canvas'a sabit boyutta çiz
+                const offscreen = document.createElement('canvas');
+                offscreen.width = dims.w * CELL_PX;
+                offscreen.height = dims.h * CELL_PX;
+                const ctx2d = offscreen.getContext('2d');
+                ctx2d.drawImage(img, 0, 0, offscreen.width, offscreen.height);
+                loadedImages[type] = offscreen;
                 loadedCount++;
                 if (loadedCount === total) {
                     setImages(loadedImages);
                 }
             };
-            // Triggering src after setting listener for SVG stability
             img.src = PIECE_ASSETS[type];
         });
     }, []);
