@@ -88,9 +88,14 @@ body.kiosk .brand-logo+form {
   margin-top: 8rem !important;
 }
 
-/* Form başlığı (h2) olan sayfalarda logodan sonraki mesafe */
-body.kiosk .brand-logo+h2 {
-  margin-top: 3.5rem !important;
+/* form-mid-block — logodan sonra boşluk + flex yapı */
+body.kiosk .form-mid-block {
+  margin-top: 3.5rem;
+}
+
+/* form-mid-block içindeki h2 — CSS !important çakışmasını önler */
+body.kiosk .form-mid-block h2 {
+  margin: 0 !important;
 }
 
 body.kiosk .main-graphic {

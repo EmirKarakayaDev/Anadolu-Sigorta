@@ -80,6 +80,13 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                         animate={{ y: 0, opacity: 1 }}
                     />
 
+                    <div className="form-mid-block" style={{
+                        flex: isKiosk ? 1 : 'none',
+                        minHeight: isKiosk ? 0 : undefined,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        width: '100%',
+                    }}>
                     <motion.h2
                         initial={{ y: -10, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
@@ -88,7 +95,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                             fontSize: isKiosk ? undefined : (isMobile ? '1.4rem' : '1.8rem'),
                             fontWeight: 800,
                             color: 'white',
-                            margin: '0 0 0.5rem 0',
+                            margin: isKiosk ? '0' : '0 0 0.5rem 0',
                             textAlign: 'center'
                         }}
                     >
@@ -214,9 +221,10 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                             </div>
                         </div>
                     </motion.form>
+                    </div>{/* /form-mid-block */}
 
                     {/* Alt Butonlar */}
-                    <div style={{
+                    <div className="action-group" style={{
                         marginTop: isKiosk ? '0' : 'auto',
                         display: 'flex',
                         flexDirection: 'column',
