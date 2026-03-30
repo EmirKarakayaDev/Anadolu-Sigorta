@@ -8,7 +8,8 @@ export function MenuScreen({ onStart, isKiosk }) {
     const [isRewardsModalOpen, setIsRewardsModalOpen] = useState(false);
 
     useEffect(() => {
-        audioManager.startBGM(1); // Menü müziği başlasın
+        if (isKiosk) audioManager.unmute(); // Kioskte her ana sayfaya dönüşte sesi aç
+        audioManager.startBGM(1);
     }, []);
 
     return (

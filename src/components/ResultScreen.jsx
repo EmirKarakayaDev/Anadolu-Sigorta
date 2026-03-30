@@ -8,7 +8,8 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
     const [isRewardsModalOpen, setIsRewardsModalOpen] = useState(false);
 
     useEffect(() => {
-        audioManager.startBGM(4); // Skor ekranı müziğine geç (BGM 4)
+        if (isKiosk) audioManager.unmute();
+        audioManager.startBGM(4);
     }, []);
 
     const isMobile = window.innerWidth < 768;

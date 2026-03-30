@@ -126,7 +126,18 @@ export const audioManager = {
     return isMuted;
   },
 
-  getMuteStatus: () => isMuted
+  getMuteStatus: () => isMuted,
+
+  unmute: () => {
+    if (!isMuted) return;
+    isMuted = false;
+    Object.values(bgms).forEach(b => b.mute(false));
+    Object.values(sfx).forEach(s => s.mute(false));
+    localStorage.removeItem('game_muted');
+    if (currentBGM && !currentBGM.playing() && !isBackgrounded) {
+      currentBGM.play();
+    }
+  }
 };
 
 // Hatırlatıcı
