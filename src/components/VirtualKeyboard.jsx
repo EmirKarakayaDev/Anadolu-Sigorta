@@ -38,11 +38,10 @@ export function VirtualKeyboard({ visible, type = 'text', onKey, onDone, onBacks
             {visible && (
                 <motion.div
                     initial={{ y: 500, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
+                    animate={{ y: 0, opacity: 1, bottom: keyboardBottom }}
                     exit={{ y: 500, opacity: 0 }}
-                    transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                    transition={{ type: 'spring', damping: 30, stiffness: 220 }}
                     className="virtual-keyboard-container no-select"
-                    style={{ bottom: keyboardBottom }}
                 >
                     <div className="keyboard-grid">
                         {layout.map((row, rowIndex) => (
