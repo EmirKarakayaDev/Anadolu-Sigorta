@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -28,29 +28,23 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
     });
 
     const [activeField, setActiveField] = useState(null);
-    const [keyboardBottom, setKeyboardBottom] = useState(0);
     const emailRef = useRef(null);
     const phoneRef = useRef(null);
     const isMobile = window.innerWidth < 768;
 
     const group1Fields = ['firstName', 'lastName', 'email'];
 
-    // Klavyeyi aktif inputun hemen altına konumlandır
-    useEffect(() => {
-        if (!isKiosk || !activeField) return;
-
+    // Render anında hesapla — klavye ilk açılışında da doğru konumda başlar
+    const getKeyboardOffset = () => {
+        if (!isKiosk || !activeField) return 0;
         const anchorEl = group1Fields.includes(activeField.name)
             ? emailRef.current
             : phoneRef.current;
-        if (!anchorEl) return;
-
+        if (!anchorEl) return 0;
         const rect = anchorEl.getBoundingClientRect();
-        const gap = 12;
-        const keyboardHeight = 640;
-        // bottom = viewport yüksekliği - (input alt kenarı + boşluk + klavye yüksekliği)
-        const bottom = window.innerHeight - rect.bottom - gap - keyboardHeight;
-        setKeyboardBottom(Math.max(0, bottom));
-    }, [activeField, isKiosk]);
+        return Math.max(0, window.innerHeight - rect.bottom - 12 - 640);
+    };
+    const keyboardOffset = getKeyboardOffset();
 
     const handleKey = (key) => {
         if (!activeField) return;
@@ -321,7 +315,7 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
                 <VirtualKeyboard
                     visible={!!activeField}
                     type={activeField?.type}
-                    keyboardBottom={keyboardBottom}
+                    keyboardOffset={keyboardOffset}
                     onKey={handleKey}
                     onBackspace={handleBackspace}
                     onSpace={() => handleKey(' ')}

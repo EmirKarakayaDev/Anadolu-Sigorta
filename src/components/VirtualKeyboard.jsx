@@ -16,7 +16,7 @@ const NUMERIC_LAYOUT = [
     ['0', 'BACKSPACE', 'DONE']
 ];
 
-export function VirtualKeyboard({ visible, type = 'text', onKey, onDone, onBackspace, onSpace, keyboardBottom = 0 }) {
+export function VirtualKeyboard({ visible, type = 'text', onKey, onDone, onBackspace, onSpace, keyboardOffset = 0 }) {
     const [isUpperCase, setIsUpperCase] = useState(false);
     const layout = type === 'tel' || type === 'number' ? NUMERIC_LAYOUT : TURKISH_QWERTY;
 
@@ -37,8 +37,8 @@ export function VirtualKeyboard({ visible, type = 'text', onKey, onDone, onBacks
         <AnimatePresence>
             {visible && (
                 <motion.div
-                    initial={{ y: 500, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1, bottom: keyboardBottom }}
+                    initial={{ y: 500, opacity: 0, bottom: 0, height: 640 + keyboardOffset }}
+                    animate={{ y: 0, opacity: 1, bottom: 0, height: 640 + keyboardOffset }}
                     exit={{ y: 500, opacity: 0 }}
                     transition={{ type: 'spring', damping: 30, stiffness: 220 }}
                     className="virtual-keyboard-container no-select"
