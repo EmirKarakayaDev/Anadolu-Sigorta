@@ -286,6 +286,12 @@ body.kiosk .game-screen-layout .brand-screen {
   gap: 14px !important;
 }
 
+/* Klavye açıkken form içeriği klavyenin üstünde scroll yapabilsin */
+body.kiosk .brand-layout-full.keyboard-open {
+  overflow-y: auto !important;
+  padding-bottom: 660px !important;
+}
+
 /* ─────────────────────────────────────────
    SANAL KLAVYE — Premium Kiosk Tasarımı
    Sadece body.kiosk modunda aktif

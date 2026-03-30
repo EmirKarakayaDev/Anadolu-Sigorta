@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -51,6 +51,31 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
         setValue(activeField.name, currentVal.slice(0, -1), { shouldValidate: true });
     };
 
+    // Klavye açıkken aktif input'u klavyenin üstünde görünür yap
+    useEffect(() => {
+        if (!isKiosk) return;
+        const container = document.querySelector('.brand-layout-full');
+        if (!container) return;
+
+        if (!activeField) {
+            container.scrollTo({ top: 0, behavior: 'smooth' });
+            return;
+        }
+
+        const input = document.querySelector(`input[name="${activeField.name}"]`);
+        if (!input) return;
+
+        const inputRect = input.getBoundingClientRect();
+        const keyboardHeight = 640;
+        const gap = 24; // klavye ile input arası nefes boşluğu
+        const targetBottom = window.innerHeight - keyboardHeight - gap;
+
+        if (inputRect.bottom > targetBottom) {
+            const scrollBy = inputRect.bottom - targetBottom;
+            container.scrollBy({ top: scrollBy, behavior: 'smooth' });
+        }
+    }, [activeField, isKiosk]);
+
     return (
         <motion.div
             className="screen no-select"
@@ -69,7 +94,7 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
                 }
             }}
         >
-            <div className="brand-layout-full">
+            <div className={`brand-layout-full${isKiosk && activeField ? ' keyboard-open' : ''}`}>
 
                 <div className="brand-screen">
                     <motion.img
