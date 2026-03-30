@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Trophy, Medal, Home, RefreshCcw, Loader2, Gift, Plane, Info, Ticket } from 'lucide-react';
+import { Home, Loader2, Gift, Plane, Info } from 'lucide-react';
 import { getTopScores, getUserRank } from '../supabase';
 import { RewardsModal } from './RewardsModal';
 
@@ -50,8 +50,9 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
         const size = isKiosk ? 48 : 26;
         const idx = Number(index);
 
+        // 1-3: YDS + Koşu Kiti
         if (idx >= 0 && idx <= 2) {
-            const colors = ["#FFD700", "#C0C0C0", "#CD7F32"]; // Gold, Silver, Bronze
+            const colors = ["#FFD700", "#C0C0C0", "#CD7F32"];
             return (
                 <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     {idx === 0 && <div style={{ position: 'absolute', width: isKiosk ? '65px' : '35px', height: isKiosk ? '65px' : '35px', borderRadius: '50%', background: 'rgba(255, 215, 0, 0.2)', filter: 'blur(8px)' }} />}
@@ -59,16 +60,8 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
                 </div>
             );
         }
-        // Rank 4 and 5 (index 3 and 4)
-        if (idx === 3 || idx === 4) {
-            return (
-                <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Ticket size={size} color="#FF6B6B" style={{ filter: 'drop-shadow(0 0 5px rgba(255, 107, 107, 0.4))' }} />
-                </div>
-            );
-        }
-        // Rank 6 to 10 (index 5 to 9)
-        if (idx >= 5 && idx <= 9) {
+        // 4-10: YDS
+        if (idx >= 3 && idx <= 9) {
             return (
                 <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <Plane size={size} color="#3A7BD5" style={{ filter: 'drop-shadow(0 0 5px rgba(58, 123, 213, 0.4))' }} />
@@ -76,13 +69,13 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
             );
         }
 
-        // Rank 11+ (veya fallback)
+        // 11+: Sadece sıra numarası
         return (
-            <div style={{ 
-                width: isKiosk ? '56px' : '32px', 
-                height: isKiosk ? '56px' : '32px', 
-                borderRadius: '50%', 
-                background: 'rgba(0,0,0,0.05)', 
+            <div style={{
+                width: isKiosk ? '56px' : '32px',
+                height: isKiosk ? '56px' : '32px',
+                borderRadius: '50%',
+                background: 'rgba(0,0,0,0.05)',
                 color: 'rgba(0,0,0,0.4)',
                 display: 'flex',
                 alignItems: 'center',
