@@ -209,7 +209,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                             {errors.phone && <span className="form-error">{errors.phone.message}</span>}
                         </div>
 
-                        <div style={{ marginTop: isKiosk ? '0.8rem' : '1.5rem', marginBottom: isKiosk ? '2rem' : '1rem' }}>
+                        <div style={{ marginTop: '0.8rem', marginBottom: isKiosk ? '2rem' : '1rem' }}>
                             <div className="checkbox-group" style={{ padding: isKiosk ? '0' : '0 8px' }}>
                                 <input
                                     type="checkbox"
@@ -228,7 +228,7 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                         marginTop: isKiosk ? '0' : 'auto',
                         display: 'flex',
                         flexDirection: 'column',
-                        gap: '0.4rem',
+                        gap: '0.8rem',
                         alignItems: 'center',
                         width: '100%',
                         paddingBottom: isKiosk ? '1rem' : '0'

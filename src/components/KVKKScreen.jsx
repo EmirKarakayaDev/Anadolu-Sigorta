@@ -87,7 +87,7 @@ Ad-Soyad										İmza
 
                         {/* Checkbox - Immediately below the text box */}
                         <div className="checkbox-group" style={{
-                            marginTop: isKiosk ? '0' : '1.5rem',
+                            marginTop: '0',
                             marginBottom: isKiosk ? '0' : '1rem',
                             padding: isKiosk ? '0' : '0 8px'
                         }}>
