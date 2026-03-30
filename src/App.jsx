@@ -94,8 +94,11 @@ function App() {
   };
 
   const handleBackToKVKK = () => {
-    setTransitionTarget(SCREENS.KVKK);
-    setIsTransitioning(true);
+    // Form ekranındaki "Geri Dön" aksiyonunda geçiş ekranı (PixelTransition) göstermeyelim.
+    // Menü veya oyun ekranına gidildiğinde geçiş animasyonu korunuyor.
+    setTransitionTarget(null);
+    setIsTransitioning(false);
+    setCurrentScreen(SCREENS.KVKK);
   };
 
   const handlePlayAgain = () => {
