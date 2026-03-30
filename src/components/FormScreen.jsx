@@ -262,12 +262,26 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
                                 type="button"
                                 className="btn-text-link"
                                 onClick={() => {
+                                    // Test ile doğrudan geçiş yap: değerleri doldur + doğrulayıp submit et
+                                    setActiveField(null);
+                                    if (document.activeElement instanceof HTMLInputElement) {
+                                        document.activeElement.blur();
+                                    }
                                     setValue('firstName', 'Test');
-                                    setValue('lastName', 'Kullanıcı');
-                                    setValue('email', 'test@test.com');
-                                    setValue('tcNumber', '11111111111');
-                                    setValue('phone', '5551112233');
+                                    setValue('lastName', 'Kullanıcı', { shouldValidate: true });
+                                    setValue('email', 'test@test.com', { shouldValidate: true });
+                                    setValue('tcNumber', '11111111111', { shouldValidate: true });
+                                    setValue('phone', '5551112233', { shouldValidate: true });
                                     setValue('confirm', true, { shouldValidate: true });
+                                // Test modunda doğrulamaya takılmadan doğrudan geçiş yap
+                                onSubmit({
+                                    firstName: 'Test',
+                                    lastName: 'Kullanıcı',
+                                    email: 'test@test.com',
+                                    tcNumber: '11111111111',
+                                    phone: '5551112233',
+                                    confirm: true,
+                                });
                                 }}
                                 style={{ textDecoration: 'underline', color: 'rgba(255, 255, 255, 0.4)' }}
                             >
