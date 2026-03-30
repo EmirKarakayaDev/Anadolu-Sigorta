@@ -16,7 +16,7 @@ const NUMERIC_LAYOUT = [
     ['0', 'BACKSPACE', 'DONE']
 ];
 
-export function VirtualKeyboard({ visible, type = 'text', onKey, onDone, onBackspace, onSpace }) {
+export function VirtualKeyboard({ visible, type = 'text', onKey, onDone, onBackspace, onSpace, keyboardBottom = 0 }) {
     const [isUpperCase, setIsUpperCase] = useState(false);
     const layout = type === 'tel' || type === 'number' ? NUMERIC_LAYOUT : TURKISH_QWERTY;
 
@@ -42,6 +42,7 @@ export function VirtualKeyboard({ visible, type = 'text', onKey, onDone, onBacks
                     exit={{ y: 500, opacity: 0 }}
                     transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                     className="virtual-keyboard-container no-select"
+                    style={{ bottom: keyboardBottom }}
                 >
                     <div className="keyboard-grid">
                         {layout.map((row, rowIndex) => (

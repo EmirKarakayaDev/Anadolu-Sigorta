@@ -44,8 +44,6 @@ adresinde yer alan başvuru formunda belirtilen bilgiler çerçevesinde iletebil
 TİCARİ ELEKTRONİK İLETİ AÇIK RIZA METNİ
 
 “Ticari Elektronik İleti Aydınlatma Metni” çerçevesinde yapılan bilgilendirme doğrultusunda Anadolu Sigorta tarafından tarafıma ticari elektronik ileti gönderilmesine ve bu amaçla tarafımla iletişime geçilmesine onay veriyorum.
-
-Ad-Soyad										İmza
     `;
 
     return (

@@ -28,9 +28,29 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
     });
 
     const [activeField, setActiveField] = useState(null);
+    const [keyboardBottom, setKeyboardBottom] = useState(0);
     const emailRef = useRef(null);
     const phoneRef = useRef(null);
     const isMobile = window.innerWidth < 768;
+
+    const group1Fields = ['firstName', 'lastName', 'email'];
+
+    // Klavyeyi aktif inputun hemen altına konumlandır
+    useEffect(() => {
+        if (!isKiosk || !activeField) return;
+
+        const anchorEl = group1Fields.includes(activeField.name)
+            ? emailRef.current
+            : phoneRef.current;
+        if (!anchorEl) return;
+
+        const rect = anchorEl.getBoundingClientRect();
+        const gap = 12;
+        const keyboardHeight = 640;
+        // bottom = viewport yüksekliği - (input alt kenarı + boşluk + klavye yüksekliği)
+        const bottom = window.innerHeight - rect.bottom - gap - keyboardHeight;
+        setKeyboardBottom(Math.max(0, bottom));
+    }, [activeField, isKiosk]);
 
     const handleKey = (key) => {
         if (!activeField) return;
@@ -51,31 +71,6 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
         setValue(activeField.name, currentVal.slice(0, -1), { shouldValidate: true });
     };
 
-    // Klavye açıkken aktif input'u klavyenin üstünde görünür yap
-    useEffect(() => {
-        if (!isKiosk) return;
-        const container = document.querySelector('.brand-layout-full');
-        if (!container) return;
-
-        if (!activeField) {
-            container.scrollTo({ top: 0, behavior: 'smooth' });
-            return;
-        }
-
-        const input = document.querySelector(`input[name="${activeField.name}"]`);
-        if (!input) return;
-
-        const inputRect = input.getBoundingClientRect();
-        const keyboardHeight = 640;
-        const gap = 24; // klavye ile input arası nefes boşluğu
-        const targetBottom = window.innerHeight - keyboardHeight - gap;
-
-        if (inputRect.bottom > targetBottom) {
-            const scrollBy = inputRect.bottom - targetBottom;
-            container.scrollBy({ top: scrollBy, behavior: 'smooth' });
-        }
-    }, [activeField, isKiosk]);
-
     return (
         <motion.div
             className="screen no-select"
@@ -94,7 +89,7 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
                 }
             }}
         >
-            <div className={`brand-layout-full${isKiosk && activeField ? ' keyboard-open' : ''}`}>
+            <div className="brand-layout-full">
 
                 <div className="brand-screen">
                     <motion.img
@@ -326,6 +321,7 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
                 <VirtualKeyboard
                     visible={!!activeField}
                     type={activeField?.type}
+                    keyboardBottom={keyboardBottom}
                     onKey={handleKey}
                     onBackspace={handleBackspace}
                     onSpace={() => handleKey(' ')}
