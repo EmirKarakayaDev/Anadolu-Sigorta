@@ -287,17 +287,6 @@ body.kiosk .game-screen-layout .brand-screen {
 }
 
 /* ─────────────────────────────────────────
-   GİRİŞ FORMU LAYOUT — Inline klavye modu
-   Sadece form ekranında (form-screen-layout) aktif
-   ───────────────────────────────────────── */
-
-/* Form ekranında safe zone daha küçük (klavye artık fixed değil) */
-body.kiosk .brand-layout-full.form-screen-layout::after {
-  min-height: 220px;
-  height: 220px;
-}
-
-/* ─────────────────────────────────────────
    SANAL KLAVYE — Premium Kiosk Tasarımı
    Sadece body.kiosk modunda aktif
    ───────────────────────────────────────── */
@@ -319,27 +308,6 @@ body.kiosk .virtual-keyboard-container {
   flex-direction: column;
   justify-content: center;
   box-sizing: border-box;
-}
-
-/* Sıfır-yükseklikli anchor: klavye kesinlikle layout'a etki etmez */
-body.kiosk .keyboard-anchor {
-  position: relative;
-  height: 0;
-  overflow: visible;
-  z-index: 200;
-}
-
-/* Inline varyant — anchor içinde absolute, hiçbir şeyi itmez */
-body.kiosk .virtual-keyboard-container.inline {
-  position: absolute;
-  top: 0.6rem;
-  left: 0;
-  right: 0;
-  height: auto;
-  padding: 1.2rem !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 20px;
-  z-index: 200;
 }
 
 body.kiosk .keyboard-grid {
@@ -423,31 +391,4 @@ body.kiosk .keyboard-key.shift-active {
   background: rgba(255, 255, 255, 0.4);
   color: #1a1a1a;
   border-bottom: 3px solid rgba(0, 0, 0, 0.5);
-}
-
-/* Inline klavyede tuş boyutları — orijinale yakın */
-body.kiosk .virtual-keyboard-container.inline .keyboard-key {
-  height: 76px;
-  font-size: 1.75rem;
-  border-radius: 12px;
-}
-
-body.kiosk .virtual-keyboard-container.inline .keyboard-key.special {
-  font-size: 1.1rem;
-}
-
-body.kiosk .virtual-keyboard-container.inline .keyboard-key.backspace {
-  font-size: 1.9rem;
-}
-
-body.kiosk .virtual-keyboard-container.inline .keyboard-key.done {
-  font-size: 1.35rem;
-}
-
-body.kiosk .virtual-keyboard-container.inline .keyboard-grid {
-  gap: 0.75rem;
-}
-
-body.kiosk .virtual-keyboard-container.inline .keyboard-row {
-  gap: 0.6rem;
 }
