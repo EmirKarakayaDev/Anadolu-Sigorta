@@ -3,7 +3,9 @@
     "allow": [
       "Bash(xargs sed:*)",
       "Bash(python3 -c \"from PIL import Image; img=Image.open\\(''c:/Users/Karakaya/Desktop/Projeler/Anadolu Sigorta/public/logo_trn.png''\\); print\\(''logo_trn:'', img.size\\); img2=Image.open\\(''c:/Users/Karakaya/Desktop/Projeler/Anadolu Sigorta/public/apple-touch-icon.png''\\); print\\(''apple-touch:'', img2.size\\)\")",
-      "Bash(node -e \"const {createCanvas, loadImage} = require\\(''canvas''\\); loadImage\\(''c:/Users/Karakaya/Desktop/Projeler/Anadolu Sigorta/public/logo_trn.png''\\).then\\(img => console.log\\(img.width, img.height\\)\\).catch\\(\\(\\)=>console.log\\(''no canvas''\\)\\)\")"
+      "Bash(node -e \"const {createCanvas, loadImage} = require\\(''canvas''\\); loadImage\\(''c:/Users/Karakaya/Desktop/Projeler/Anadolu Sigorta/public/logo_trn.png''\\).then\\(img => console.log\\(img.width, img.height\\)\\).catch\\(\\(\\)=>console.log\\(''no canvas''\\)\\)\")",
+      "Bash(python3 -c \":*)",
+      "Bash(python -c \":*)"
     ]
   }
 }

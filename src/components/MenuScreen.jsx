@@ -23,7 +23,7 @@ export function MenuScreen({ onStart, isKiosk }) {
                 <div className="brand-screen">
                     {/* Top Logo */}
                     <motion.img
-                        src="/beyaz_as_logo.png"
+                        src="/as_logo.svg"
                         alt="Anadolu Sigorta"
                         className="brand-logo"
                         initial={{ y: -20, opacity: 0 }}

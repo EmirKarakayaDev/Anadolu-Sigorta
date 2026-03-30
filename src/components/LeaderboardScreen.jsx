@@ -100,7 +100,7 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
                 {/* Top Graphic - Desktop Only for space efficiency */}
                 {/* Top Brand Logo */}
                 <motion.img 
-                    src="/beyaz_as_logo.png" 
+                    src="/as_logo.svg" 
                     alt="Anadolu Sigorta" 
                     className="brand-logo"
                     initial={{ y: -20, opacity: 0 }}

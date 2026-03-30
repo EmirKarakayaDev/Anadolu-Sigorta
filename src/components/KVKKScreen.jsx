@@ -57,7 +57,7 @@ TİCARİ ELEKTRONİK İLETİ AÇIK RIZA METNİ
             <div className="brand-layout-full">
                 <div className="brand-screen">
                     <img
-                        src={isKiosk ? "/beyaz_as_logo.png" : "/logo_trn.png"}
+                        src={isKiosk ? "/as_logo.svg" : "/logo_trn.png"}
                         alt="Anadolu Sigorta"
                         className="brand-logo"
                         style={{ height: 'auto' }}

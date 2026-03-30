@@ -25,7 +25,7 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
                 {/* Top Graphic - Fixed at top like Menu Logo */}
                 {/* Top Brand Logo */}
                 <motion.img 
-                    src="/beyaz_as_logo.png" 
+                    src="/as_logo.svg" 
                     alt="Anadolu Sigorta" 
                     className="brand-logo"
                     initial={{ y: -20, opacity: 0 }}
