@@ -5,6 +5,7 @@ export function KVKKScreen({ onAccept, onDecline, isKiosk }) {
     const [isChecked, setIsChecked] = useState(false);
     const [showError, setShowError] = useState(false);
     const isMobile = window.innerWidth < 768;
+    const pdfUrl = "https://www.anadolusigorta.com.tr/Files/GlobalDocument/kisisel_veri_basvuru_formu.pdf";
 
     const handleAcceptClick = () => {
         if (!isChecked) {
@@ -37,7 +38,8 @@ KİŞİSEL VERİLERİ TOPLAMA YÖNTEMİ
 Kişisel verileriniz internet sitesi, mobil uygulamalar, çerezler, çağrı merkezi, elektronik araçlar aracılığıyla otomatik yollarla veya fiziksel formlar aracılığıyla otomatik olmayan yollarla toplanmaktadır.
 
 İLGİLİ KİŞİLERİN HAKLARI
-Kanun’un ilgili kişinin haklarını düzenleyen 11. maddesi kapsamındaki taleplerinizi, https://www.anadolusigorta.com.tr/Files/GlobalDocument/kisisel_veri_basvuru_formu.pdf adresinde yer alan başvuru formunda belirtilen bilgiler çerçevesinde iletebilirsiniz.
+Kanun’un ilgili kişinin haklarını düzenleyen 11. maddesi kapsamındaki taleplerinizi, __PDF_URL__
+adresinde yer alan başvuru formunda belirtilen bilgiler çerçevesinde iletebilirsiniz.
 
 TİCARİ ELEKTRONİK İLETİ AÇIK RIZA METNİ
 
@@ -82,7 +84,20 @@ Ad-Soyad										İmza
                         </h1>
 
                         <div className="kvkk-container" style={isKiosk ? { flex: 1, minHeight: 0 } : {}}>
-                            {kvkkText}
+                            {kvkkText.split("__PDF_URL__")[0]}
+                            <a
+                                href={pdfUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                style={{
+                                    color: "#00A6FB",
+                                    textDecoration: "underline",
+                                    wordBreak: "break-all",
+                                }}
+                            >
+                                {pdfUrl}
+                            </a>
+                            {kvkkText.split("__PDF_URL__")[1]}
                         </div>
 
                         {/* Checkbox - Immediately below the text box */}
