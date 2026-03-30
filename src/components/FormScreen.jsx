@@ -267,21 +267,15 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
                                     if (document.activeElement instanceof HTMLInputElement) {
                                         document.activeElement.blur();
                                     }
-                                    setValue('firstName', 'Test');
-                                    setValue('lastName', 'Kullanıcı', { shouldValidate: true });
-                                    setValue('email', 'test@test.com', { shouldValidate: true });
-                                    setValue('tcNumber', '11111111111', { shouldValidate: true });
-                                    setValue('phone', '5551112233', { shouldValidate: true });
-                                    setValue('confirm', true, { shouldValidate: true });
-                                // Test modunda doğrulamaya takılmadan doğrudan geçiş yap
-                                onSubmit({
-                                    firstName: 'Test',
-                                    lastName: 'Kullanıcı',
-                                    email: 'test@test.com',
-                                    tcNumber: '11111111111',
-                                    phone: '5551112233',
-                                    confirm: true,
-                                });
+                                    // Test modunda form içini yazmadan doğrudan geçiş yap
+                                    onSubmit({
+                                        firstName: 'Test',
+                                        lastName: 'Kullanıcı',
+                                        email: 'test@test.com',
+                                        tcNumber: '11111111111',
+                                        phone: '5551112233',
+                                        confirm: true,
+                                    });
                                 }}
                                 style={{ textDecoration: 'underline', color: 'rgba(255, 255, 255, 0.4)' }}
                             >
