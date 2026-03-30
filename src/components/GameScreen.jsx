@@ -310,49 +310,22 @@ export function GameScreen({ onGameOver, isKiosk }) {
                             alignItems: 'center'
                         }}>
                             <AnimatePresence>
-                                <motion.div
-                                    key={countdown}
-                                    initial={{ scale: 3, opacity: 0, rotate: -30 }}
-                                    animate={{ scale: 1, opacity: 1, rotate: 0 }}
-                                    exit={{ scale: 0.2, opacity: 0, rotate: 30 }}
-                                    transition={{ duration: 0.4, type: 'spring', stiffness: 120 }}
-                                    style={{
-                                        position: 'absolute',
-                                        fontSize: isKiosk ? '18rem' : '12rem',
-                                        fontWeight: 900,
-                                        // Ana dolgu ve Desen (Diamond Pattern simülasyonu)
-                                        background: `
-                                            linear-gradient(135deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%) -10px 0,
-                                            linear-gradient(225deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%) -10px 0,
-                                            linear-gradient(315deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%),
-                                            linear-gradient(45deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%),
-                                            linear-gradient(to bottom, #FFD166, #F7B500, #F27121)
-                                        `,
-                                        backgroundSize: '20px 20px, 20px 20px, 20px 20px, 20px 20px, 100% 100%',
-                                        WebkitBackgroundClip: 'text',
-                                        WebkitTextFillColor: 'transparent',
-                                        // Çok katmanlı çerçeve ve gölge (Sticker etkisi)
-                                        filter: `
-                                            /* Koyu Lacivert İç Kontur */
-                                            drop-shadow(2px 2px 0px #1D1D46) 
-                                            drop-shadow(-2px -2px 0px #1D1D46) 
-                                            drop-shadow(2px -2px 0px #1D1D46) 
-                                            drop-shadow(-2px 2px 0px #1D1D46)
-                                            /* Kalın Beyaz Dış Çerçeve */
-                                            drop-shadow(4px 4px 0px #FFFFFF)
-                                            drop-shadow(-4px -4px 0px #FFFFFF)
-                                            drop-shadow(4px -4px 0px #FFFFFF)
-                                            drop-shadow(-4px 4px 0px #FFFFFF)
-                                            drop-shadow(0px 0px 20px rgba(0,0,0,0.3))
-                                        `,
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        lineHeight: 1
-                                    }}
-                                >
-                                    {countdown > 0 ? countdown : ''}
-                                </motion.div>
+                                {countdown > 0 && (
+                                    <motion.img
+                                        key={countdown}
+                                        src={`/assets/COUNTDOWN_${countdown}.svg`}
+                                        initial={{ scale: 3, opacity: 0, rotate: -30 }}
+                                        animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                                        exit={{ scale: 0.2, opacity: 0, rotate: 30 }}
+                                        transition={{ duration: 0.4, type: 'spring', stiffness: 120 }}
+                                        style={{
+                                            position: 'absolute',
+                                            width: isKiosk ? '18rem' : '12rem',
+                                            height: 'auto',
+                                            objectFit: 'contain'
+                                        }}
+                                    />
+                                )}
                             </AnimatePresence>
                         </div>
                     </motion.div>
