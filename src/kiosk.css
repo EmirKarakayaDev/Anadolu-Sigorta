@@ -291,13 +291,10 @@ body.kiosk .game-screen-layout .brand-screen {
    Sadece form ekranında (form-screen-layout) aktif
    ───────────────────────────────────────── */
 
-body.kiosk .brand-layout-full.form-screen-layout {
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
+/* Form ekranında safe zone daha küçük (klavye artık fixed değil) */
 body.kiosk .brand-layout-full.form-screen-layout::after {
-  display: none;
+  min-height: 220px;
+  height: 220px;
 }
 
 /* ─────────────────────────────────────────
@@ -324,18 +321,25 @@ body.kiosk .virtual-keyboard-container {
   box-sizing: border-box;
 }
 
-/* Inline varyant — form içinde form akışına gömülü */
-body.kiosk .virtual-keyboard-container.inline {
+/* Sıfır-yükseklikli anchor: klavye kesinlikle layout'a etki etmez */
+body.kiosk .keyboard-anchor {
   position: relative;
-  bottom: auto;
-  left: auto;
-  width: 100%;
+  height: 0;
+  overflow: visible;
+  z-index: 200;
+}
+
+/* Inline varyant — anchor içinde absolute, hiçbir şeyi itmez */
+body.kiosk .virtual-keyboard-container.inline {
+  position: absolute;
+  top: 0.6rem;
+  left: 0;
+  right: 0;
   height: auto;
-  padding: 1rem !important;
-  margin-top: 0.8rem;
+  padding: 1.2rem !important;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 20px;
-  z-index: auto;
+  z-index: 200;
 }
 
 body.kiosk .keyboard-grid {
@@ -421,29 +425,29 @@ body.kiosk .keyboard-key.shift-active {
   border-bottom: 3px solid rgba(0, 0, 0, 0.5);
 }
 
-/* Inline klavyede tuşlar daha kompakt */
+/* Inline klavyede tuş boyutları — orijinale yakın */
 body.kiosk .virtual-keyboard-container.inline .keyboard-key {
-  height: 64px;
-  font-size: 1.5rem;
-  border-radius: 10px;
+  height: 76px;
+  font-size: 1.75rem;
+  border-radius: 12px;
 }
 
 body.kiosk .virtual-keyboard-container.inline .keyboard-key.special {
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 body.kiosk .virtual-keyboard-container.inline .keyboard-key.backspace {
-  font-size: 1.6rem;
+  font-size: 1.9rem;
 }
 
 body.kiosk .virtual-keyboard-container.inline .keyboard-key.done {
-  font-size: 1.15rem;
+  font-size: 1.35rem;
 }
 
 body.kiosk .virtual-keyboard-container.inline .keyboard-grid {
-  gap: 0.6rem;
+  gap: 0.75rem;
 }
 
 body.kiosk .virtual-keyboard-container.inline .keyboard-row {
-  gap: 0.5rem;
+  gap: 0.6rem;
 }

@@ -190,17 +190,19 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
                             {errors.email && <span className="form-error">{errors.email.message}</span>}
                         </div>
 
-                        {/* Klavye: Grup 1 aktifken e-postanın altında açılır */}
+                        {/* Klavye: Grup 1 aktifken e-postanın altında açılır (anchor: layout etkilenmez) */}
                         {isKiosk && (
-                            <VirtualKeyboard
-                                inline
-                                visible={activeGroup === 1}
-                                type={activeField?.type}
-                                onKey={handleKey}
-                                onBackspace={handleBackspace}
-                                onSpace={() => handleKey(' ')}
-                                onDone={handleDone}
-                            />
+                            <div className="keyboard-anchor">
+                                <VirtualKeyboard
+                                    inline
+                                    visible={activeGroup === 1}
+                                    type={activeField?.type}
+                                    onKey={handleKey}
+                                    onBackspace={handleBackspace}
+                                    onSpace={() => handleKey(' ')}
+                                    onDone={handleDone}
+                                />
+                            </div>
                         )}
 
                         {/* GRUP 2: T.C. / Telefon */}
@@ -244,17 +246,19 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
                             {errors.phone && <span className="form-error">{errors.phone.message}</span>}
                         </div>
 
-                        {/* Klavye: Grup 2 aktifken telefonun altında açılır */}
+                        {/* Klavye: Grup 2 aktifken telefonun altında açılır (anchor: layout etkilenmez) */}
                         {isKiosk && (
-                            <VirtualKeyboard
-                                inline
-                                visible={activeGroup === 2}
-                                type={activeField?.type}
-                                onKey={handleKey}
-                                onBackspace={handleBackspace}
-                                onSpace={() => handleKey(' ')}
-                                onDone={handleDone}
-                            />
+                            <div className="keyboard-anchor">
+                                <VirtualKeyboard
+                                    inline
+                                    visible={activeGroup === 2}
+                                    type={activeField?.type}
+                                    onKey={handleKey}
+                                    onBackspace={handleBackspace}
+                                    onSpace={() => handleKey(' ')}
+                                    onDone={handleDone}
+                                />
+                            </div>
                         )}
 
                         <div style={{ marginTop: '0.8rem', marginBottom: isKiosk ? '2rem' : '1rem' }}>
