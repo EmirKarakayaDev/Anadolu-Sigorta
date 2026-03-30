@@ -287,6 +287,20 @@ body.kiosk .game-screen-layout .brand-screen {
 }
 
 /* ─────────────────────────────────────────
+   GİRİŞ FORMU LAYOUT — Inline klavye modu
+   Sadece form ekranında (form-screen-layout) aktif
+   ───────────────────────────────────────── */
+
+body.kiosk .brand-layout-full.form-screen-layout {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+body.kiosk .brand-layout-full.form-screen-layout::after {
+  display: none;
+}
+
+/* ─────────────────────────────────────────
    SANAL KLAVYE — Premium Kiosk Tasarımı
    Sadece body.kiosk modunda aktif
    ───────────────────────────────────────── */
@@ -308,6 +322,20 @@ body.kiosk .virtual-keyboard-container {
   flex-direction: column;
   justify-content: center;
   box-sizing: border-box;
+}
+
+/* Inline varyant — form içinde form akışına gömülü */
+body.kiosk .virtual-keyboard-container.inline {
+  position: relative;
+  bottom: auto;
+  left: auto;
+  width: 100%;
+  height: auto;
+  padding: 1rem !important;
+  margin-top: 0.8rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  z-index: auto;
 }
 
 body.kiosk .keyboard-grid {
@@ -391,4 +419,31 @@ body.kiosk .keyboard-key.shift-active {
   background: rgba(255, 255, 255, 0.4);
   color: #1a1a1a;
   border-bottom: 3px solid rgba(0, 0, 0, 0.5);
+}
+
+/* Inline klavyede tuşlar daha kompakt */
+body.kiosk .virtual-keyboard-container.inline .keyboard-key {
+  height: 64px;
+  font-size: 1.5rem;
+  border-radius: 10px;
+}
+
+body.kiosk .virtual-keyboard-container.inline .keyboard-key.special {
+  font-size: 1rem;
+}
+
+body.kiosk .virtual-keyboard-container.inline .keyboard-key.backspace {
+  font-size: 1.6rem;
+}
+
+body.kiosk .virtual-keyboard-container.inline .keyboard-key.done {
+  font-size: 1.15rem;
+}
+
+body.kiosk .virtual-keyboard-container.inline .keyboard-grid {
+  gap: 0.6rem;
+}
+
+body.kiosk .virtual-keyboard-container.inline .keyboard-row {
+  gap: 0.5rem;
 }

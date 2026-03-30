@@ -32,6 +32,12 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
     const phoneRef = useRef(null);
     const isMobile = window.innerWidth < 768;
 
+    const group1Fields = ['firstName', 'lastName', 'email'];
+    const group2Fields = ['tcNumber', 'phone'];
+    const activeGroup = activeField
+        ? (group1Fields.includes(activeField.name) ? 1 : 2)
+        : null;
+
     const handleKey = (key) => {
         if (!activeField) return;
         const currentVal = watch(activeField.name) || '';
@@ -49,6 +55,20 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
         if (!activeField) return;
         const currentVal = watch(activeField.name) || '';
         setValue(activeField.name, currentVal.slice(0, -1), { shouldValidate: true });
+    };
+
+    const handleDone = () => {
+        const fieldsOrder = ['firstName', 'lastName', 'email', 'tcNumber', 'phone'];
+        const currentIndex = fieldsOrder.indexOf(activeField.name);
+        if (currentIndex < fieldsOrder.length - 1) {
+            const nextField = fieldsOrder[currentIndex + 1];
+            setFocus(nextField);
+        } else {
+            setActiveField(null);
+            if (document.activeElement instanceof HTMLInputElement) {
+                document.activeElement.blur();
+            }
+        }
     };
 
     return (
@@ -69,7 +89,7 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
                 }
             }}
         >
-            <div className="brand-layout-full">
+            <div className={isKiosk ? "brand-layout-full form-screen-layout" : "brand-layout-full"}>
 
                 <div className="brand-screen">
                     <motion.img
@@ -112,6 +132,7 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
                             flex: isKiosk ? 1 : 'none'
                         }}
                     >
+                        {/* GRUP 1: Ad / Soyad / E-posta */}
                         <div style={{
                             display: 'grid',
                             gridTemplateColumns: '1fr 1fr',
@@ -169,6 +190,20 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
                             {errors.email && <span className="form-error">{errors.email.message}</span>}
                         </div>
 
+                        {/* Klavye: Grup 1 aktifken e-postanın altında açılır */}
+                        {isKiosk && (
+                            <VirtualKeyboard
+                                inline
+                                visible={activeGroup === 1}
+                                type={activeField?.type}
+                                onKey={handleKey}
+                                onBackspace={handleBackspace}
+                                onSpace={() => handleKey(' ')}
+                                onDone={handleDone}
+                            />
+                        )}
+
+                        {/* GRUP 2: T.C. / Telefon */}
                         <div className="form-group" style={{ marginBottom: isKiosk ? 0 : '0.8rem' }}>
                             <label>T.C. Kimlik Numarası <span style={{ color: '#FF6B6B' }}>*</span></label>
                             <input
@@ -208,6 +243,19 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
                             />
                             {errors.phone && <span className="form-error">{errors.phone.message}</span>}
                         </div>
+
+                        {/* Klavye: Grup 2 aktifken telefonun altında açılır */}
+                        {isKiosk && (
+                            <VirtualKeyboard
+                                inline
+                                visible={activeGroup === 2}
+                                type={activeField?.type}
+                                onKey={handleKey}
+                                onBackspace={handleBackspace}
+                                onSpace={() => handleKey(' ')}
+                                onDone={handleDone}
+                            />
+                        )}
 
                         <div style={{ marginTop: '0.8rem', marginBottom: isKiosk ? '2rem' : '1rem' }}>
                             <div className="checkbox-group" style={{ padding: isKiosk ? '0' : '0 8px' }}>
@@ -296,32 +344,6 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
                 )}
             </div>
 
-            {/* Virtual Keyboard */}
-            {isKiosk && (
-                <VirtualKeyboard
-                    visible={!!activeField}
-                    type={activeField?.type}
-                    onKey={handleKey}
-                    onBackspace={handleBackspace}
-                    onSpace={() => handleKey(' ')}
-                    onDone={() => {
-                        const fieldsOrder = ['firstName', 'lastName', 'email', 'tcNumber', 'phone'];
-                        const currentIndex = fieldsOrder.indexOf(activeField.name);
-
-                        if (currentIndex < fieldsOrder.length - 1) {
-                            // Bir sonraki alana odaklan
-                            const nextField = fieldsOrder[currentIndex + 1];
-                            setFocus(nextField);
-                        } else {
-                            // Son alandaysa klavyeyi kapat
-                            setActiveField(null);
-                            if (document.activeElement instanceof HTMLInputElement) {
-                                document.activeElement.blur();
-                            }
-                        }
-                    }}
-                />
-            )}
         </motion.div>
     );
 }
