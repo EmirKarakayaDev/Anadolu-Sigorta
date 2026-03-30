@@ -66,17 +66,9 @@ export function RewardsModal({ isOpen, onClose, isKiosk }) {
                         </div>
 
                         {/* Teaser metni */}
-                        <div style={{
-                            background: 'linear-gradient(135deg, rgba(33, 88, 217, 0.08), rgba(33, 88, 217, 0.04))',
-                            border: '1.5px solid rgba(33, 88, 217, 0.2)',
-                            borderRadius: isKiosk ? '1.5rem' : '1rem',
-                            padding: isKiosk ? '1.4rem 1.8rem' : '0.9rem 1.1rem',
-                            marginBottom: isKiosk ? '0.5rem' : '0.2rem'
-                        }}>
-                            <p style={{ margin: 0, fontSize: isKiosk ? '1.3rem' : '0.85rem', color: 'var(--as-blue)', fontWeight: 700, textAlign: 'center', lineHeight: 1.5 }}>
-                                Bavulları doğru yerleştiren ilk 10 kişiden biri ol, Yurt Dışı Seyahat Sigortası'na ek ilk 3'e özel ödülleri kaçırma!
-                            </p>
-                        </div>
+                        <p style={{ margin: 0, fontSize: isKiosk ? '1.3rem' : '0.85rem', color: '#222', fontWeight: 700, textAlign: 'center', lineHeight: 1.5 }}>
+                            Bavulları doğru yerleştiren ilk 10 kişiden biri ol, Yurt Dışı Seyahat Sigortası'na ek ilk 3'e özel ödülleri kaçırma!
+                        </p>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: isKiosk ? '1.5rem' : '1rem', marginTop: isKiosk ? '2rem' : '1.2rem' }}>
                             {/* 1-3 */}
