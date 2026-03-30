@@ -93,6 +93,11 @@ function App() {
     setIsTransitioning(true);
   };
 
+  const handleBackToKVKK = () => {
+    setTransitionTarget(SCREENS.KVKK);
+    setIsTransitioning(true);
+  };
+
   const handlePlayAgain = () => {
     setTransitionTarget(SCREENS.GAME);
     setIsTransitioning(true);
@@ -108,7 +113,7 @@ function App() {
           <KVKKScreen key="kvkk" onAccept={handleKVKKAccept} onDecline={handleReset} isKiosk={isKiosk} />
         )}
         {currentScreen === SCREENS.FORM && (
-          <FormScreen key="form" onSubmit={handleFormSubmit} isKiosk={isKiosk} isTest={isTest} />
+          <FormScreen key="form" onSubmit={handleFormSubmit} onBack={handleBackToKVKK} isKiosk={isKiosk} isTest={isTest} />
         )}
         {currentScreen === SCREENS.GAME && (
           <GameScreen key="game" onGameOver={handleGameOver} isKiosk={isKiosk} />

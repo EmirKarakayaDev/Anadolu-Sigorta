@@ -14,7 +14,7 @@ const schema = z.object({
     confirm: z.boolean().refine(v => v === true, "Onaylanmalıdır")
 });
 
-export function FormScreen({ onSubmit, isKiosk, isTest }) {
+export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
     const { register, handleSubmit, setValue, watch, setFocus, formState: { errors } } = useForm({
         resolver: zodResolver(schema),
         defaultValues: {
@@ -239,6 +239,21 @@ export function FormScreen({ onSubmit, isKiosk, isTest }) {
                             className="btn-primary"
                         >
                             Kaydet ve Başla
+                        </button>
+                        <button
+                            type="button"
+                            className="btn-outline"
+                            style={{ flex: 1, width: '100%' }}
+                            onClick={() => {
+                                // Kiosk'ta klavyeyi kapat
+                                setActiveField(null);
+                                if (document.activeElement instanceof HTMLInputElement) {
+                                    document.activeElement.blur();
+                                }
+                                onBack?.();
+                            }}
+                        >
+                            Geri Dön
                         </button>
 
                         {/* Hızlı test butonu (geliştirme modu) */}
