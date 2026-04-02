@@ -63,7 +63,7 @@ export const getTopScores = async (limit = 10) => {
     try {
         const { data, error } = await supabase
             .from('top_scores')
-            .select('id, first_name, score, created_at')
+            .select('id, first_name, last_name, score, created_at')
             .order('score', { ascending: false })
             .limit(limit);
 
