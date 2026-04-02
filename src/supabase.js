@@ -57,8 +57,8 @@ export const saveGameSession = async (userData, score) => {
 export const getTopScores = async (limit = 10) => {
     try {
         const { data, error } = await supabase
-            .from('sessions')
-            .select('*')
+            .from('top_scores')
+            .select('id, first_name, score, created_at')
             .order('score', { ascending: false })
             .limit(limit);
 
@@ -85,7 +85,7 @@ export const getUserRank = async (sessionId) => {
 
         // 2. Bu puandan daha yüksek puan alan kaç kişi olduğunu say (+1 ekle)
         const { count, error: cError } = await supabase
-            .from('sessions')
+            .from('top_scores')
             .select('*', { count: 'exact', head: true })
             .gt('score', userScore);
 
