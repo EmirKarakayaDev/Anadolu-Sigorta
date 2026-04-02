@@ -9,7 +9,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 export const saveGameSession = async (userData, score) => {
     // 1. Google Sheets (Excel) Kaydı (Tam Otomatik)
     const googleSheetUrl = 'https://script.google.com/macros/s/AKfycbx4tfD9BnZT9ZX75zpzXsseyGDlL74vqcMr9Pl0-khJ_zCHmlU_tBhTroz7sLO_oFUmiA/exec';
-    
+
     // Google'a veri gönder (Sessizce çalışsın, oyun akışını bloklamasın)
     fetch(googleSheetUrl, {
         method: 'POST',
@@ -30,24 +30,29 @@ export const saveGameSession = async (userData, score) => {
     }).catch(e => console.error("Google Sheets Hatası:", e));
 
     try {
-        // 2. Supabase Kaydı (Ranking ve Liderlik Tablosu için)
-        const { data, error } = await supabase
-            .from('sessions')
-            .insert([
-                {
-                    first_name: userData.firstName,
-                    last_name: userData.lastName,
+        // 2. Supabase Kaydı (Edge Function üzerinden)
+        const response = await fetch(`${supabaseUrl}/functions/v1/save-session`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'apikey': supabaseAnonKey,
+            },
+            body: JSON.stringify({
+                userData: {
+                    firstName: userData.firstName,
+                    lastName: userData.lastName,
                     email: userData.email,
                     phone: userData.phone,
-                    tc_number: userData.tcNumber,
-                    score: score,
-                    device_type: window.innerWidth > 1024 ? 'kiosk' : 'mobile'
-                }
-            ])
-            .select();
+                    tcNumber: userData.tcNumber,
+                    deviceType: window.innerWidth > 1024 ? 'kiosk' : 'mobile'
+                },
+                score: score
+            })
+        });
 
-        if (error) throw error;
-        return { success: true, id: data[0].id };
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error);
+        return { success: true, id: result.id };
     } catch (e) {
         console.error("Supabase hata: ", e);
         return { success: false, error: e };
