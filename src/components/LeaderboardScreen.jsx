@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Home, Loader2, Gift, Plane, Info } from 'lucide-react';
 import { getTopScores, getUserRank } from '../supabase';
-import { audioManager } from '../utils/audioManager';
 import { RewardsModal } from './RewardsModal';
 
 export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk }) {
@@ -12,10 +11,6 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
     const [isRewardsModalOpen, setIsRewardsModalOpen] = useState(false);
     const userRowRef = useRef(null); // Kullanıcının bulunduğu satıra odaklanmak için
     const isMobile = window.innerWidth < 768;
-
-    useEffect(() => {
-        if (isKiosk) audioManager.unmute();
-    }, []);
 
     useEffect(() => {
         async function fetchScores() {

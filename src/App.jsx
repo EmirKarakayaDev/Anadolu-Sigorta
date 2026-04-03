@@ -9,6 +9,7 @@ import { LeaderboardScreen } from './components/LeaderboardScreen';
 import { PixelTransition } from './components/PixelTransition';
 
 import { saveGameSession } from './supabase';
+import { audioManager } from './utils/audioManager';
 
 const SCREENS = {
   MENU: 'menu',
@@ -43,6 +44,8 @@ function App() {
   }, []);
 
   const handleStart = () => {
+    // Kullanıcı ilk etkileşimde AudioContext kilidi açılır, BGM'yi yeniden tetikle
+    if (isKiosk) audioManager.startBGM(1);
     // Tarayıcı kısıtlamaları nedeniyle ilk etkileşimde tam ekranı tetikle
     try {
       const docElm = document.documentElement;

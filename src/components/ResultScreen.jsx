@@ -8,7 +8,6 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
     const [isRewardsModalOpen, setIsRewardsModalOpen] = useState(false);
 
     useEffect(() => {
-        if (isKiosk) audioManager.unmute();
         audioManager.startBGM(4);
     }, []);
 
