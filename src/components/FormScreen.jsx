@@ -204,7 +204,7 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
                             <input
                                 className={`form-input ${errors.tcNumber ? 'error' : ''}`}
                                 {...register('tcNumber')}
-                                {...(isKiosk ? { value: maskedDisplay.tcNumber, onChange: () => {} } : { type: 'password' })}
+                                {...(isKiosk ? { value: maskedDisplay.tcNumber, onChange: () => {} } : { type: 'text', style: { WebkitTextSecurity: 'disc' } })}
                                 placeholder="11 haneli T.C. kimlik numaranız"
                                 inputMode={isKiosk ? 'none' : 'numeric'}
                                 maxLength={11}
@@ -223,7 +223,7 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
                                 {...register('phone', {
                                     onChange: (e) => e.target.value = e.target.value.replace(/\D/g, '')
                                 })}
-                                {...(isKiosk ? { value: maskedDisplay.phone, onChange: () => {} } : { type: 'password' })}
+                                {...(isKiosk ? { value: maskedDisplay.phone, onChange: () => {} } : { type: 'text', style: { WebkitTextSecurity: 'disc' } })}
                                 ref={(e) => {
                                     register('phone').ref(e);
                                     phoneRef.current = e;
