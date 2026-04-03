@@ -1,13 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { audioManager } from '../utils/audioManager';
 
 export function PixelTransition({ onMidpoint, onComplete, isKiosk }) {
     const [phase, setPhase] = useState('entering');
-
-    useEffect(() => {
-        audioManager.play('gecis'); // Geçiş sesini SADECE BİR KEZ (başlangıçta) çal
-    }, []);
 
     useEffect(() => {
         if (phase === 'entering') {
