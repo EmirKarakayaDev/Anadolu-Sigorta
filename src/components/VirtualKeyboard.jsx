@@ -16,7 +16,9 @@ const NUMERIC_LAYOUT = [
     ['0', 'BACKSPACE', 'DONE']
 ];
 
-export function VirtualKeyboard({ visible, type = 'text', onKey, onDone, onBackspace, onSpace, keyboardOffset = 0 }) {
+const EMAIL_DOMAINS = ['@gmail.com', '@hotmail.com', '@outlook.com', '@yahoo.com'];
+
+export function VirtualKeyboard({ visible, type = 'text', isEmail = false, onKey, onDone, onBackspace, onSpace, onSuggestion, keyboardOffset = 0 }) {
     const [isUpperCase, setIsUpperCase] = useState(false);
     const layout = type === 'tel' || type === 'number' ? NUMERIC_LAYOUT : TURKISH_QWERTY;
 
@@ -43,6 +45,21 @@ export function VirtualKeyboard({ visible, type = 'text', onKey, onDone, onBacks
                     transition={{ type: 'spring', damping: 30, stiffness: 220 }}
                     className="virtual-keyboard-container no-select"
                 >
+                    {isEmail && (
+                        <div className="keyboard-row keyboard-email-suggestions">
+                            {EMAIL_DOMAINS.map((domain) => (
+                                <button
+                                    key={domain}
+                                    type="button"
+                                    className="keyboard-key keyboard-suggestion"
+                                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); onSuggestion?.(domain); }}
+                                    onMouseDown={(e) => e.preventDefault()}
+                                >
+                                    {domain}
+                                </button>
+                            ))}
+                        </div>
+                    )}
                     <div className="keyboard-grid">
                         {layout.map((row, rowIndex) => (
                             <div key={rowIndex} className="keyboard-row">

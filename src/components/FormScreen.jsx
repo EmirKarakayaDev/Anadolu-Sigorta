@@ -331,10 +331,17 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
                 <VirtualKeyboard
                     visible={!!activeField}
                     type={activeField?.type}
+                    isEmail={activeField?.name === 'email'}
                     keyboardOffset={keyboardOffset}
                     onKey={handleKey}
                     onBackspace={handleBackspace}
                     onSpace={() => handleKey(' ')}
+                    onSuggestion={(domain) => {
+                        const current = watch('email') || '';
+                        const atIndex = current.indexOf('@');
+                        const base = atIndex !== -1 ? current.slice(0, atIndex) : current;
+                        setValue('email', base + domain, { shouldValidate: true });
+                    }}
                     onDone={() => {
                         const fieldsOrder = ['firstName', 'lastName', 'email', 'tcNumber', 'phone'];
                         const currentIndex = fieldsOrder.indexOf(activeField.name);

@@ -391,3 +391,21 @@ body.kiosk .keyboard-key.shift-active {
   color: #1a1a1a;
   border-bottom: 3px solid rgba(0, 0, 0, 0.5);
 }
+
+body.kiosk .keyboard-email-suggestions {
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.5rem 0.5rem 0.2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 0.3rem;
+}
+
+body.kiosk .keyboard-key.keyboard-suggestion {
+  flex: 1;
+  height: 64px;
+  font-size: 1.1rem;
+  background: rgba(255, 128, 0, 0.15);
+  border-bottom: 3px solid rgba(255, 128, 0, 0.4);
+  color: rgba(255, 200, 120, 1);
+  letter-spacing: 0.02em;
+}
