@@ -193,7 +193,7 @@ export function FormScreen({ onSubmit, onBack, isKiosk }) {
                             <input
                                 className={`form-input ${errors.tcNumber ? 'error' : ''}`}
                                 {...register('tcNumber')}
-                                type="password"
+                                type="text"
                                 placeholder="11 haneli T.C. kimlik numaranız"
                                 inputMode={isKiosk ? 'none' : 'numeric'}
                                 maxLength={11}
@@ -216,7 +216,7 @@ export function FormScreen({ onSubmit, onBack, isKiosk }) {
                                     register('phone').ref(e);
                                     phoneRef.current = e;
                                 }}
-                                type="password"
+                                type="text"
                                 placeholder="05xx xxx xx xx"
                                 inputMode={isKiosk ? 'none' : 'numeric'}
                                 maxLength={11}
