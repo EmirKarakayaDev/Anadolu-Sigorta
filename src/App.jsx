@@ -24,7 +24,6 @@ const SCREENS = {
 // Öncelik URL parametresi (?kiosk), alternatif olarak yüksek çözünürlüklü dikey ekran tespiti.
 const urlParams = new URLSearchParams(window.location.search);
 const isKiosk = urlParams.has('kiosk') || window.screen.height >= 1800;
-const isTest = true; // TODO: gerçek yayın öncesi kaldır → import.meta.env.DEV || urlParams.has('test')
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState(SCREENS.MENU);
@@ -119,7 +118,7 @@ function App() {
           <KVKKScreen key="kvkk" onAccept={handleKVKKAccept} onDecline={handleReset} isKiosk={isKiosk} />
         )}
         {currentScreen === SCREENS.FORM && (
-          <FormScreen key="form" onSubmit={handleFormSubmit} onBack={handleBackToKVKK} isKiosk={isKiosk} isTest={isTest} />
+          <FormScreen key="form" onSubmit={handleFormSubmit} onBack={handleBackToKVKK} isKiosk={isKiosk} />
         )}
         {currentScreen === SCREENS.GAME && (
           <GameScreen key="game" onGameOver={handleGameOver} isKiosk={isKiosk} />

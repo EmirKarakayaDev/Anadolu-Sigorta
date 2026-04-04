@@ -14,7 +14,7 @@ const schema = z.object({
     confirm: z.boolean().refine(v => v === true, "Onaylanmalıdır")
 });
 
-export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
+export function FormScreen({ onSubmit, onBack, isKiosk }) {
     const { register, handleSubmit, setValue, watch, setFocus, formState: { errors } } = useForm({
         resolver: zodResolver(schema),
         defaultValues: {
@@ -285,33 +285,6 @@ export function FormScreen({ onSubmit, onBack, isKiosk, isTest }) {
                         >
                             Geri Dön
                         </button>
-
-                        {/* Hızlı test butonu (geliştirme modu) */}
-                        {isTest && (
-                            <button
-                                type="button"
-                                className="btn-text-link"
-                                onClick={() => {
-                                    // Test ile doğrudan geçiş yap: değerleri doldur + doğrulayıp submit et
-                                    setActiveField(null);
-                                    if (document.activeElement instanceof HTMLInputElement) {
-                                        document.activeElement.blur();
-                                    }
-                                    // Test modunda form içini yazmadan doğrudan geçiş yap
-                                    onSubmit({
-                                        firstName: 'Test',
-                                        lastName: 'Kullanıcı',
-                                        email: 'test@test.com',
-                                        tcNumber: '11111111111',
-                                        phone: '5551112233',
-                                        confirm: true,
-                                    });
-                                }}
-                                style={{ textDecoration: 'underline', color: 'rgba(255, 255, 255, 0.4)' }}
-                            >
-                                Test Modu (Hızlı Geçiş)
-                            </button>
-                        )}
                     </div>
                 </div>
 
