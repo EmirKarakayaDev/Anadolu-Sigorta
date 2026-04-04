@@ -193,14 +193,14 @@ export function FormScreen({ onSubmit, onBack, isKiosk }) {
                             <input
                                 className={`form-input ${errors.tcNumber ? 'error' : ''}`}
                                 {...register('tcNumber')}
+                                type="password"
                                 placeholder="11 haneli T.C. kimlik numaranız"
                                 inputMode={isKiosk ? 'none' : 'numeric'}
                                 maxLength={11}
                                 onFocus={() => {
                                     if (isKiosk) setActiveField({ name: 'tcNumber', type: 'tel' });
                                 }}
-                                autoComplete="off"
-                                style={{ WebkitTextSecurity: 'disc' }}
+                                autoComplete="new-password"
                             />
                             {errors.tcNumber && <span className="form-error">{errors.tcNumber.message}</span>}
                         </div>
@@ -216,14 +216,14 @@ export function FormScreen({ onSubmit, onBack, isKiosk }) {
                                     register('phone').ref(e);
                                     phoneRef.current = e;
                                 }}
+                                type="password"
                                 placeholder="05xx xxx xx xx"
                                 inputMode={isKiosk ? 'none' : 'numeric'}
                                 maxLength={11}
                                 onFocus={() => {
                                     if (isKiosk) setActiveField({ name: 'phone', type: 'tel' });
                                 }}
-                                autoComplete="off"
-                                style={{ WebkitTextSecurity: 'disc' }}
+                                autoComplete="new-password"
                             />
                             {errors.phone && <span className="form-error">{errors.phone.message}</span>}
                         </div>
