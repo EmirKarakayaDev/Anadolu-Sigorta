@@ -30,6 +30,7 @@ function App() {
   const [userData, setUserData] = useState(null);
   const [finalScore, setFinalScore] = useState(0);
   const [lastSessionId, setLastSessionId] = useState(null);
+  const [isTestSession, setIsTestSession] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [transitionTarget, setTransitionTarget] = useState(null);
   const isSavingRef = React.useRef(false);
@@ -66,6 +67,7 @@ function App() {
   const handleKVKKAccept = () => setCurrentScreen(SCREENS.FORM);
 
   const handleFormSubmit = (data) => {
+    setIsTestSession(!!data.isTestEntry);
     setUserData(data);
     setTransitionTarget(SCREENS.GAME);
     setIsTransitioning(true);
@@ -75,7 +77,7 @@ function App() {
     if (isSavingRef.current) return;
 
     setFinalScore(score);
-    if (userData) {
+    if (userData && !isTestSession) {
       isSavingRef.current = true;
       saveGameSession(userData, score).then(result => {
         if (result.success) {
@@ -127,7 +129,7 @@ function App() {
           <ResultScreen key="result" score={finalScore} onReset={handleReset} onPlayAgain={handlePlayAgain} onShowLeaderboard={() => setCurrentScreen(SCREENS.LEADERBOARD)} isKiosk={isKiosk} />
         )}
         {currentScreen === SCREENS.LEADERBOARD && (
-          <LeaderboardScreen key="leaderboard" onReset={handleReset} onPlayAgain={handlePlayAgain} lastSessionId={lastSessionId} isKiosk={isKiosk} />
+          <LeaderboardScreen key="leaderboard" onReset={handleReset} onPlayAgain={handlePlayAgain} lastSessionId={lastSessionId} isKiosk={isKiosk} isTestSession={isTestSession} finalScore={finalScore} />
         )}
       </AnimatePresence>
 

@@ -75,6 +75,21 @@ export const getTopScores = async (limit = 10) => {
     }
 };
 
+export const getRankByScore = async (score) => {
+    try {
+        const { count, error } = await supabase
+            .from('top_scores')
+            .select('*', { count: 'exact', head: true })
+            .gt('score', score);
+
+        if (error) throw error;
+        return { rank: count + 1, score };
+    } catch (e) {
+        console.error("Sıralama hesaplama hatası: ", e);
+        return null;
+    }
+};
+
 export const getUserRank = async (sessionId) => {
     if (!sessionId) return null;
     try {

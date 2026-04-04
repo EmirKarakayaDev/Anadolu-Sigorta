@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Home, Loader2, Gift, Plane, Info } from 'lucide-react';
-import { getTopScores, getUserRank } from '../supabase';
+import { getTopScores, getUserRank, getRankByScore } from '../supabase';
 import { RewardsModal } from './RewardsModal';
 
-export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk }) {
+export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk, isTestSession, finalScore }) {
     const [scores, setScores] = useState([]);
     const [loading, setLoading] = useState(true);
     const [userRankData, setUserRankData] = useState(null);
@@ -19,7 +19,10 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
             setScores(topScores);
             
             // Eğer aktif bir oturum varsa ve ilk 10'da değilse sıralamasını çek
-            if (lastSessionId) {
+            if (isTestSession) {
+                const rankInfo = await getRankByScore(finalScore);
+                setUserRankData(rankInfo);
+            } else if (lastSessionId) {
                 const isInTop10 = topScores.some(s => s.id === lastSessionId);
                 if (!isInTop10) {
                     const rankInfo = await getUserRank(lastSessionId);
