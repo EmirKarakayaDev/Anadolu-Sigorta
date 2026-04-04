@@ -28,9 +28,7 @@ export function FormScreen({ onSubmit, onBack, isKiosk }) {
     });
 
     const [activeField, setActiveField] = useState(null);
-    const [maskedDisplay, setMaskedDisplay] = useState({ tcNumber: '', phone: '' });
     const testPressTimer = useRef(null);
-    const peekTimerRef = useRef({});
     const emailRef = useRef(null);
     const phoneRef = useRef(null);
     const isMobile = window.innerWidth < 768;
@@ -59,12 +57,6 @@ export function FormScreen({ onSubmit, onBack, isKiosk }) {
             if (currentVal.length >= 11) return;
             const newVal = currentVal + key;
             setValue(activeField.name, newVal, { shouldValidate: true });
-            // Son girilen karakteri göster, 800ms sonra maskele
-            setMaskedDisplay(prev => ({ ...prev, [activeField.name]: '*'.repeat(newVal.length - 1) + key }));
-            clearTimeout(peekTimerRef.current[activeField.name]);
-            peekTimerRef.current[activeField.name] = setTimeout(() => {
-                setMaskedDisplay(prev => ({ ...prev, [activeField.name]: '*'.repeat(newVal.length) }));
-            }, 800);
             return;
         }
 
@@ -76,10 +68,6 @@ export function FormScreen({ onSubmit, onBack, isKiosk }) {
         const currentVal = watch(activeField.name) || '';
         const newVal = currentVal.slice(0, -1);
         setValue(activeField.name, newVal, { shouldValidate: true });
-        if (activeField.name === 'tcNumber' || activeField.name === 'phone') {
-            clearTimeout(peekTimerRef.current[activeField.name]);
-            setMaskedDisplay(prev => ({ ...prev, [activeField.name]: '*'.repeat(newVal.length) }));
-        }
     };
 
     return (
@@ -205,7 +193,6 @@ export function FormScreen({ onSubmit, onBack, isKiosk }) {
                             <input
                                 className={`form-input ${errors.tcNumber ? 'error' : ''}`}
                                 {...register('tcNumber')}
-                                {...(isKiosk ? { value: maskedDisplay.tcNumber, onChange: () => {} } : { type: 'text', style: { WebkitTextSecurity: 'disc' } })}
                                 placeholder="11 haneli T.C. kimlik numaranız"
                                 inputMode={isKiosk ? 'none' : 'numeric'}
                                 maxLength={11}
@@ -213,6 +200,7 @@ export function FormScreen({ onSubmit, onBack, isKiosk }) {
                                     if (isKiosk) setActiveField({ name: 'tcNumber', type: 'tel' });
                                 }}
                                 autoComplete="off"
+                                style={{ WebkitTextSecurity: 'disc' }}
                             />
                             {errors.tcNumber && <span className="form-error">{errors.tcNumber.message}</span>}
                         </div>
@@ -224,7 +212,6 @@ export function FormScreen({ onSubmit, onBack, isKiosk }) {
                                 {...register('phone', {
                                     onChange: (e) => e.target.value = e.target.value.replace(/\D/g, '')
                                 })}
-                                {...(isKiosk ? { value: maskedDisplay.phone, onChange: () => {} } : { type: 'text', style: { WebkitTextSecurity: 'disc' } })}
                                 ref={(e) => {
                                     register('phone').ref(e);
                                     phoneRef.current = e;
@@ -236,6 +223,7 @@ export function FormScreen({ onSubmit, onBack, isKiosk }) {
                                     if (isKiosk) setActiveField({ name: 'phone', type: 'tel' });
                                 }}
                                 autoComplete="off"
+                                style={{ WebkitTextSecurity: 'disc' }}
                             />
                             {errors.phone && <span className="form-error">{errors.phone.message}</span>}
                         </div>
