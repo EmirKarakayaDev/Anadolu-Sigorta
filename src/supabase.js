@@ -6,7 +6,7 @@ const supabaseAnonKey = 'sb_publishable_hsVxf7PNVbY5I4-rGv25sg_WqLLgrv0';
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export const saveGameSession = async (userData, score) => {
+export const saveGameSession = async (userData, score, isTest = false) => {
     // 1. Google Sheets (Excel) Kaydı (Tam Otomatik)
     const googleSheetUrl = 'https://script.google.com/macros/s/AKfycbx4tfD9BnZT9ZX75zpzXsseyGDlL74vqcMr9Pl0-khJ_zCHmlU_tBhTroz7sLO_oFUmiA/exec';
 
@@ -46,7 +46,8 @@ export const saveGameSession = async (userData, score) => {
                     tcNumber: userData.tcNumber,
                     deviceType: window.innerWidth > 1024 ? 'kiosk' : 'mobile'
                 },
-                score: score
+                score: score,
+                isTest: isTest
             })
         });
 

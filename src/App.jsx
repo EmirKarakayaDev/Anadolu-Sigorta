@@ -77,9 +77,9 @@ function App() {
     if (isSavingRef.current) return;
 
     setFinalScore(score);
-    if (userData && !isTestSession) {
+    if (userData) {
       isSavingRef.current = true;
-      saveGameSession(userData, score).then(result => {
+      saveGameSession(userData, score, isTestSession).then(result => {
         if (result.success) {
           setLastSessionId(result.id);
         }
