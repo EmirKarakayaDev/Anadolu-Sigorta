@@ -29,6 +29,7 @@ export function FormScreen({ onSubmit, onBack, isKiosk }) {
 
     const [activeField, setActiveField] = useState(null);
     const [maskedDisplay, setMaskedDisplay] = useState({ tcNumber: '', phone: '' });
+    const testPressTimer = useRef(null);
     const peekTimerRef = useRef({});
     const emailRef = useRef(null);
     const phoneRef = useRef(null);
@@ -267,6 +268,19 @@ export function FormScreen({ onSubmit, onBack, isKiosk }) {
                             type="submit"
                             form="kiosk-form"
                             className="btn-primary"
+                            onMouseDown={() => {
+                                testPressTimer.current = setTimeout(() => {
+                                    onSubmit({ firstName: 'Test', lastName: 'Kullanıcı', email: 'test@test.com', tcNumber: '11111111111', phone: '5551112233', confirm: true });
+                                }, 3000);
+                            }}
+                            onMouseUp={() => clearTimeout(testPressTimer.current)}
+                            onMouseLeave={() => clearTimeout(testPressTimer.current)}
+                            onTouchStart={() => {
+                                testPressTimer.current = setTimeout(() => {
+                                    onSubmit({ firstName: 'Test', lastName: 'Kullanıcı', email: 'test@test.com', tcNumber: '11111111111', phone: '5551112233', confirm: true });
+                                }, 3000);
+                            }}
+                            onTouchEnd={() => clearTimeout(testPressTimer.current)}
                         >
                             Kaydet ve Başla
                         </button>
