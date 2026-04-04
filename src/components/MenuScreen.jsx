@@ -4,7 +4,7 @@ import { audioManager } from '../utils/audioManager';
 import { Info } from 'lucide-react';
 import { RewardsModal } from './RewardsModal';
 
-export function MenuScreen({ onStart, isKiosk }) {
+export function MenuScreen({ onStart, isKiosk, savedUserData, onContinueWithSaved, onChangeSavedData }) {
     const [isRewardsModalOpen, setIsRewardsModalOpen] = useState(false);
 
     useEffect(() => {
@@ -52,12 +52,38 @@ export function MenuScreen({ onStart, isKiosk }) {
                         transition={{ delay: 0.5 }}
                         style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', paddingBottom: isKiosk ? '1rem' : '0' }}
                     >
-                        <button
-                            className="btn-primary"
-                            onClick={onStart}
-                        >
-                            Oyuna Başla
-                        </button>
+                        {!isKiosk && savedUserData ? (
+                            <>
+                                <div style={{
+                                    background: 'rgba(255,255,255,0.12)',
+                                    border: '1px solid rgba(255,255,255,0.25)',
+                                    borderRadius: '16px',
+                                    padding: '12px 20px',
+                                    width: '100%',
+                                    textAlign: 'center',
+                                    color: 'white',
+                                }}>
+                                    <div style={{ fontSize: '0.78rem', opacity: 0.7, marginBottom: '2px' }}>Kayıtlı oyuncu</div>
+                                    <div style={{ fontWeight: 700, fontSize: '1.05rem' }}>
+                                        {savedUserData.firstName} {savedUserData.lastName}
+                                    </div>
+                                </div>
+                                <button className="btn-primary" onClick={onContinueWithSaved}>
+                                    Devam Et
+                                </button>
+                                <button
+                                    className="btn-outline"
+                                    onClick={onChangeSavedData}
+                                    style={{ width: '100%' }}
+                                >
+                                    Farklı Oyuncu
+                                </button>
+                            </>
+                        ) : (
+                            <button className="btn-primary" onClick={onStart}>
+                                Oyuna Başla
+                            </button>
+                        )}
 
                         <button
                             onClick={() => setIsRewardsModalOpen(true)}

@@ -11,6 +11,8 @@ import { PixelTransition } from './components/PixelTransition';
 import { saveGameSession } from './supabase';
 import { audioManager } from './utils/audioManager';
 
+const LS_KEY = 'as_user_data';
+
 const SCREENS = {
   MENU: 'menu',
   KVKK: 'kvkk',
@@ -28,6 +30,10 @@ const isKiosk = urlParams.has('kiosk') || window.screen.height >= 1800;
 function App() {
   const [currentScreen, setCurrentScreen] = useState(SCREENS.MENU);
   const [userData, setUserData] = useState(null);
+  const [savedUserData, setSavedUserData] = useState(() => {
+    if (isKiosk) return null;
+    try { return JSON.parse(localStorage.getItem(LS_KEY)) || null; } catch { return null; }
+  });
   const [finalScore, setFinalScore] = useState(0);
   const [lastSessionId, setLastSessionId] = useState(null);
   const [isTestSession, setIsTestSession] = useState(false);
@@ -69,8 +75,27 @@ function App() {
   const handleFormSubmit = (data) => {
     setIsTestSession(!!data.isTestEntry);
     setUserData(data);
+    if (!isKiosk && !data.isTestEntry) {
+      try {
+        localStorage.setItem(LS_KEY, JSON.stringify(data));
+        setSavedUserData(data);
+      } catch { }
+    }
     setTransitionTarget(SCREENS.GAME);
     setIsTransitioning(true);
+  };
+
+  const handleContinueWithSaved = () => {
+    if (!savedUserData) return;
+    setUserData(savedUserData);
+    setTransitionTarget(SCREENS.GAME);
+    setIsTransitioning(true);
+  };
+
+  const handleChangeSavedData = () => {
+    try { localStorage.removeItem(LS_KEY); } catch { }
+    setSavedUserData(null);
+    handleStart();
   };
 
   const handleGameOver = (score) => {
@@ -114,7 +139,14 @@ function App() {
     <div className="app-container">
       <AnimatePresence mode="wait">
         {currentScreen === SCREENS.MENU && (
-          <MenuScreen key="menu" onStart={handleStart} isKiosk={isKiosk} />
+          <MenuScreen
+            key="menu"
+            onStart={handleStart}
+            isKiosk={isKiosk}
+            savedUserData={savedUserData}
+            onContinueWithSaved={handleContinueWithSaved}
+            onChangeSavedData={handleChangeSavedData}
+          />
         )}
         {currentScreen === SCREENS.KVKK && (
           <KVKKScreen key="kvkk" onAccept={handleKVKKAccept} onDecline={handleReset} isKiosk={isKiosk} />
