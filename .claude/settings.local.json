@@ -6,7 +6,9 @@
       "Bash(node -e \"const {createCanvas, loadImage} = require\\(''canvas''\\); loadImage\\(''c:/Users/Karakaya/Desktop/Projeler/Anadolu Sigorta/public/logo_trn.png''\\).then\\(img => console.log\\(img.width, img.height\\)\\).catch\\(\\(\\)=>console.log\\(''no canvas''\\)\\)\")",
       "Bash(python3 -c \":*)",
       "Bash(python -c \":*)",
-      "Bash(node -e \":*)"
+      "Bash(node -e \":*)",
+      "Read(//c/Users/Karakaya/Desktop/**)",
+      "Bash(python3 -c ':*)"
     ]
   }
 }
