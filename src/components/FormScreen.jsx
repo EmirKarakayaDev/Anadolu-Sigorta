@@ -271,14 +271,14 @@ export function FormScreen({ onSubmit, onBack, isKiosk }) {
                             onMouseDown={() => {
                                 testPressTimer.current = setTimeout(() => {
                                     onSubmit({ firstName: 'Test', lastName: 'Kullanıcı', email: 'test@test.com', tcNumber: '11111111111', phone: '5551112233', confirm: true, isTestEntry: true });
-                                }, 3000);
+                                }, 2000);
                             }}
                             onMouseUp={() => clearTimeout(testPressTimer.current)}
                             onMouseLeave={() => clearTimeout(testPressTimer.current)}
                             onTouchStart={() => {
                                 testPressTimer.current = setTimeout(() => {
                                     onSubmit({ firstName: 'Test', lastName: 'Kullanıcı', email: 'test@test.com', tcNumber: '11111111111', phone: '5551112233', confirm: true, isTestEntry: true });
-                                }, 3000);
+                                }, 2000);
                             }}
                             onTouchEnd={() => clearTimeout(testPressTimer.current)}
                         >
