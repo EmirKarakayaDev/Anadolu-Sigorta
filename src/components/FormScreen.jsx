@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -28,7 +28,6 @@ export function FormScreen({ onSubmit, onBack, isKiosk }) {
     });
 
     const [activeField, setActiveField] = useState(null);
-    const testPressTimer = useRef(null);
     const emailRef = useRef(null);
     const phoneRef = useRef(null);
     const isMobile = window.innerWidth < 768;
@@ -68,6 +67,22 @@ export function FormScreen({ onSubmit, onBack, isKiosk }) {
         const currentVal = watch(activeField.name) || '';
         const newVal = currentVal.slice(0, -1);
         setValue(activeField.name, newVal, { shouldValidate: true });
+    };
+
+    // Maskeli input için onChange — gerçek değeri formdan alıp yeni karakteri ekle/sil
+    const handleMaskedChange = (fieldName, e) => {
+        if (isKiosk) return; // Kiosk sanal klavye ile yönetir
+        const oldReal = watch(fieldName) || '';
+        const raw = e.target.value;
+        if (raw.length > oldReal.length) {
+            // Kullanıcı yeni karakter ekledi — yıldızların sonrasını al
+            const newChars = raw.slice(oldReal.length).replace(/\D/g, '');
+            const newVal = (oldReal + newChars).slice(0, 11);
+            setValue(fieldName, newVal, { shouldValidate: true });
+        } else {
+            // Backspace ile sildi
+            setValue(fieldName, oldReal.slice(0, raw.length), { shouldValidate: true });
+        }
     };
 
     return (
@@ -191,12 +206,15 @@ export function FormScreen({ onSubmit, onBack, isKiosk }) {
                         <div className="form-group" style={{ marginBottom: isKiosk ? 0 : '0.8rem' }}>
                             <label>T.C. Kimlik Numarası <span style={{ color: '#FF6B6B' }}>*</span></label>
                             <input
+                                ref={(e) => register('tcNumber').ref(e)}
+                                name="tcNumber"
                                 className={`form-input ${errors.tcNumber ? 'error' : ''}`}
-                                {...register('tcNumber')}
                                 type="text"
                                 placeholder="11 haneli T.C. kimlik numaranız"
                                 inputMode={isKiosk ? 'none' : 'numeric'}
                                 maxLength={11}
+                                value={'*'.repeat((watch('tcNumber') || '').length)}
+                                onChange={(e) => handleMaskedChange('tcNumber', e)}
                                 onFocus={() => {
                                     if (isKiosk) setActiveField({ name: 'tcNumber', type: 'tel' });
                                 }}
@@ -208,18 +226,18 @@ export function FormScreen({ onSubmit, onBack, isKiosk }) {
                         <div className="form-group" style={{ marginBottom: 0 }}>
                             <label>Telefon <span style={{ color: '#FF6B6B' }}>*</span></label>
                             <input
-                                className={`form-input ${errors.phone ? 'error' : ''}`}
-                                {...register('phone', {
-                                    onChange: (e) => e.target.value = e.target.value.replace(/\D/g, '')
-                                })}
                                 ref={(e) => {
                                     register('phone').ref(e);
                                     phoneRef.current = e;
                                 }}
+                                name="phone"
+                                className={`form-input ${errors.phone ? 'error' : ''}`}
                                 type="text"
                                 placeholder="05xx xxx xx xx"
                                 inputMode={isKiosk ? 'none' : 'numeric'}
                                 maxLength={11}
+                                value={'*'.repeat((watch('phone') || '').length)}
+                                onChange={(e) => handleMaskedChange('phone', e)}
                                 onFocus={() => {
                                     if (isKiosk) setActiveField({ name: 'phone', type: 'tel' });
                                 }}
@@ -256,19 +274,6 @@ export function FormScreen({ onSubmit, onBack, isKiosk }) {
                             type="submit"
                             form="kiosk-form"
                             className="btn-primary"
-                            onMouseDown={() => {
-                                testPressTimer.current = setTimeout(() => {
-                                    onSubmit({ firstName: 'Test', lastName: 'Kullanıcı', email: 'test@test.com', tcNumber: '11111111111', phone: '5551112233', confirm: true, isTestEntry: true });
-                                }, 2000);
-                            }}
-                            onMouseUp={() => clearTimeout(testPressTimer.current)}
-                            onMouseLeave={() => clearTimeout(testPressTimer.current)}
-                            onTouchStart={() => {
-                                testPressTimer.current = setTimeout(() => {
-                                    onSubmit({ firstName: 'Test', lastName: 'Kullanıcı', email: 'test@test.com', tcNumber: '11111111111', phone: '5551112233', confirm: true, isTestEntry: true });
-                                }, 2000);
-                            }}
-                            onTouchEnd={() => clearTimeout(testPressTimer.current)}
                         >
                             Kaydet ve Başla
                         </button>
