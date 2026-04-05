@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Gift, Plane, X, ChevronLeft } from 'lucide-react';
+import { Gift, Plane, X } from 'lucide-react';
 
 const COMPETITION_TOP10 = [
     { first_name: 'Oguzhan', last_name: 'Yıldırım', score: 9300 },
@@ -219,7 +219,7 @@ function AnnouncementView({ isKiosk, onShowLeaderboard, onClose }) {
     );
 }
 
-function LeaderboardView({ isKiosk, onBack, onClose }) {
+function LeaderboardView({ isKiosk, onClose }) {
     return (
         <>
             {/* Header */}
@@ -232,34 +232,14 @@ function LeaderboardView({ isKiosk, onBack, onClose }) {
                 gap: '1rem',
                 flexShrink: 0
             }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: isKiosk ? '1.2rem' : '0.7rem' }}>
-                    <button
-                        onClick={onBack}
-                        style={{
-                            background: 'rgba(255,255,255,0.2)',
-                            border: '1px solid rgba(255,255,255,0.4)',
-                            borderRadius: '50%',
-                            width: isKiosk ? '56px' : '34px',
-                            height: isKiosk ? '56px' : '34px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            color: 'white',
-                            cursor: 'pointer',
-                            flexShrink: 0
-                        }}
-                    >
-                        <ChevronLeft size={isKiosk ? 30 : 18} />
-                    </button>
-                    <h2 style={{
-                        color: 'white',
-                        margin: 0,
-                        fontWeight: 900,
-                        fontSize: isKiosk ? '2.2rem' : '1.3rem'
-                    }}>
-                        Yarışma Sonuçları
-                    </h2>
-                </div>
+                <h2 style={{
+                    color: 'white',
+                    margin: 0,
+                    fontWeight: 900,
+                    fontSize: isKiosk ? '2.2rem' : '1.3rem'
+                }}>
+                    Yarışma Sonuçları
+                </h2>
                 <button
                     onClick={onClose}
                     style={{
