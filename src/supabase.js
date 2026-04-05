@@ -60,7 +60,7 @@ export const saveGameSession = async (userData, score, isTest = false) => {
     }
 };
 
-export const getTopScores = async (limit = 10) => {
+export const getTopScores = async (limit = 100) => {
     try {
         const { data, error } = await supabase
             .from('top_scores')

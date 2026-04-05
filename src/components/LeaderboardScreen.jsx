@@ -13,7 +13,7 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
     useEffect(() => {
         async function fetchScores() {
             setLoading(true);
-            const topScores = await getTopScores(10);
+            const topScores = await getTopScores(100);
             setScores(topScores);
             
             // Eğer aktif bir oturum varsa ve ilk 10'da değilse sıralamasını çek
@@ -194,7 +194,7 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
                                         ref={isCurrent ? userRowRef : null}
                                         initial={{ x: -10, opacity: 0 }}
                                         animate={{ x: 0, opacity: 1 }}
-                                        transition={{ delay: i * 0.05 }}
+                                        transition={{ delay: Math.min(i * 0.01, 0.3) }}
                                         style={{
                                             display: 'flex',
                                             alignItems: 'center',
