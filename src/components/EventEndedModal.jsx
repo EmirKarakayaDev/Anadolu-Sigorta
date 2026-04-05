@@ -129,7 +129,7 @@ function AnnouncementView({ isKiosk, onShowLeaderboard, onClose }) {
             {/* Header */}
             <div style={{
                 background: 'var(--as-blue)',
-                padding: isKiosk ? '2.5rem 3rem' : '1.5rem 2rem',
+                padding: isKiosk ? '2.5rem 1.5rem' : '1.5rem 1rem',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
@@ -165,7 +165,7 @@ function AnnouncementView({ isKiosk, onShowLeaderboard, onClose }) {
 
             {/* Body */}
             <div style={{
-                padding: isKiosk ? '3rem' : '2rem',
+                padding: isKiosk ? '3rem 1.5rem' : '2rem 1rem',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: isKiosk ? '2rem' : '1.2rem',
@@ -186,7 +186,7 @@ function AnnouncementView({ isKiosk, onShowLeaderboard, onClose }) {
                     background: 'rgba(33, 88, 217, 0.07)',
                     border: '1px solid rgba(33, 88, 217, 0.18)',
                     borderRadius: isKiosk ? '1.5rem' : '1rem',
-                    padding: isKiosk ? '1.8rem 2rem' : '1rem 1.2rem'
+                    padding: isKiosk ? '1.8rem 1rem' : '1rem 0.6rem'
                 }}>
                     <p style={{
                         color: 'var(--as-blue)',
@@ -224,7 +224,7 @@ function LeaderboardView({ isKiosk, onClose }) {
             {/* Header */}
             <div style={{
                 background: 'var(--as-blue)',
-                padding: isKiosk ? '2.5rem 3rem' : '1.5rem 2rem',
+                padding: isKiosk ? '2.5rem 1.5rem' : '1.5rem 1rem',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
@@ -260,14 +260,14 @@ function LeaderboardView({ isKiosk, onClose }) {
             </div>
 
             {/* Scores */}
-            <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: isKiosk ? '2rem 2.5rem' : '1rem 1.2rem' }}>
+            <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: isKiosk ? '2rem 1.25rem' : '1rem 0.6rem' }}>
                 {COMPETITION_TOP10.map((s, i) => (
                     <div
                         key={i}
                         style={{
                             display: 'flex',
                             alignItems: 'center',
-                            padding: isKiosk ? '1.5rem 2rem' : '0.8rem 1rem',
+                            padding: isKiosk ? '1.5rem 1rem' : '0.8rem 0.5rem',
                             background: 'transparent',
                             border: 'none',
                             borderRadius: isKiosk ? '2rem' : '1rem',
