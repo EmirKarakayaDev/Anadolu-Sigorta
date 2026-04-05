@@ -75,6 +75,8 @@ export function GameScreen({ onGameOver, isKiosk }) {
     }, [move, rotate, drop, hardDrop, gameOver, isCounting]);
 
     const gameOverTriggeredRef = useRef(false);
+    const scoreRef = useRef(score);
+    useEffect(() => { scoreRef.current = score; }, [score]);
 
     const audioPlayOnceRef = useRef(false);
     // Geri sayım ve müzik yönetimi
@@ -134,7 +136,7 @@ export function GameScreen({ onGameOver, isKiosk }) {
 
                     // Yazının ekranda kalma süresinden sonra skor ekranına geç
                     finalTransitionTimeout = setTimeout(() => {
-                        onGameOver(score);
+                        onGameOver(scoreRef.current);
                     }, 1500);
                 }, 500);
             }
