@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { RefreshCcw, Trophy, Home, Info } from 'lucide-react';
+import { Home } from 'lucide-react';
 import { audioManager } from '../utils/audioManager';
-import { RewardsModal } from './RewardsModal';
 
 export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, isKiosk }) {
-    const [isRewardsModalOpen, setIsRewardsModalOpen] = useState(false);
-
     useEffect(() => {
         audioManager.startBGM(4);
     }, []);
@@ -49,17 +46,16 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.4 }}
                 >
-                    <div style={{ 
-                        width: '100%', 
-                        position: 'relative', 
-                        display: 'flex', 
-                        alignItems: 'center', 
+                    <div style={{
+                        width: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
                         justifyContent: 'center',
                         marginBottom: isKiosk ? '2rem' : '1.2rem'
                     }}>
-                        <h2 style={{ 
-                            fontSize: isKiosk ? '3.5rem' : (isMobile ? '1.8rem' : '2.5rem'), 
-                            fontWeight: 900, 
+                        <h2 style={{
+                            fontSize: isKiosk ? '3.5rem' : (isMobile ? '1.8rem' : '2.5rem'),
+                            fontWeight: 900,
                             color: 'white',
                             margin: 0,
                             textAlign: 'center',
@@ -67,26 +63,6 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
                         }}>
                             {score === 0 ? 'OYUN BİTTİ!' : 'TEBRİKLER!'}
                         </h2>
-                        <button 
-                            onClick={() => setIsRewardsModalOpen(true)}
-                            style={{ 
-                                position: 'absolute',
-                                right: 0,
-                                background: 'rgba(255,255,255,0.2)', 
-                                border: '1px solid rgba(255,255,255,0.4)', 
-                                borderRadius: '50%', 
-                                width: isKiosk ? '64px' : '36px', 
-                                height: isKiosk ? '64px' : '36px', 
-                                display: 'flex', 
-                                alignItems: 'center', 
-                                justifyContent: 'center',
-                                color: 'white',
-                                cursor: 'pointer',
-                                backdropFilter: 'blur(5px)'
-                            }}
-                        >
-                            <Info size={isKiosk ? 32 : 20} />
-                        </button>
                     </div>
 
                     {/* Score Card */}
@@ -156,7 +132,6 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
                 />
             )}
 
-            <RewardsModal isOpen={isRewardsModalOpen} onClose={() => setIsRewardsModalOpen(false)} isKiosk={isKiosk} />
         </div>
         </motion.div>
     );

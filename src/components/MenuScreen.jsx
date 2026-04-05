@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { audioManager } from '../utils/audioManager';
-import { Info } from 'lucide-react';
-import { RewardsModal } from './RewardsModal';
+import { EventEndedModal } from './EventEndedModal';
 
 export function MenuScreen({ onStart, isKiosk, savedUserData, onContinueWithSaved, onChangeSavedData }) {
-    const [isRewardsModalOpen, setIsRewardsModalOpen] = useState(false);
+    const [isEventModalOpen, setIsEventModalOpen] = useState(false);
 
     useEffect(() => {
         if (isKiosk) audioManager.unmute(); // Kioskte her ana sayfaya dönüşte sesi aç
         audioManager.startBGM(1);
+
+        // Her oturumda ilk MenuScreen açılışında popup göster
+        if (!sessionStorage.getItem('event_ended_shown')) {
+            sessionStorage.setItem('event_ended_shown', '1');
+            setIsEventModalOpen(true);
+        }
     }, []);
 
     return (
@@ -86,7 +91,7 @@ export function MenuScreen({ onStart, isKiosk, savedUserData, onContinueWithSave
                         )}
 
                         <button
-                            onClick={() => setIsRewardsModalOpen(true)}
+                            onClick={() => setIsEventModalOpen(true)}
                             style={{
                                 background: 'rgba(255, 255, 255, 0.1)',
                                 border: '1px solid rgba(255, 255, 255, 0.3)',
@@ -102,13 +107,13 @@ export function MenuScreen({ onStart, isKiosk, savedUserData, onContinueWithSave
                                 backdropFilter: 'blur(5px)'
                             }}
                         >
-                            <Info size={isKiosk ? 32 : 18} /> Ödülleri Gör
+                            Yarışma Sonuçları
                         </button>
                     </motion.div>
                 </div>
             </div>
 
-            <RewardsModal isOpen={isRewardsModalOpen} onClose={() => setIsRewardsModalOpen(false)} isKiosk={isKiosk} />
+            <EventEndedModal isOpen={isEventModalOpen} onClose={() => setIsEventModalOpen(false)} isKiosk={isKiosk} />
         </motion.div>
     );
 }
