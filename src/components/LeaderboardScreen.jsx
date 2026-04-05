@@ -146,7 +146,7 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
                         letterSpacing: '0.5px',
                         textAlign: 'center'
                     }}>
-                        En İyi 10
+                        En İyi 100
                     </p>
                 </div>
 
