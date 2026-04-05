@@ -267,25 +267,21 @@ function LeaderboardView({ isKiosk, onClose }) {
                         style={{
                             display: 'flex',
                             alignItems: 'center',
-                            padding: isKiosk ? '1.2rem 1.5rem' : '0.7rem 0.8rem',
-                            borderRadius: isKiosk ? '1.5rem' : '0.8rem',
-                            marginBottom: isKiosk ? '0.6rem' : '0.3rem',
-                            background: i < 3 ? `rgba(${i === 0 ? '255,215,0' : i === 1 ? '192,192,192' : '205,127,50'}, 0.08)` : 'transparent'
+                            padding: isKiosk ? '1.5rem 2rem' : '0.8rem 1rem',
+                            background: 'transparent',
+                            border: 'none',
+                            borderRadius: isKiosk ? '2rem' : '1rem',
                         }}
                     >
-                        <div style={{ width: isKiosk ? '64px' : '36px', display: 'flex', justifyContent: 'center', flexShrink: 0 }}>
+                        <div style={{ width: isKiosk ? '80px' : '40px', display: 'flex', justifyContent: 'center', flexShrink: 0 }}>
                             {getRankBadge(i, isKiosk)}
                         </div>
-                        <div style={{ flex: 1, marginLeft: isKiosk ? '1.5rem' : '0.8rem', textAlign: 'left' }}>
-                            <div style={{ fontWeight: 800, fontSize: isKiosk ? '1.6rem' : '0.95rem', color: '#222' }}>
+                        <div style={{ flex: 1, marginLeft: isKiosk ? '2rem' : '1rem', textAlign: 'left' }}>
+                            <div style={{ fontWeight: 800, fontSize: isKiosk ? '1.8rem' : '1rem', color: '#333' }}>
                                 {s.first_name} {s.last_name ? s.last_name[0] + '.' : ''}
                             </div>
                         </div>
-                        <div style={{
-                            fontWeight: 900,
-                            fontSize: isKiosk ? '2rem' : '1.2rem',
-                            color: i < 3 ? (i === 0 ? '#B8860B' : i === 1 ? '#666' : '#8B4513') : '#222'
-                        }}>
+                        <div style={{ fontWeight: 900, fontSize: isKiosk ? '2.5rem' : '1.4rem', color: '#222' }}>
                             {s.score}
                         </div>
                     </div>
