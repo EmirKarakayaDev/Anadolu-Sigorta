@@ -113,7 +113,6 @@ export function EventEndedModal({ isOpen, onClose, isKiosk }) {
                         ) : (
                             <LeaderboardView
                                 isKiosk={isKiosk}
-                                onBack={() => setView('announcement')}
                                 onClose={onClose}
                             />
                         )}
