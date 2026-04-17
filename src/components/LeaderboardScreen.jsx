@@ -13,7 +13,7 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
     useEffect(() => {
         async function fetchScores() {
             setLoading(true);
-            const topScores = await getTopScores(100);
+            const topScores = await getTopScores(10);
             setScores(topScores);
             
             // Eğer aktif bir oturum varsa ve ilk 10'da değilse sıralamasını çek
@@ -146,7 +146,7 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
                         letterSpacing: '0.5px',
                         textAlign: 'center'
                     }}>
-                        En İyi 100
+                        En İyi 10
                     </p>
                 </div>
 
