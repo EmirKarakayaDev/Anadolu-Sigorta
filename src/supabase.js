@@ -60,10 +60,10 @@ export const saveGameSession = async (userData, score, isTest = false) => {
     }
 };
 
-export const getTopScores = async (limit = 100) => {
+export const getTopScores = async (limit = 10) => {
     try {
         const { data, error } = await supabase
-            .from('top_scores')
+            .from('top_scores_event2')
             .select('id, first_name, last_name, score, created_at')
             .order('score', { ascending: false })
             .limit(limit);
@@ -79,7 +79,7 @@ export const getTopScores = async (limit = 100) => {
 export const getRankByScore = async (score) => {
     try {
         const { count, error } = await supabase
-            .from('top_scores')
+            .from('top_scores_event2')
             .select('*', { count: 'exact', head: true })
             .gt('score', score);
 
@@ -94,9 +94,8 @@ export const getRankByScore = async (score) => {
 export const getUserRank = async (sessionId) => {
     if (!sessionId) return null;
     try {
-        // 1. Önce bu oturumun puanını al
         const { data: sessionData, error: sError } = await supabase
-            .from('sessions')
+            .from('sessions_event2')
             .select('score')
             .eq('id', sessionId)
             .single();
@@ -104,9 +103,8 @@ export const getUserRank = async (sessionId) => {
         if (sError || !sessionData) throw sError;
         const userScore = sessionData.score;
 
-        // 2. Bu puandan daha yüksek puan alan kaç kişi olduğunu say (+1 ekle)
         const { count, error: cError } = await supabase
-            .from('top_scores')
+            .from('top_scores_event2')
             .select('*', { count: 'exact', head: true })
             .gt('score', userScore);
 
