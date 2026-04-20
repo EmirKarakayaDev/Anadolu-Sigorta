@@ -165,7 +165,7 @@ function App() {
           <ResultScreen key="result" score={finalScore} onReset={handleReset} onPlayAgain={handlePlayAgain} onShowLeaderboard={() => setCurrentScreen(SCREENS.LEADERBOARD)} isKiosk={isKiosk} />
         )}
         {currentScreen === SCREENS.LEADERBOARD && (
-          <LeaderboardScreen key="leaderboard" onReset={handleReset} onPlayAgain={handlePlayAgain} lastSessionId={lastSessionId} isKiosk={isKiosk} isTestSession={isTestSession} finalScore={finalScore} />
+          <LeaderboardScreen key="leaderboard" onReset={handleReset} onPlayAgain={handlePlayAgain} lastSessionId={lastSessionId} isKiosk={isKiosk} isTestSession={isTestSession} finalScore={finalScore} eventEnded={EVENT_ENDED} />
         )}
       </AnimatePresence>
 

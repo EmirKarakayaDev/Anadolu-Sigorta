@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Home, Loader2, Gift, Plane } from 'lucide-react';
 import { getTopScores, getUserRank, getRankByScore } from '../supabase';
 
-export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk, isTestSession, finalScore }) {
+export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk, isTestSession, finalScore, eventEnded }) {
     const [scores, setScores] = useState([]);
     const [loading, setLoading] = useState(true);
     const [userRankData, setUserRankData] = useState(null);
@@ -13,7 +13,7 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
     useEffect(() => {
         async function fetchScores() {
             setLoading(true);
-            const topScores = await getTopScores(10);
+            const topScores = await getTopScores(eventEnded ? 50 : 10);
             setScores(topScores);
             
             // Eğer aktif bir oturum varsa ve ilk 10'da değilse sıralamasını çek
@@ -146,7 +146,7 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
                         letterSpacing: '0.5px',
                         textAlign: 'center'
                     }}>
-                        En İyi 10
+                        En İyi {eventEnded ? 50 : 10}
                     </p>
                 </div>
 
