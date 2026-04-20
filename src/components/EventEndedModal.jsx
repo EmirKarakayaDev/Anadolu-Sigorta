@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Gift, Plane, X } from 'lucide-react';
 
@@ -134,7 +134,12 @@ function AnnouncementView({ isKiosk, onShowLeaderboard, onClose }) {
                 justifyContent: 'space-between',
                 flexShrink: 0
             }}>
-                <h2 style={{ color: 'white', margin: 0, fontWeight: 900, fontSize: isKiosk ? '2.6rem' : '1.4rem' }}>
+                <h2 style={{
+                    color: 'white',
+                    margin: 0,
+                    fontWeight: 900,
+                    fontSize: isKiosk ? '2.6rem' : '1.4rem'
+                }}>
                     Etkinlik Sona Erdi
                 </h2>
                 <button
@@ -165,7 +170,13 @@ function AnnouncementView({ isKiosk, onShowLeaderboard, onClose }) {
                 flex: 1,
                 overflowY: 'auto'
             }}>
-                <p style={{ color: '#333', fontSize: isKiosk ? '1.8rem' : '1rem', lineHeight: 1.65, margin: 0, fontWeight: 500 }}>
+                <p style={{
+                    color: '#333',
+                    fontSize: isKiosk ? '1.8rem' : '1rem',
+                    lineHeight: 1.65,
+                    margin: 0,
+                    fontWeight: 500
+                }}>
                     Etkinliğimiz sona ermiştir. Yarışma sonuçlarını aşağıdaki butondan görebilirsiniz. Katılımcılara teşekkür ederiz.
                 </p>
 
@@ -175,7 +186,13 @@ function AnnouncementView({ isKiosk, onShowLeaderboard, onClose }) {
                     borderRadius: isKiosk ? '1.5rem' : '1rem',
                     padding: isKiosk ? '1.8rem 1rem' : '1rem 0.6rem'
                 }}>
-                    <p style={{ color: 'var(--as-blue)', fontSize: isKiosk ? '1.5rem' : '0.88rem', margin: 0, fontWeight: 600, lineHeight: 1.6 }}>
+                    <p style={{
+                        color: 'var(--as-blue)',
+                        fontSize: isKiosk ? '1.5rem' : '0.88rem',
+                        margin: 0,
+                        fontWeight: 600,
+                        lineHeight: 1.6
+                    }}>
                         Oyun hâlâ açık! Global liderlik tablosunda yerini almak için oynamaya devam edebilirsin.
                     </p>
                 </div>
@@ -205,7 +222,12 @@ function LeaderboardView({ isKiosk, onClose }) {
                 gap: '1rem',
                 flexShrink: 0
             }}>
-                <h2 style={{ color: 'white', margin: 0, fontWeight: 900, fontSize: isKiosk ? '2.2rem' : '1.3rem' }}>
+                <h2 style={{
+                    color: 'white',
+                    margin: 0,
+                    fontWeight: 900,
+                    fontSize: isKiosk ? '2.2rem' : '1.3rem'
+                }}>
                     Yarışma Sonuçları
                 </h2>
                 <button
@@ -236,6 +258,8 @@ function LeaderboardView({ isKiosk, onClose }) {
                             display: 'flex',
                             alignItems: 'center',
                             padding: isKiosk ? '1.5rem 1rem' : '0.8rem 0.5rem',
+                            background: 'transparent',
+                            border: 'none',
                             borderRadius: isKiosk ? '2rem' : '1rem',
                         }}
                     >
