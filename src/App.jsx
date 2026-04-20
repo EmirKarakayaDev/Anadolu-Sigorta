@@ -28,7 +28,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const isKiosk = urlParams.has('kiosk') || window.screen.height >= 1800;
 
 // Etkinlik durumu — true: etkinlik bitti (popup + sonuç butonu göster), false: etkinlik devam ediyor
-const EVENT_ENDED = false;
+const EVENT_ENDED = true;
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState(SCREENS.MENU);
