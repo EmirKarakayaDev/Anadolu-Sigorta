@@ -27,6 +27,9 @@ const SCREENS = {
 const urlParams = new URLSearchParams(window.location.search);
 const isKiosk = urlParams.has('kiosk') || window.screen.height >= 1800;
 
+// Etkinlik durumu — true: etkinlik bitti (popup + sonuç butonu göster), false: etkinlik devam ediyor
+const EVENT_ENDED = false;
+
 function App() {
   const [currentScreen, setCurrentScreen] = useState(SCREENS.MENU);
   const [userData, setUserData] = useState(null);
@@ -146,6 +149,7 @@ function App() {
             savedUserData={savedUserData}
             onContinueWithSaved={handleContinueWithSaved}
             onChangeSavedData={handleChangeSavedData}
+            eventEnded={EVENT_ENDED}
           />
         )}
         {currentScreen === SCREENS.KVKK && (

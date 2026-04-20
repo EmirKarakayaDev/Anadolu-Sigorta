@@ -1,11 +1,19 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { audioManager } from '../utils/audioManager';
+import { EventEndedModal } from './EventEndedModal';
 
-export function MenuScreen({ onStart, isKiosk, savedUserData, onContinueWithSaved, onChangeSavedData }) {
+export function MenuScreen({ onStart, isKiosk, savedUserData, onContinueWithSaved, onChangeSavedData, eventEnded }) {
+    const [isEventModalOpen, setIsEventModalOpen] = useState(false);
+
     useEffect(() => {
-        if (isKiosk) audioManager.unmute(); // Kioskte her ana sayfaya dönüşte sesi aç
+        if (isKiosk) audioManager.unmute();
         audioManager.startBGM(1);
+
+        if (eventEnded && !sessionStorage.getItem('event_ended_shown')) {
+            sessionStorage.setItem('event_ended_shown', '1');
+            setIsEventModalOpen(true);
+        }
     }, []);
 
     return (
@@ -18,7 +26,6 @@ export function MenuScreen({ onStart, isKiosk, savedUserData, onContinueWithSave
         >
             <div className="brand-layout-full" style={{ paddingBottom: isKiosk ? undefined : 0 }}>
                 <div className="brand-screen">
-                    {/* Top Logo */}
                     <motion.img
                         src="/as_logo.svg"
                         alt="Anadolu Sigorta"
@@ -28,7 +35,6 @@ export function MenuScreen({ onStart, isKiosk, savedUserData, onContinueWithSave
                         transition={{ delay: 0.2 }}
                     />
 
-                    {/* Center Graphic — flex:1 wrapper ile logo ve butonlar arasında tam ortada */}
                     <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
                         <motion.div
                             className="main-graphic"
@@ -40,7 +46,6 @@ export function MenuScreen({ onStart, isKiosk, savedUserData, onContinueWithSave
                         </motion.div>
                     </div>
 
-                    {/* Action Button */}
                     <motion.div
                         className="action-group"
                         initial={{ y: 20, opacity: 0 }}
@@ -67,11 +72,7 @@ export function MenuScreen({ onStart, isKiosk, savedUserData, onContinueWithSave
                                 <button className="btn-primary" onClick={onContinueWithSaved}>
                                     Devam Et
                                 </button>
-                                <button
-                                    className="btn-outline"
-                                    onClick={onChangeSavedData}
-                                    style={{ width: '100%' }}
-                                >
+                                <button className="btn-outline" onClick={onChangeSavedData} style={{ width: '100%' }}>
                                     Farklı Oyuncu
                                 </button>
                             </>
@@ -81,9 +82,32 @@ export function MenuScreen({ onStart, isKiosk, savedUserData, onContinueWithSave
                             </button>
                         )}
 
+                        {eventEnded && (
+                            <button
+                                onClick={() => setIsEventModalOpen(true)}
+                                style={{
+                                    background: 'rgba(255, 255, 255, 0.1)',
+                                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                                    borderRadius: '30px',
+                                    padding: isKiosk ? '16px 36px' : '8px 20px',
+                                    color: 'white',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: isKiosk ? '12px' : '8px',
+                                    cursor: 'pointer',
+                                    fontSize: isKiosk ? '1.6rem' : '0.9rem',
+                                    fontWeight: 600,
+                                    backdropFilter: 'blur(5px)'
+                                }}
+                            >
+                                Yarışma Sonuçları
+                            </button>
+                        )}
                     </motion.div>
                 </div>
             </div>
+
+            <EventEndedModal isOpen={isEventModalOpen} onClose={() => setIsEventModalOpen(false)} isKiosk={isKiosk} />
         </motion.div>
     );
 }
