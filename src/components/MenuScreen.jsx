@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { Info } from 'lucide-react';
 import { audioManager } from '../utils/audioManager';
 import { EventEndedModal } from './EventEndedModal';
+import { RewardsModal } from './RewardsModal';
 
 export function MenuScreen({ onStart, isKiosk, savedUserData, onContinueWithSaved, onChangeSavedData, eventEnded }) {
     const [isEventModalOpen, setIsEventModalOpen] = useState(false);
+    const [isRewardsModalOpen, setIsRewardsModalOpen] = useState(false);
 
     useEffect(() => {
         if (isKiosk) audioManager.unmute();
@@ -103,11 +106,33 @@ export function MenuScreen({ onStart, isKiosk, savedUserData, onContinueWithSave
                                 Yarışma Sonuçları
                             </button>
                         )}
+                        {!eventEnded && (
+                            <button
+                                onClick={() => setIsRewardsModalOpen(true)}
+                                style={{
+                                    background: 'rgba(255, 255, 255, 0.1)',
+                                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                                    borderRadius: '30px',
+                                    padding: isKiosk ? '16px 36px' : '8px 20px',
+                                    color: 'white',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: isKiosk ? '12px' : '8px',
+                                    cursor: 'pointer',
+                                    fontSize: isKiosk ? '1.6rem' : '0.9rem',
+                                    fontWeight: 600,
+                                    backdropFilter: 'blur(5px)'
+                                }}
+                            >
+                                <Info size={isKiosk ? 32 : 18} /> Ödülleri Gör
+                            </button>
+                        )}
                     </motion.div>
                 </div>
             </div>
 
             <EventEndedModal isOpen={isEventModalOpen} onClose={() => setIsEventModalOpen(false)} isKiosk={isKiosk} />
+            <RewardsModal isOpen={isRewardsModalOpen} onClose={() => setIsRewardsModalOpen(false)} isKiosk={isKiosk} />
         </motion.div>
     );
 }

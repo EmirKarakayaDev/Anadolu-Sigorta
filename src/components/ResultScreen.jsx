@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Home } from 'lucide-react';
+import { Home, Info } from 'lucide-react';
 import { audioManager } from '../utils/audioManager';
+import { RewardsModal } from './RewardsModal';
 
 export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, isKiosk }) {
+    const [isRewardsModalOpen, setIsRewardsModalOpen] = useState(false);
     useEffect(() => {
         audioManager.startBGM(4);
     }, []);
@@ -109,6 +111,26 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
                     <button className="btn-primary" onClick={onShowLeaderboard}>
                         Skor Tablosu
                     </button>
+
+                    <button
+                        onClick={() => setIsRewardsModalOpen(true)}
+                        style={{
+                            background: 'rgba(255, 255, 255, 0.15)',
+                            border: '1px solid rgba(255, 255, 255, 0.3)',
+                            borderRadius: '30px',
+                            padding: isKiosk ? '16px 36px' : '8px 20px',
+                            color: 'white',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: isKiosk ? '12px' : '8px',
+                            cursor: 'pointer',
+                            fontSize: isKiosk ? '1.6rem' : '0.9rem',
+                            fontWeight: 600,
+                            backdropFilter: 'blur(5px)'
+                        }}
+                    >
+                        <Info size={isKiosk ? 32 : 18} /> Ödülleri Gör
+                    </button>
  
                     {!isKiosk && (
                         <button className="btn-outline" onClick={onPlayAgain}>
@@ -131,6 +153,8 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
                     animate={{ y: 0, opacity: 1 }}
                 />
             )}
+
+            <RewardsModal isOpen={isRewardsModalOpen} onClose={() => setIsRewardsModalOpen(false)} isKiosk={isKiosk} />
 
         </div>
         </motion.div>
