@@ -75,7 +75,7 @@ export function MenuScreen({ onStart, isKiosk, savedUserData, onContinueWithSave
                                 <button className="btn-primary" onClick={onContinueWithSaved}>
                                     Devam Et
                                 </button>
-                                <button className="btn-outline" onClick={onChangeSavedData} style={{ width: '100%' }}>
+                                <button className="btn-text-link" onClick={onChangeSavedData}>
                                     Farklı Oyuncu
                                 </button>
                             </>
