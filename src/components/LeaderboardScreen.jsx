@@ -1,13 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Home, Loader2, Gift, Plane } from 'lucide-react';
+import { Home, Loader2, Gift, Plane, Info } from 'lucide-react';
 import { getTopScores, getUserRank, getRankByScore } from '../supabase';
+import { RewardsModal } from './RewardsModal';
 
 export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk, isTestSession, finalScore, eventEnded }) {
     const [scores, setScores] = useState([]);
     const [loading, setLoading] = useState(true);
     const [userRankData, setUserRankData] = useState(null);
-    const userRowRef = useRef(null); // Kullanıcının bulunduğu satıra odaklanmak için
+    const [isRewardsModalOpen, setIsRewardsModalOpen] = useState(false);
+    const userRowRef = useRef(null);
     const isMobile = window.innerWidth < 768;
 
     useEffect(() => {
@@ -133,9 +135,32 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
                         textAlign: 'center',
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'center'
+                        justifyContent: 'center',
+                        position: 'relative'
                     }}>
                         <h2 style={{ fontSize: isKiosk ? '3.5rem' : (isMobile ? '1.8rem' : '2.2rem'), fontWeight: 900, color: 'white', margin: 0 }}>Liderlik Tablosu</h2>
+                        {!eventEnded && (
+                            <button
+                                onClick={() => setIsRewardsModalOpen(true)}
+                                style={{
+                                    position: 'absolute',
+                                    right: 0,
+                                    background: 'rgba(255,255,255,0.15)',
+                                    border: '1px solid rgba(255,255,255,0.3)',
+                                    borderRadius: '50%',
+                                    width: isKiosk ? '64px' : '36px',
+                                    height: isKiosk ? '64px' : '36px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    cursor: 'pointer',
+                                    backdropFilter: 'blur(5px)',
+                                    flexShrink: 0
+                                }}
+                            >
+                                <Info size={isKiosk ? 32 : 18} color="white" />
+                            </button>
+                        )}
                     </div>
 
                     <p style={{
@@ -294,6 +319,7 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
                 />
             )}
 
+            <RewardsModal isOpen={isRewardsModalOpen} onClose={() => setIsRewardsModalOpen(false)} isKiosk={isKiosk} />
         </div>
         </motion.div>
     );

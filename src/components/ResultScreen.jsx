@@ -53,6 +53,7 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        position: 'relative',
                         marginBottom: isKiosk ? '2rem' : '1.2rem'
                     }}>
                         <h2 style={{
@@ -65,6 +66,26 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
                         }}>
                             {score === 0 ? 'OYUN BİTTİ!' : 'TEBRİKLER!'}
                         </h2>
+                        <button
+                            onClick={() => setIsRewardsModalOpen(true)}
+                            style={{
+                                position: 'absolute',
+                                right: 0,
+                                background: 'rgba(255,255,255,0.15)',
+                                border: '1px solid rgba(255,255,255,0.3)',
+                                borderRadius: '50%',
+                                width: isKiosk ? '64px' : '36px',
+                                height: isKiosk ? '64px' : '36px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                cursor: 'pointer',
+                                backdropFilter: 'blur(5px)',
+                                flexShrink: 0
+                            }}
+                        >
+                            <Info size={isKiosk ? 32 : 18} color="white" />
+                        </button>
                     </div>
 
                     {/* Score Card */}
@@ -110,26 +131,6 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
                 >
                     <button className="btn-primary" onClick={onShowLeaderboard}>
                         Skor Tablosu
-                    </button>
-
-                    <button
-                        onClick={() => setIsRewardsModalOpen(true)}
-                        style={{
-                            background: 'rgba(255, 255, 255, 0.15)',
-                            border: '1px solid rgba(255, 255, 255, 0.3)',
-                            borderRadius: '30px',
-                            padding: isKiosk ? '16px 36px' : '8px 20px',
-                            color: 'white',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: isKiosk ? '12px' : '8px',
-                            cursor: 'pointer',
-                            fontSize: isKiosk ? '1.6rem' : '0.9rem',
-                            fontWeight: 600,
-                            backdropFilter: 'blur(5px)'
-                        }}
-                    >
-                        <Info size={isKiosk ? 32 : 18} /> Ödülleri Gör
                     </button>
  
                     {!isKiosk && (
