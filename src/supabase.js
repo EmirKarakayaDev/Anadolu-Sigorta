@@ -63,7 +63,7 @@ export const saveGameSession = async (userData, score, isTest = false) => {
 export const getTopScores = async (limit = 10) => {
     try {
         const { data, error } = await supabase
-            .from('top_scores_event3')
+            .from('etkinlik_4_derece')
             .select('id, first_name, last_name, score, created_at')
             .order('score', { ascending: false })
             .limit(limit);
@@ -79,7 +79,7 @@ export const getTopScores = async (limit = 10) => {
 export const getRankByScore = async (score) => {
     try {
         const { count, error } = await supabase
-            .from('top_scores_event3')
+            .from('etkinlik_4_derece')
             .select('*', { count: 'exact', head: true })
             .gt('score', score);
 
@@ -95,7 +95,7 @@ export const getUserRank = async (sessionId) => {
     if (!sessionId) return null;
     try {
         const { data: sessionData, error: sError } = await supabase
-            .from('sessions_event3')
+            .from('etkinlik_4')
             .select('score')
             .eq('id', sessionId)
             .single();
@@ -104,7 +104,7 @@ export const getUserRank = async (sessionId) => {
         const userScore = sessionData.score;
 
         const { count, error: cError } = await supabase
-            .from('top_scores_event3')
+            .from('etkinlik_4_derece')
             .select('*', { count: 'exact', head: true })
             .gt('score', userScore);
 
