@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Home, Loader2, Gift, Plane, Info } from 'lucide-react';
 import { getTopScores, getUserRank, getRankByScore } from '../supabase';
 import { RewardsModal } from './RewardsModal';
+import { REWARDS_ENABLED } from '../game/constants';
 
 export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk, isTestSession, finalScore, eventEnded }) {
     const [scores, setScores] = useState([]);
@@ -139,7 +140,7 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
                         position: 'relative'
                     }}>
                         <h2 style={{ fontSize: isKiosk ? '3.5rem' : (isMobile ? '1.8rem' : '2.2rem'), fontWeight: 900, color: 'white', margin: 0 }}>Liderlik Tablosu</h2>
-                        {!eventEnded && (
+                        {!eventEnded && REWARDS_ENABLED && (
                             <button
                                 onClick={() => setIsRewardsModalOpen(true)}
                                 style={{

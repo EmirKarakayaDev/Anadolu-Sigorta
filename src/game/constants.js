@@ -1,3 +1,5 @@
+export const REWARDS_ENABLED = false; // Ödül olan etkinlikte true yap
+
 export const COLS = 10;
 export const ROWS = 20;
 export const BLOCK_SIZE = 30;
