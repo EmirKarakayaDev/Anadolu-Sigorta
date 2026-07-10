@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Gift, Plane, Info } from 'lucide-react';
+import { X, Gift, Info } from 'lucide-react';
 
 export function RewardsModal({ isOpen, onClose, isKiosk }) {
     return (
@@ -67,30 +67,18 @@ export function RewardsModal({ isOpen, onClose, isKiosk }) {
 
                         {/* Teaser metni */}
                         <p style={{ margin: 0, fontSize: isKiosk ? '1.3rem' : '0.85rem', color: '#222', fontWeight: 700, textAlign: 'center', lineHeight: 1.5 }}>
-                            Bavulları doğru yerleştiren ilk 10 kişiden biri ol, Yurt Dışı Seyahat Sigortası'na ek ilk 3'e özel ödülleri kaçırma!
+                            Bavulları doğru yerleştiren ilk 5 kişiden biri ol, çift kişilik konser bileti kazan!
                         </p>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: isKiosk ? '1.5rem' : '1rem', marginTop: isKiosk ? '2rem' : '1.2rem' }}>
-                            {/* 1-3 */}
+                            {/* 1-5 */}
                             <div style={{ display: 'flex', alignItems: 'center', gap: isKiosk ? '2rem' : '1.2rem', padding: isKiosk ? '1.8rem' : '1.2rem', background: 'rgba(58, 123, 213, 0.05)', borderRadius: isKiosk ? '2rem' : '1.5rem', border: '1px solid rgba(58, 123, 213, 0.15)' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: isKiosk ? '80px' : '56px', height: isKiosk ? '80px' : '56px', background: 'rgba(58, 123, 213, 0.1)', borderRadius: isKiosk ? '1.2rem' : '1rem', flexShrink: 0 }}>
                                     <Gift size={isKiosk ? 48 : 32} color="#3A7BD5" />
                                 </div>
                                 <div style={{ flex: 1 }}>
-                                    <div style={{ fontWeight: 900, color: '#3A7BD5', fontSize: isKiosk ? '1.6rem' : '1.1rem' }}>1 - 3. Sıra</div>
-                                    <div style={{ color: '#555', fontSize: isKiosk ? '1.25rem' : '0.85rem', fontWeight: 700, marginTop: '2px' }}>Yurt Dışı Seyahat Sigortası</div>
-                                    <div style={{ color: '#3A7BD5', fontSize: isKiosk ? '1.15rem' : '0.78rem', fontWeight: 800, marginTop: '2px' }}>+ Koşu Kiti 🏃</div>
-                                </div>
-                            </div>
-
-                            {/* 4-10 */}
-                            <div style={{ display: 'flex', alignItems: 'center', gap: isKiosk ? '2rem' : '1.2rem', padding: isKiosk ? '1.8rem' : '1.2rem', background: 'rgba(255, 215, 0, 0.06)', borderRadius: isKiosk ? '2rem' : '1.5rem', border: '1.5px solid rgba(255, 215, 0, 0.3)' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: isKiosk ? '80px' : '56px', height: isKiosk ? '80px' : '56px', background: 'rgba(255, 215, 0, 0.12)', borderRadius: isKiosk ? '1.2rem' : '1rem', flexShrink: 0 }}>
-                                    <Plane size={isKiosk ? 48 : 32} color="#E6B800" />
-                                </div>
-                                <div style={{ flex: 1 }}>
-                                    <div style={{ fontWeight: 900, color: '#B8860B', fontSize: isKiosk ? '1.6rem' : '1.1rem' }}>4 - 10. Sıra</div>
-                                    <div style={{ color: '#555', fontSize: isKiosk ? '1.25rem' : '0.85rem', fontWeight: 700, marginTop: '2px' }}>Yurt Dışı Seyahat Sigortası</div>
+                                    <div style={{ fontWeight: 900, color: '#3A7BD5', fontSize: isKiosk ? '1.6rem' : '1.1rem' }}>1 - 5. Sıra</div>
+                                    <div style={{ color: '#555', fontSize: isKiosk ? '1.25rem' : '0.85rem', fontWeight: 700, marginTop: '2px' }}>Çift Kişilik Konser Bileti 🎫</div>
                                 </div>
                             </div>
                         </div>
