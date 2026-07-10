@@ -7,7 +7,7 @@ export const EVENTS = {
     uludag: {
         table: 'etkinlik_4_uludag',
         viewTable: 'etkinlik_4_uludag_derece',
-        allowKiosk: false,
+        allowKiosk: true,
         rewardsEnabled: false,
     },
     cvk: {
