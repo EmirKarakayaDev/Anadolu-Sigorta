@@ -1,5 +1,8 @@
 // Aynı gün, farklı lokasyonlarda düzenlenen etkinlikler için ayrı veri/görünüm ayarları.
-// QR kodları ?event=<slug> parametresiyle üretilir.
+// cvk mevcut/varsayılan lokasyon olduğu için linki değişmez (?event olmadan da çalışır).
+// uludag için linke ayrıca ?event=uludag eklenir.
+const DEFAULT_EVENT = 'cvk';
+
 export const EVENTS = {
     uludag: {
         table: 'etkinlik_4_uludag',
@@ -16,5 +19,6 @@ export const EVENTS = {
 };
 
 export function getEventConfig(slug) {
-    return EVENTS[slug] ? { slug, ...EVENTS[slug] } : null;
+    const resolvedSlug = slug || DEFAULT_EVENT;
+    return EVENTS[resolvedSlug] ? { slug: resolvedSlug, ...EVENTS[resolvedSlug] } : null;
 }
