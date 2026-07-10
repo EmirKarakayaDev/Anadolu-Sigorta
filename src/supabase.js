@@ -6,7 +6,7 @@ const supabaseAnonKey = 'sb_publishable_hsVxf7PNVbY5I4-rGv25sg_WqLLgrv0';
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export const saveGameSession = async (userData, score, isTest = false) => {
+export const saveGameSession = async (userData, score, isTest = false, eventSlug) => {
     // 1. Google Sheets (Excel) Kaydı (Tam Otomatik)
     const googleSheetUrl = 'https://script.google.com/macros/s/AKfycbx4tfD9BnZT9ZX75zpzXsseyGDlL74vqcMr9Pl0-khJ_zCHmlU_tBhTroz7sLO_oFUmiA/exec';
 
@@ -25,7 +25,8 @@ export const saveGameSession = async (userData, score, isTest = false) => {
             phone: userData.phone,
             tcNumber: userData.tcNumber,
             score: score,
-            deviceType: window.innerWidth > 1024 ? 'kiosk' : 'mobile'
+            deviceType: window.innerWidth > 1024 ? 'kiosk' : 'mobile',
+            event: eventSlug
         })
     }).catch(e => console.error("Google Sheets Hatası:", e));
 
@@ -47,7 +48,8 @@ export const saveGameSession = async (userData, score, isTest = false) => {
                     deviceType: window.innerWidth > 1024 ? 'kiosk' : 'mobile'
                 },
                 score: score,
-                isTest: isTest
+                isTest: isTest,
+                event: eventSlug
             })
         });
 
@@ -60,10 +62,10 @@ export const saveGameSession = async (userData, score, isTest = false) => {
     }
 };
 
-export const getTopScores = async (limit = 10) => {
+export const getTopScores = async (viewTable, limit = 10) => {
     try {
         const { data, error } = await supabase
-            .from('etkinlik_4_derece')
+            .from(viewTable)
             .select('id, first_name, last_name, score, created_at')
             .order('score', { ascending: false })
             .limit(limit);
@@ -76,10 +78,10 @@ export const getTopScores = async (limit = 10) => {
     }
 };
 
-export const getRankByScore = async (score) => {
+export const getRankByScore = async (viewTable, score) => {
     try {
         const { count, error } = await supabase
-            .from('etkinlik_4_derece')
+            .from(viewTable)
             .select('*', { count: 'exact', head: true })
             .gt('score', score);
 
@@ -91,11 +93,11 @@ export const getRankByScore = async (score) => {
     }
 };
 
-export const getUserRank = async (sessionId) => {
+export const getUserRank = async (table, viewTable, sessionId) => {
     if (!sessionId) return null;
     try {
         const { data: sessionData, error: sError } = await supabase
-            .from('etkinlik_4')
+            .from(table)
             .select('score')
             .eq('id', sessionId)
             .single();
@@ -104,7 +106,7 @@ export const getUserRank = async (sessionId) => {
         const userScore = sessionData.score;
 
         const { count, error: cError } = await supabase
-            .from('etkinlik_4_derece')
+            .from(viewTable)
             .select('*', { count: 'exact', head: true })
             .gt('score', userScore);
 

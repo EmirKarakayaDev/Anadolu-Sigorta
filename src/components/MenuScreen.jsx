@@ -4,9 +4,8 @@ import { Info } from 'lucide-react';
 import { audioManager } from '../utils/audioManager';
 import { EventEndedModal } from './EventEndedModal';
 import { RewardsModal } from './RewardsModal';
-import { REWARDS_ENABLED } from '../game/constants';
 
-export function MenuScreen({ onStart, isKiosk, savedUserData, onContinueWithSaved, onChangeSavedData, eventEnded }) {
+export function MenuScreen({ onStart, isKiosk, savedUserData, onContinueWithSaved, onChangeSavedData, eventEnded, rewardsEnabled }) {
     const [isEventModalOpen, setIsEventModalOpen] = useState(false);
     const [isRewardsModalOpen, setIsRewardsModalOpen] = useState(false);
 
@@ -107,7 +106,7 @@ export function MenuScreen({ onStart, isKiosk, savedUserData, onContinueWithSave
                                 Yarışma Sonuçları
                             </button>
                         )}
-                        {!eventEnded && REWARDS_ENABLED && (
+                        {!eventEnded && rewardsEnabled && (
                             <button
                                 onClick={() => setIsRewardsModalOpen(true)}
                                 style={{

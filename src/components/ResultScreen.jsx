@@ -3,9 +3,8 @@ import { motion } from 'framer-motion';
 import { Home, Info } from 'lucide-react';
 import { audioManager } from '../utils/audioManager';
 import { RewardsModal } from './RewardsModal';
-import { REWARDS_ENABLED } from '../game/constants';
 
-export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, isKiosk }) {
+export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, isKiosk, rewardsEnabled }) {
     const [isRewardsModalOpen, setIsRewardsModalOpen] = useState(false);
     useEffect(() => {
         audioManager.startBGM(4);
@@ -67,7 +66,7 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
                         }}>
                             {score === 0 ? 'OYUN BİTTİ!' : 'TEBRİKLER!'}
                         </h2>
-                        {REWARDS_ENABLED && <button
+                        {rewardsEnabled && <button
                             onClick={() => setIsRewardsModalOpen(true)}
                             style={{
                                 position: 'absolute',

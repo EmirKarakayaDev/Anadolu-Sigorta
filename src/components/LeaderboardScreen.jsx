@@ -3,9 +3,8 @@ import { motion } from 'framer-motion';
 import { Home, Loader2, Gift, Plane, Info } from 'lucide-react';
 import { getTopScores, getUserRank, getRankByScore } from '../supabase';
 import { RewardsModal } from './RewardsModal';
-import { REWARDS_ENABLED } from '../game/constants';
 
-export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk, isTestSession, finalScore, eventEnded }) {
+export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk, isTestSession, finalScore, eventEnded, rewardsEnabled, table, viewTable }) {
     const [scores, setScores] = useState([]);
     const [loading, setLoading] = useState(true);
     const [userRankData, setUserRankData] = useState(null);
@@ -16,17 +15,17 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
     useEffect(() => {
         async function fetchScores() {
             setLoading(true);
-            const topScores = await getTopScores(eventEnded ? 50 : 10);
+            const topScores = await getTopScores(viewTable, eventEnded ? 50 : 10);
             setScores(topScores);
-            
+
             // Eğer aktif bir oturum varsa ve ilk 10'da değilse sıralamasını çek
             if (isTestSession) {
-                const rankInfo = await getRankByScore(finalScore);
+                const rankInfo = await getRankByScore(viewTable, finalScore);
                 setUserRankData(rankInfo);
             } else if (lastSessionId) {
                 const isInTop10 = topScores.some(s => s.id === lastSessionId);
                 if (!isInTop10) {
-                    const rankInfo = await getUserRank(lastSessionId);
+                    const rankInfo = await getUserRank(table, viewTable, lastSessionId);
                     setUserRankData(rankInfo);
                 } else {
                     setUserRankData(null);
@@ -140,7 +139,7 @@ export function LeaderboardScreen({ onReset, onPlayAgain, lastSessionId, isKiosk
                         position: 'relative'
                     }}>
                         <h2 style={{ fontSize: isKiosk ? '3.5rem' : (isMobile ? '1.8rem' : '2.2rem'), fontWeight: 900, color: 'white', margin: 0 }}>Liderlik Tablosu</h2>
-                        {!eventEnded && REWARDS_ENABLED && (
+                        {!eventEnded && rewardsEnabled && (
                             <button
                                 onClick={() => setIsRewardsModalOpen(true)}
                                 style={{

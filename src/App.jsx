@@ -10,6 +10,7 @@ import { PixelTransition } from './components/PixelTransition';
 
 import { saveGameSession } from './supabase';
 import { audioManager } from './utils/audioManager';
+import { getEventConfig } from './eventConfig';
 
 const LS_KEY = 'as_user_data';
 
@@ -22,10 +23,15 @@ const SCREENS = {
   LEADERBOARD: 'leaderboard'
 };
 
+// Etkinlik Lokasyonu Kontrolü
+// Her lokasyon kendi QR/linkini ?event=<slug> parametresiyle taşır; veriler/davranış buna göre ayrışır.
+const urlParams = new URLSearchParams(window.location.search);
+const eventConfig = getEventConfig(urlParams.get('event'));
+
 // Kiosk Modu Kontrolü
 // Öncelik URL parametresi (?kiosk), alternatif olarak yüksek çözünürlüklü dikey ekran tespiti.
-const urlParams = new URLSearchParams(window.location.search);
-const isKiosk = urlParams.has('kiosk') || window.screen.height >= 1800;
+// Lokasyon kiosk girişine izin vermiyorsa (allowKiosk:false) hiçbir durumda kiosk moda geçilmez.
+const isKiosk = !!eventConfig?.allowKiosk && (urlParams.has('kiosk') || window.screen.height >= 1800);
 
 // Etkinlik durumu — true: etkinlik bitti (popup + sonuç butonu göster), false: etkinlik devam ediyor
 const EVENT_ENDED = false;
@@ -107,7 +113,7 @@ function App() {
     setFinalScore(score);
     if (userData) {
       isSavingRef.current = true;
-      saveGameSession(userData, score, isTestSession).then(result => {
+      saveGameSession(userData, score, isTestSession, eventConfig.slug).then(result => {
         if (result.success) {
           setLastSessionId(result.id);
         }
@@ -138,6 +144,17 @@ function App() {
     setIsTransitioning(true);
   };
 
+  if (!eventConfig) {
+    return (
+      <div className="app-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '2rem', color: 'white' }}>
+        <div>
+          <h2 style={{ marginBottom: '0.5rem' }}>Etkinlik bağlantısı geçersiz</h2>
+          <p>Lütfen etkinlik için verilen QR kodu/linki kullanın.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="app-container">
       <AnimatePresence mode="wait">
@@ -150,6 +167,7 @@ function App() {
             onContinueWithSaved={handleContinueWithSaved}
             onChangeSavedData={handleChangeSavedData}
             eventEnded={EVENT_ENDED}
+            rewardsEnabled={eventConfig.rewardsEnabled}
           />
         )}
         {currentScreen === SCREENS.KVKK && (
@@ -162,10 +180,10 @@ function App() {
           <GameScreen key="game" onGameOver={handleGameOver} isKiosk={isKiosk} />
         )}
         {currentScreen === SCREENS.RESULT && (
-          <ResultScreen key="result" score={finalScore} onReset={handleReset} onPlayAgain={handlePlayAgain} onShowLeaderboard={() => setCurrentScreen(SCREENS.LEADERBOARD)} isKiosk={isKiosk} />
+          <ResultScreen key="result" score={finalScore} onReset={handleReset} onPlayAgain={handlePlayAgain} onShowLeaderboard={() => setCurrentScreen(SCREENS.LEADERBOARD)} isKiosk={isKiosk} rewardsEnabled={eventConfig.rewardsEnabled} />
         )}
         {currentScreen === SCREENS.LEADERBOARD && (
-          <LeaderboardScreen key="leaderboard" onReset={handleReset} onPlayAgain={handlePlayAgain} lastSessionId={lastSessionId} isKiosk={isKiosk} isTestSession={isTestSession} finalScore={finalScore} eventEnded={EVENT_ENDED} />
+          <LeaderboardScreen key="leaderboard" onReset={handleReset} onPlayAgain={handlePlayAgain} lastSessionId={lastSessionId} isKiosk={isKiosk} isTestSession={isTestSession} finalScore={finalScore} eventEnded={EVENT_ENDED} rewardsEnabled={eventConfig.rewardsEnabled} table={eventConfig.table} viewTable={eventConfig.viewTable} />
         )}
       </AnimatePresence>
 
