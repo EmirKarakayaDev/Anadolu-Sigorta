@@ -107,7 +107,7 @@ export function FormScreen({ onSubmit, onBack, isKiosk }) {
 
                 <div className="brand-screen">
                     <motion.img
-                        src={isKiosk ? "/as_logo.svg" : "/logo_trn.png"}
+                        src={isKiosk ? "/as_logo.svg" : "/logo_trn_new.png"}
                         alt={isKiosk ? "Anadolu Sigorta" : "Kaybetmek Yok"}
                         className="brand-logo"
                         initial={{ y: -20, opacity: 0 }}
@@ -297,7 +297,7 @@ export function FormScreen({ onSubmit, onBack, isKiosk }) {
 
                 {isKiosk && (
                     <motion.img
-                        src="/logo_trn.png"
+                        src="/logo_trn_new.png"
                         alt="Kaybetmek Yok"
                         className="brand-logo kiosk-logo-fixed"
                         initial={{ y: 20, opacity: 0 }}

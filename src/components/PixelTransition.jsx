@@ -55,7 +55,7 @@ export function PixelTransition({ onMidpoint, onComplete, isKiosk }) {
                         transition={{ duration: 0.4 }}
                     >
                         <img 
-                            src="/logo_trn.png" 
+                            src="/logo_trn_new.png"
                             alt="Anadolu Sigorta" 
                             style={{ 
                                 width: isKiosk ? '80vw' : '60vw', 

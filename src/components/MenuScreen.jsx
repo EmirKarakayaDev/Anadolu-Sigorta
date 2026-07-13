@@ -45,7 +45,7 @@ export function MenuScreen({ onStart, isKiosk, savedUserData, onContinueWithSave
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{ type: "spring", stiffness: 100, delay: 0.3 }}
                         >
-                            <img src="/logo_trn.png" alt="Kaybetmek Yok" style={{ width: '100%' }} />
+                            <img src="/logo_trn_new.png" alt="Kaybetmek Yok" style={{ width: '100%' }} />
                         </motion.div>
                     </div>
 

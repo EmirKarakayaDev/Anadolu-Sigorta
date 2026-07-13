@@ -147,7 +147,7 @@ export function ResultScreen({ score, onReset, onPlayAgain, onShowLeaderboard, i
 
             {isKiosk && (
                 <motion.img
-                    src="/logo_trn.png"
+                    src="/logo_trn_new.png"
                     alt="Anadolu Sigorta"
                     className="brand-logo kiosk-logo-fixed"
                     initial={{ y: 20, opacity: 0 }}
