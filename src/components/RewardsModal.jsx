@@ -21,7 +21,6 @@ export function RewardsModal({ isOpen, onClose, isKiosk }) {
                         justifyContent: 'center',
                         padding: '20px',
                         paddingTop: isKiosk ? '320px' : '20px',
-                        zIndex: 3000,
                     }}
                     onClick={onClose}
                 >
